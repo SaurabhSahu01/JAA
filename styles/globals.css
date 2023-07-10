@@ -19,3 +19,13 @@
 body {
   
 }
+
+
+.home-gallary{
+  height: 600px;
+  overflow-x: auto;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}

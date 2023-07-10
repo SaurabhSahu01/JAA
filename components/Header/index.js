@@ -2,16 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { HomeIcon as HomeIconSolid } from "@heroicons/react/24/solid"
-import { HomeIcon } from "@heroicons/react/24/outline"
-import { NewspaperIcon as NewspaperIconSolid } from "@heroicons/react/24/solid"
-import { NewspaperIcon } from "@heroicons/react/24/outline"
-import { PhotoIcon } from "@heroicons/react/24/outline"
-import { PhotoIcon as PhotoIconSolid } from "@heroicons/react/24/solid"
-import { BriefcaseIcon as BriefcaseIconSolid } from "@heroicons/react/24/solid"
-import { BriefcaseIcon } from "@heroicons/react/24/outline"
-import { InformationCircleIcon } from "@heroicons/react/24/outline"
-import { InformationCircleIcon as InformationCircleIconSolid } from "@heroicons/react/24/solid"
+import { HomeIcon } from "@heroicons/react/24/solid"
+import { NewspaperIcon } from "@heroicons/react/24/solid"
+import { PhotoIcon } from "@heroicons/react/24/solid"
+import { BriefcaseIcon } from "@heroicons/react/24/solid"
+import { ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
 
 function Header() {
     const router = useRouter();
@@ -33,14 +28,14 @@ function Header() {
                             router.pathname === "/" ?
                                 <Link href="/">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <HomeIconSolid className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <HomeIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-semibold text-primarycolor'>Home</span>
                                     </div>
                                 </Link>
                                 :
                                 <Link href="/">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <HomeIcon className='text-gray-500 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <HomeIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-light'>Home</span>
                                     </div>
                                 </Link>
@@ -51,14 +46,14 @@ function Header() {
                             router.pathname === "/feed" ?
                                 <Link href="/feed">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <NewspaperIconSolid className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <NewspaperIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-semibold text-primarycolor'>Feed</span>
                                     </div>
                                 </Link>
                                 :
                                 <Link href="/feed">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <NewspaperIcon className='text-gray-500 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <NewspaperIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-light'>Feed</span>
                                     </div>
                                 </Link>
@@ -69,14 +64,14 @@ function Header() {
                             router.pathname === "/gallery" ?
                                 <Link href="/gallery">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <PhotoIconSolid className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <PhotoIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-semibold text-primarycolor'>Gallery</span>
                                     </div>
                                 </Link>
                                 :
                                 <Link href="/gallery">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <PhotoIcon className='text-gray-500 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <PhotoIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-light'>Gallery</span>
                                     </div>
                                 </Link>
@@ -87,14 +82,14 @@ function Header() {
                             router.pathname === "/jobs" ?
                                 <Link href="/jobs">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <BriefcaseIconSolid className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <BriefcaseIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-semibold text-primarycolor'>Jobs</span>
                                     </div>
                                 </Link>
                                 :
                                 <Link href="/jobs">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <BriefcaseIcon className='text-gray-500 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <BriefcaseIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
                                         <span className='text-xs font-light'>Jobs</span>
                                     </div>
                                 </Link>
@@ -102,18 +97,18 @@ function Header() {
                     </li>
                     <li>
                         {
-                            router.pathname === "/about" ?
-                                <Link href="/about">
+                            router.pathname === "/messages" ?
+                                <Link href="/messages">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <InformationCircleIconSolid className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>About Us</span>
+                                        <ChatBubbleLeftIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <span className='text-xs font-semibold text-primarycolor'>Messages</span>
                                     </div>
                                 </Link>
                                 :
-                                <Link href="/about">
+                                <Link href="/messages">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <InformationCircleIcon className='text-gray-500 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>About Us</span>
+                                        <ChatBubbleLeftIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <span className='text-xs font-light'>Messages</span>
                                     </div>
                                 </Link>
                         }

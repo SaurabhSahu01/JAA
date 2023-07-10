@@ -46,7 +46,7 @@ function Footer() {
         </div>
         <ul className='flex xs:flex-col sm:flex-row justify-center place-items-center sm:gap-10 xs:gap-5'>
           <li>
-            <Link href="/gallery" className='text-slate-500 hover:text-slate-200  font-light'>Gallery</Link>
+            <Link href="/about" className='text-slate-500 hover:text-slate-200  font-light'>About Us</Link>
           </li>
           <li>
             <Link href="/contact" className=' text-slate-500 hover:text-slate-200  font-light'>Contact</Link>

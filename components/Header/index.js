@@ -10,9 +10,26 @@ import { ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
 
 function Header() {
     const router = useRouter();
+
+    // disappearing header on scrolling
+    const [position, setPosition] = React.useState(window.scrollY)
+    const [visible, setVisible] = React.useState(true) 
+    React.useEffect(()=> {
+        const handleScroll = () => {
+           let moving = window.scrollY
+           let finalValue = position > moving ? true : false;
+           setVisible(finalValue);
+           setPosition(moving)
+        };
+        window.addEventListener("scroll", handleScroll);
+        return(() => {
+           window.removeEventListener("scroll", handleScroll);
+        })
+    })
+
     return (
         <>
-            <div className='flex justify-between items-center bg-slate-200 sticky top-0 py-2 md:px-5 xs:px-3'>
+            <div className={`justify-between items-center bg-slate-200 sticky top-0 py-2 md:px-5 xs:px-3 ${visible ? 'flex' : 'hidden'}`}>
                 <div className='flex justify-center items-center gap-2'>
                     <Image
                      src="/header/JNUlogo.png"

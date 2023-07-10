@@ -25,7 +25,7 @@ function Footer() {
 
   return (
     mounted &&
-    <footer className={`w-full shadow bg-primarycolor text-slate-200 py-5`} ref={footerRef}>
+    <footer className={`w-full shadow bg-primarycolor text-slate-200 py-5 xs:mb-[2rem] md:mb-0`} ref={footerRef}>
       <div className='w-11/12 mx-auto flex md:flex-row xs:flex-col justify-between place-items-center gap-5'>
         <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
           <Link href="#" className="text-slate-500 hover:text-slate-200">

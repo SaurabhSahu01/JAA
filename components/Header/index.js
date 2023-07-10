@@ -13,7 +13,7 @@ function Header() {
 
     return (
         <>
-            <div className='flex justify-between items-center bg-slate-200 sticky top-0 py-2 md:px-5 xs:px-3'>
+            <div className='flex justify-between items-center bg-[#f2f4f6] sticky top-0 py-2 md:px-5 xs:px-3'>
                 <div className='flex justify-center items-center gap-2'>
                     <Image
                      src="/header/JNUlogo.png"
@@ -23,7 +23,7 @@ function Header() {
                     />
                     <p className='md:text-xl xs:text-lg font-semibold tracking-wider text-primarycolor'>JNU Alumni Association</p>
                 </div>
-                <ul className='md:w-7/12 xs:w-full md:relative md:flex md:flex-row justify-around items-center xs:fixed xs:flex xs:bottom-0 xs:left-0 xs:py-1 md:py-0 bg-slate-200'>
+                <ul className='md:w-7/12 xs:w-full md:relative md:flex md:flex-row justify-around items-center xs:fixed xs:flex xs:bottom-0 xs:left-0 xs:py-1 md:py-0 bg-[#f2f4f6]'>
                     <li>
                         {
                             router.pathname === "/" ?

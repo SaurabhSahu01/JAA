@@ -23,7 +23,7 @@ function Header() {
                     />
                     <p className='md:text-xl xs:text-lg font-semibold tracking-wider text-primarycolor'>JNU Alumni Association</p>
                 </div>
-                <ul className='md:w-7/12 xs:w-full md:relative md:flex md:flex-row justify-around items-center xs:fixed xs:flex xs:bottom-0 xs:left-0 bg-slate-200'>
+                <ul className='md:w-7/12 xs:w-full md:relative md:flex md:flex-row justify-around items-center xs:fixed xs:flex xs:bottom-0 xs:left-0 xs:py-1 md:py-0 bg-slate-200'>
                     <li>
                         {
                             router.pathname === "/" ?

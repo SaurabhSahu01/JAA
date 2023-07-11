@@ -3,10 +3,11 @@ import GoogleButton from "react-google-button";
 import { EyeIcon } from '@heroicons/react/24/solid'
 import { EyeSlashIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image';
-import { loginwithemail, loginwithgoogle, logout, signupwithemail, changeMaxAge } from '@/src/utils/login';
+import { loginwithemail, loginwithgoogle, changeMaxAge } from '@/src/utils/login';
 import { GoogleAuthProvider } from "firebase/auth";
 import cookieCutter from "cookie-cutter";
 import { useRouter } from 'next/router';
+import Loader from '../common/Loader';
 
 function Login() {
     const router = useRouter();
@@ -46,6 +47,25 @@ function Login() {
     const handleShowPassword = (e) => {
         setValues({ ...values, showPassword: !values.showPassword })
     }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setlogInProgress(true);
+        await loginwithemail(values.username, values.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                // console.log("user = ", user);
+                cookieCutter.set('userToken', user.accessToken);
+                cookieCutter.set('uid', user.uid);
+                changeMaxAge('userToken', 24*3600);
+                changeMaxAge('uid', 24*3600);
+                setlogInProgress(false);
+                router.push("/");
+            })
+            .catch((err) => {
+                setlogInProgress(false);
+                setloginerr(true);
+            })
+    }
     return (
         <div className='h-screen flex md:flex-row xs:flex-col items-center justify-center gap-[4rem] select-none'>
             <div className='rounded-sm w-fit h-fit py-10 px-5 flex flex-col items-center justify-center gap-5 bg-primarycolor shadow-xl'>
@@ -75,10 +95,7 @@ function Login() {
 
                     {mailerr ? (<span className="text-red-500">Invalid email!</span>) : (<></>)}
                     {loginerr ? (<span className="text-red-500">Incorrect email or password!</span>) : (<></>)}
-                    {logInProgress ? (<button className="mt-4 text-white rounded-lg py-2 bg-[#4e299e] font-semibold" disabled>
-                        <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105">
+                    {logInProgress ? (<div><Loader color="#1B2D56" loading={logInProgress} /></div>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105" onClick={handleLogin}>
                         Sign In
                     </button>) : (<button className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor cursor-not-allowed" disabled>
                         Sign In
@@ -103,12 +120,12 @@ function Login() {
                             // The signed-in user info.
                             const user = result.user;
                             console.log("user = ", user);
-                           
+
                             // setting cookies 
                             cookieCutter.set('userToken', user.accessToken);
                             cookieCutter.set('uid', user.uid);
-                            changeMaxAge('userToken', 24*3600);
-                            changeMaxAge('uid', 24*3600);
+                            changeMaxAge('userToken', 24 * 3600);
+                            changeMaxAge('uid', 24 * 3600);
                         }).catch((error) => {
                             // Handle Errors here.
                             const errorCode = error.code;

@@ -2,6 +2,7 @@ import React from 'react'
 import GoogleButton from "react-google-button";
 import { EyeIcon } from '@heroicons/react/24/solid'
 import { EyeSlashIcon } from '@heroicons/react/24/solid'
+import Image from 'next/image';
 
 function Login() {
     // states
@@ -41,8 +42,8 @@ function Login() {
         setValues({ ...values, showPassword: !values.showPassword })
     }
     return (
-        <div className='h-screen flex flex-col items-center justify-center select-none'>
-            <div className='rounded-sm w-fit h-fit py-10 px-5 flex flex-col items-center justify-center gap-5 bg-primarycolor'>
+        <div className='h-screen flex md:flex-row xs:flex-col items-center justify-center gap-[4rem] select-none'>
+            <div className='rounded-sm w-fit h-fit py-10 px-5 flex flex-col items-center justify-center gap-5 bg-primarycolor shadow-xl'>
                 <div className='min-w-[300px] h-[300px] px-5 py-5 flex flex-col gap-4 justify-center items-center bg-slate-100 box-border'>
                     <div className="w-full rounded-sm py-1 outline-none bg-white flex justify-between items-center shadow-lg">
                         <input
@@ -86,6 +87,14 @@ function Login() {
                     </span>
                 </div>
                 <GoogleButton className='mx-auto m-2' />
+            </div>
+            <div className='lg:block xs:hidden'>
+                <Image
+                    src="/login/loginsvg.svg"
+                    width={500}
+                    height={500}
+                    alt="login svg"
+                />
             </div>
         </div>
     )

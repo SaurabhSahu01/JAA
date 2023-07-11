@@ -19,7 +19,7 @@ function Header() {
                      src="/header/JNUlogo.png"
                      width={30}
                      height={30}
-                     alt="Picture of the author"
+                     alt="JNU logo"
                     />
                     <p className='md:text-xl xs:text-lg font-semibold tracking-wider text-primarycolor'>JNU Alumni Association</p>
                 </div>

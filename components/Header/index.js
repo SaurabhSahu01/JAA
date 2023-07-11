@@ -44,18 +44,18 @@ function Header() {
                     </li>
                     <li>
                         {
-                            router.pathname === "/feed" ?
-                                <Link href="/feed">
+                            router.pathname === "/feeds" ?
+                                <Link href="/feeds">
                                     <div className='flex flex-col justify-center items-center'>
                                         <NewspaperIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Feed</span>
+                                        <span className='text-xs font-semibold text-primarycolor'>Feeds</span>
                                     </div>
                                 </Link>
                                 :
-                                <Link href="/feed">
+                                <Link href="/feeds">
                                     <div className='flex flex-col justify-center items-center'>
                                         <NewspaperIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Feed</span>
+                                        <span className='text-xs font-light'>Feeds</span>
                                     </div>
                                 </Link>
                         }

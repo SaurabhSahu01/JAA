@@ -11,6 +11,8 @@ export const signupwithemail = (email, pass) => {
 }
 
 export const logout = () => {
+    deleteCookie("userToken");
+    deleteCookie("uid");
     //setlogInProgress(true);
     setTimeout(async () => {
         await signOut(auth)
@@ -52,4 +54,8 @@ export const changeMaxAge = (cookieName, age) => {
             break;
         }
     }
+}
+
+export const deleteCookie = (name) => {
+    document.cookie = name + '=; Max-Age=0; path=/;';
 }

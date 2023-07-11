@@ -119,13 +119,14 @@ function Login() {
 
                             // The signed-in user info.
                             const user = result.user;
-                            console.log("user = ", user);
+                            // console.log("user = ", user);
 
                             // setting cookies 
                             cookieCutter.set('userToken', user.accessToken);
                             cookieCutter.set('uid', user.uid);
                             changeMaxAge('userToken', 24 * 3600);
                             changeMaxAge('uid', 24 * 3600);
+                            router.push("/");
                         }).catch((error) => {
                             // Handle Errors here.
                             const errorCode = error.code;

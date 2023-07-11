@@ -6,8 +6,10 @@ import Image from 'next/image';
 import { loginwithemail, loginwithgoogle, logout, signupwithemail, changeMaxAge } from '@/src/utils/login';
 import { GoogleAuthProvider } from "firebase/auth";
 import cookieCutter from "cookie-cutter";
+import { useRouter } from 'next/router';
 
 function Login() {
+    const router = useRouter();
     // states
     const [loginerr, setloginerr] = React.useState(false);
     const [mailerr, setmailerr] = React.useState(false);
@@ -84,8 +86,9 @@ function Login() {
                     <span className="text-center text-sm my-3 cursor-default">
                         Don&apos;t have an account? <button
                             className=" text-blue-600 cursor-pointer"
+                            onClick={() => router.push('/signup')}
                         >
-                            sign up
+                            Sign Up
                         </button>
                     </span>
                 </div>

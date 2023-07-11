@@ -19,7 +19,7 @@ function Header() {
                      src="/header/JNUlogo.png"
                      width={30}
                      height={30}
-                     alt="Picture of the author"
+                     alt="JNU logo"
                     />
                     <p className='md:text-xl xs:text-lg font-semibold tracking-wider text-primarycolor'>JNU Alumni Association</p>
                 </div>
@@ -44,18 +44,18 @@ function Header() {
                     </li>
                     <li>
                         {
-                            router.pathname === "/feed" ?
-                                <Link href="/feed">
+                            router.pathname === "/feeds" ?
+                                <Link href="/feeds">
                                     <div className='flex flex-col justify-center items-center'>
                                         <NewspaperIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Feed</span>
+                                        <span className='text-xs font-semibold text-primarycolor'>Feeds</span>
                                     </div>
                                 </Link>
                                 :
-                                <Link href="/feed">
+                                <Link href="/feeds">
                                     <div className='flex flex-col justify-center items-center'>
                                         <NewspaperIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Feed</span>
+                                        <span className='text-xs font-light'>Feeds</span>
                                     </div>
                                 </Link>
                         }
@@ -116,7 +116,7 @@ function Header() {
                     </li>
                 </ul>
                 <Link href="/login">
-                    <div className='bg-primarycolor text-white rounded-md py-2 px-3'>Login</div>
+                    <div className='bg-primarycolor text-white rounded-sm py-1 px-3'>Login</div>
                 </Link>
             </div>
         </>

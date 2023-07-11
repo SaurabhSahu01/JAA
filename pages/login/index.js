@@ -1,8 +1,8 @@
 import React from 'react'
-
+import Login from '@/components/Login'
 function LoginPage() {
   return (
-    <div>This is Login Page without Layout</div>
+    <Login/>
   )
 }
 

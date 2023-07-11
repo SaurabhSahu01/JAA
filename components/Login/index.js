@@ -72,9 +72,9 @@ function Login() {
                     {logInProgress ? (<button className="mt-4 text-white rounded-lg py-2 bg-[#4e299e] font-semibold" disabled>
                         <span className="spinner-border spinner-border-sm mx-2" role="status" aria-hidden="true"></span>
                         Loading...
-                    </button>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-2 bg-primarycolor font-medium transition duration-150 hover:scale-105">
+                    </button>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105">
                         Sign In
-                    </button>) : (<button className="mt-4 text-white rounded-sm py-1 px-2 bg-primarycolor font-medium cursor-not-allowed" disabled>
+                    </button>) : (<button className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor cursor-not-allowed" disabled>
                         Sign In
                     </button>))}
                     <span className="text-center text-sm my-3 cursor-default">

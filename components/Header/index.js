@@ -116,7 +116,7 @@ function Header() {
                     </li>
                 </ul>
                 <Link href="/login">
-                    <div className='bg-primarycolor text-white rounded-md py-2 px-3'>Login</div>
+                    <div className='bg-primarycolor text-white rounded-sm py-1 px-3'>Login</div>
                 </Link>
             </div>
         </>

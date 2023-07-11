@@ -1,0 +1,18 @@
+import { NextResponse } from "next/server";
+
+export default async function middleware(req) {
+    let userToken = req.cookies.get('userToken');
+    let atkn = req.cookies.get('atkn');
+    let url = req.url;
+    const host = new URL(url).hostname;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const domain = `${protocol}://${host}`;
+    console.log(domain)
+
+    if (!userToken && (url.includes('/feeds') || url.includes('/jobs') || url.includes('/messages') || url.includes('/join'))) {
+        return NextResponse.redirect(`${domain}/login`);
+    }
+    if(!atkn && (url.includes('/adminpanel'))){
+        return NextResponse.redirect(`${domain}/adminlogin`);
+    }
+}

@@ -33,12 +33,16 @@ function SignUp() {
             setData({ ...data, email: e.target.value })
         }
         else {
+            setvalidemail(false);
             setData({ ...data, email: "" })
         }
     }
     const handlePass = (e) => {
         if (e.target.value.length >= 6) {
             setData({ ...data, password: e.target.value });
+        }
+        else{
+            setData({ ...data, password: "" });
         }
     }
     const handleShowPassword = (e) => {

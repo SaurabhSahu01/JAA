@@ -7,19 +7,35 @@ import { NewspaperIcon } from "@heroicons/react/24/solid"
 import { PhotoIcon } from "@heroicons/react/24/solid"
 import { BriefcaseIcon } from "@heroicons/react/24/solid"
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
+import { UserCircleIcon } from "@heroicons/react/24/solid"
+import { PowerIcon } from "@heroicons/react/24/solid"
+import { UserIcon } from "@heroicons/react/24/solid"
+import cookieCutter from "cookie-cutter"
+import { deleteCookie } from '@/src/utils/login'
 
 function Header() {
     const router = useRouter();
+    const [userDropdown, setUserDropdown] = React.useState(false);
+    const [userToken, setUserToken] = React.useState(false);
 
+    React.useEffect(() => {
+        if(cookieCutter.get('userToken')){
+            setUserToken(true);
+        }
+        else{
+            setUserToken(false);
+        }
+    }, [])
+    
     return (
         <>
             <div className='flex justify-between items-center bg-[#f2f4f6] sticky top-0 py-2 md:px-5 xs:px-3'>
                 <div className='flex justify-center items-center gap-2'>
                     <Image
-                     src="/header/JNUlogo.png"
-                     width={30}
-                     height={30}
-                     alt="JNU logo"
+                        src="/header/JNUlogo.png"
+                        width={30}
+                        height={30}
+                        alt="JNU logo"
                     />
                     <p className='md:text-xl xs:text-lg font-semibold tracking-wider text-primarycolor'>JNU Alumni Association</p>
                 </div>
@@ -115,9 +131,36 @@ function Header() {
                         }
                     </li>
                 </ul>
-                <Link href="/login">
-                    <div className='bg-primarycolor text-white rounded-sm py-1 px-3'>Login</div>
-                </Link>
+                <div>
+                    {
+                            userToken ?
+                            <UserCircleIcon className='h-[3rem] w-[3rem] text-primarycolor cursor-pointer' onClick={() => setUserDropdown(userDropdown => !userDropdown)} /> :
+                            <Link href="/login">
+                                <div className='bg-primarycolor text-white rounded-sm py-1 px-3'>Login</div>
+                            </Link>
+                    }
+                    {
+                        userDropdown ?
+                            <ul className='absolute sm:top-[3.8rem] md:right-[2rem] xs:top-[3.5rem] xs:right-[0.5rem] w-[6rem] h-fit flex flex-col justify-center items-center gap-1 p-2 bg-slate-100  text-black select-none shadow-lg'>
+                                <li>
+                                    <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => { 
+                                        router.push('/profile')
+                                    }}><UserIcon className='h-[1rem] w-[1rem]' />Profile</span>
+                                </li>
+                                <li>
+                                    <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => {
+                                        deleteCookie('userToken');
+                                        deleteCookie('uid');
+                                        router.push('/')
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 500);
+                                    }}><PowerIcon className='h-[1rem] w-[1rem]' />Logout</span>
+                                </li>
+                            </ul> :
+                            ""
+                    }
+                </div>
             </div>
         </>
     )

@@ -53,7 +53,7 @@ function Login() {
         await loginwithemail(values.username, values.password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                // console.log("user = ", user);
+                console.log("user = ", user);
                 cookieCutter.set('userToken', user.accessToken);
                 cookieCutter.set('uid', user.uid);
                 changeMaxAge('userToken', 24*3600);
@@ -119,7 +119,7 @@ function Login() {
 
                             // The signed-in user info.
                             const user = result.user;
-                            // console.log("user = ", user);
+                            console.log("user = ", user);
 
                             // setting cookies 
                             cookieCutter.set('userToken', user.accessToken);

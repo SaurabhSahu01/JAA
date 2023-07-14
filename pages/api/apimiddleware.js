@@ -1,5 +1,5 @@
 // middleware to protect APIs from flooding
-import { verifyToken } from "@/src/util/firebaseadmin";
+import { verifyToken } from "@/src/utils/firebaseadmin";
 const apimiddleware = handler => async (req, res) => {
     const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" ") : null;
     if (!tokenString) {

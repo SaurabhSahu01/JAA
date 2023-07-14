@@ -127,6 +127,7 @@ const Registration = () => {
                             className="w-full h-14 bg-gray-200 rounded-xl outline-none border-none px-5 text-gray-400 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             autoComplete="off"
                             onChange={onChangeHandler}
+                            required
                         />
                         {/* <input
                             type="LastName"
@@ -226,7 +227,7 @@ const Registration = () => {
     }
 
     return (
-        <div className='flex flex-col text-black bg-[#cad3eb] p-4 relative w-11/12 mx-auto mt-10 shadow-lg rounded-lg'>
+        <div className='flex flex-col text-black bg-[#e4eafb] p-4 relative w-11/12 mx-auto mt-10 shadow-lg rounded-lg'>
             {!firstStep && <div className='flex items-center text-blue-600 w-fit  absolute top-2 right-[5%] md:right-[12%]'>Already a member? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
             </svg>

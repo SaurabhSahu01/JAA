@@ -110,7 +110,7 @@ function Contact() {
 
             <img className='absolute bottom-[-7rem] left-[-12rem] z-10' src="/contact/sendpng.png" alt="" />
 
-            <button className='bg-[#1B2D56] hover:bg-[#2e4578] rounded-md p-3 text-slate-100 w-48'>Send Message</button>
+            <button type='submit' className='bg-[#1B2D56] hover:bg-[#2e4578] rounded-md p-3 text-slate-100 w-48'>Send Message</button>
           </form>
         </div>
       </div>

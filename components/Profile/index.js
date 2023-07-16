@@ -148,7 +148,7 @@ const Profile = () => {
 
             <div className='flex flex-col items-center mt-4 p-1 md:p-3'>
                 <div className=' m-2 text-lg font-bold'>Welcome, User</div>
-                <table className='flex flex-col w-[90%] md:w-[26rem]  bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden'>
+                <table className='flex flex-col w-[90%] md:w-[26rem]  bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
                     <h1 className='text-center font-bold text-xl p-2'>User Info</h1>
                     <tbody className=''>
 
@@ -171,7 +171,7 @@ const Profile = () => {
             </div>
 
             <div className='flex flex-col items-center p-1 md:p-3 '>
-                <table className='flex flex-col w-[90%] md:w-[26rem]  bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden'>
+                <table className='flex flex-col w-[90%] md:w-[26rem]  bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
                     <h1 className='text-center font-bold text-xl p-2'>school Info</h1>
                     <tbody className='w-full'>
 

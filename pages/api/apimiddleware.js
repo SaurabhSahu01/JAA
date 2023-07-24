@@ -18,11 +18,14 @@ const apimiddleware = handler => async (req, res) => {
         let result = verifyToken(tokenString[1]);
         return result
             .then(decodedtoken => {
-                // console.log(decodedtoken)
-                req.body.decodedToken = decodedtoken
+                console.log(decodedtoken)
+                req.body = {
+                    uid: decodedtoken.uid
+                }
                 return handler(req, res);
             })
             .catch(e => {
+                console.log(e);
                 return res.status(403).json({
                     status: 403,
                     message: "Not the valid token"

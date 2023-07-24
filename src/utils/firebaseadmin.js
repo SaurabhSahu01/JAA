@@ -17,14 +17,18 @@ export const verifyToken = (userToken) => {
     return getAuth().verifyIdToken(userToken);
 }
 
-export async function addUser(uid, creationTime) {
+export async function addUser(uid, creationTime, signInType) {
     const documentRef = db.collection('users').doc(uid);
     return documentRef.get().then(async (docSnapshot) => {
-        if (docSnapshot.exists) {
-            //search for the profile
-        } else {
+        if (!docSnapshot.exists) {
             return await db.collection('users').doc(uid).set({
-                creationTime: creationTime
+                creationTime: creationTime,
+                signInType: signInType
+            }).then(() => {
+                const profileCollectionRef = documentRef.collection('profile');
+                return profileCollectionRef.doc('profile').set({
+                    set : false
+                })
             })
         }
     }).catch((error) => {

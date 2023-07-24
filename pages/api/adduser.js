@@ -5,7 +5,8 @@ async function handler(req, res) {
     if (req.method == "POST") {
         const uid = req.body.uid;
         const creationTime = req.body.creationTime;
-        const result = addUser(uid, creationTime);
+        const signInType = req.body.signInType;
+        const result = addUser(uid, creationTime, signInType);
         result
             .then(data => {
                 return res.status(200).json({

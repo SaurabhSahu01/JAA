@@ -2,6 +2,12 @@ import apimiddleware from "./apimiddleware";
 import formidable from "formidable"
 import { register } from "@/src/utils/firebaseadmin";
 
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+}
+
 async function handler(req, res){
     if(req.method === "POST"){
         const form = formidable({ multiples: false });

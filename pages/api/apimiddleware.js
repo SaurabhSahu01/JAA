@@ -19,8 +19,13 @@ const apimiddleware = handler => async (req, res) => {
         return result
             .then(decodedtoken => {
                 console.log(decodedtoken)
-                req.body = {
-                    uid: decodedtoken.uid
+                if(Object.keys(req.body).length === 0){
+                    req.body = {
+                        uid: decodedtoken.uid
+                    }
+                }
+                else{
+                    req.body.uid = decodedtoken.uid;
                 }
                 return handler(req, res);
             })

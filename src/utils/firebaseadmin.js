@@ -65,32 +65,32 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
         })
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
-            firstName: firstName,
-            lastName: lastName,
-            number: number,
-            gender: gender,
-            dob: dob,
-            school: school,
-            program: program,
-            hostel: hostel,
-            joiningYear: joiningYear,
-            graduationYear: graduationYear,
-            photo: downloadURL
+            firstName: firstName[0],
+            lastName: lastName[0],
+            number: number[0],
+            gender: gender[0],
+            dob: dob[0],
+            school: school[0],
+            program: program[0],
+            hostel: hostel[0],
+            joiningYear: joiningYear[0],
+            graduationYear: graduationYear[0],
+            photo: downloadURL[0]
         }, { merge: true })
     }
     else {
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
-            firstName: firstName,
-            lastName: lastName,
-            number: number,
-            gender: gender,
-            dob: dob,
-            school: school,
-            program: program,
-            hostel: hostel,
-            joiningYear: joiningYear,
-            graduationYear: graduationYear,
+            firstName: firstName[0],
+            lastName: lastName[0],
+            number: number[0],
+            gender: gender[0],
+            dob: dob[0],
+            school: school[0],
+            program: program[0],
+            hostel: hostel[0],
+            joiningYear: joiningYear[0],
+            graduationYear: graduationYear[0],
             photo: null
         }, { merge: true })
     }

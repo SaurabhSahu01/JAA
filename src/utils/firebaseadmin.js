@@ -48,7 +48,7 @@ export async function getUsers() {
 
 export async function register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo = null){
     const bucket = storage.bucket();
-    const destinationPath = photo.originalFilename;
+    const destinationPath = photo && photo.originalFilename;
 
     photo && await bucket.upload(photo.filepath, {
         destination: destinationPath,

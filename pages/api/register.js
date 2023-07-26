@@ -43,7 +43,7 @@ async function handler(req, res){
                 }
                 else{
                     const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear } = fields;
-                    
+                    //console.log(firstName);
                     register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, null).then(response => {
                         console.log("image added", response);
                         res.status(200).json({

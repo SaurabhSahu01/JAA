@@ -59,7 +59,22 @@ function Login() {
                 changeMaxAge('userToken', 24*3600);
                 changeMaxAge('uid', 24*3600);
                 setlogInProgress(false);
-                router.push("/");
+                fetch('/api/adduser',{
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                        'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                    },
+                    body : JSON.stringify({
+                        creationTime: new Date().toGMTString(),
+                        signInType: "email"
+                    })
+                }).then((res) => res.json())
+                .then(response => {
+                    console.log(response);
+                    router.push("/");
+                })
+                .catch(err => console.log(err))
             })
             .catch((err) => {
                 setlogInProgress(false);
@@ -126,7 +141,22 @@ function Login() {
                             cookieCutter.set('uid', user.uid);
                             changeMaxAge('userToken', 24 * 3600);
                             changeMaxAge('uid', 24 * 3600);
-                            router.push("/");
+                            fetch('/api/adduser',{
+                                method: "POST",
+                                headers: {
+                                    'Content-type': 'application/json; charset=UTF-8',
+                                    'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                                },
+                                body : JSON.stringify({
+                                    creationTime: new Date().toGMTString(),
+                                    signInType: "email"
+                                })
+                            }).then((res) => res.json())
+                            .then(response => {
+                                console.log(response);
+                                router.push("/");
+                            })
+                            .catch(err => console.log(err))
                         }).catch((error) => {
                             // Handle Errors here.
                             const errorCode = error.code;

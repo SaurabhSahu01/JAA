@@ -46,23 +46,23 @@ export async function getUsers() {
     return await db.collection('users').get()
 }
 
-export async function register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo = null){
-    const bucket = storage.bucket();
-    const destinationPath = photo && photo.originalFilename;
+export async function register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo = null) {
+    if (photo !== null) {
+        //console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
+        const bucket = storage.bucket();
+        const destinationPath = photo.originalFilename;
+        // console.log("destinationPath = ", destinationPath)
+        destinationPath && await bucket.upload(photo.filepath, {
+            destination: destinationPath,
+            metadata: {
+                contentType: photo.mimetype
+            }
+        });
 
-    photo && await bucket.upload(photo.filepath, {
-        destination: destinationPath,
-        metadata: {
-            contentType: photo.mimetype
-        }
-    });
-
-    const downloadURL = photo && await bucket.file(destinationPath).getSignedUrl({
-        action: "read",
-        expires: '03-01-2500'
-    })
-
-    if(photo !== null){
+        const downloadURL = photo && await bucket.file(destinationPath).getSignedUrl({
+            action: "read",
+            expires: '03-01-2500'
+        })
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
             firstName: firstName,
@@ -76,9 +76,9 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
             joiningYear: joiningYear,
             graduationYear: graduationYear,
             photo: downloadURL
-        }, {merge: true})
+        }, { merge: true })
     }
-    else{
+    else {
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
             firstName: firstName,
@@ -92,6 +92,6 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
             joiningYear: joiningYear,
             graduationYear: graduationYear,
             photo: null
-        }, {merge: true})
+        }, { merge: true })
     }
 }

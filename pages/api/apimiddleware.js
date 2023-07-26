@@ -18,8 +18,9 @@ const apimiddleware = handler => async (req, res) => {
         let result = verifyToken(tokenString[1]);
         return result
             .then(decodedtoken => {
-                console.log(decodedtoken)
-                if(Object.keys(req.body).length === 0){
+                // console.log(decodedtoken)
+                console.log(req.body)
+                if(!req.body || Object.keys(req.body).length === 0){
                     req.body = {
                         uid: decodedtoken.uid
                     }

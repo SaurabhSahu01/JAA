@@ -149,7 +149,7 @@ function Login() {
                                 },
                                 body : JSON.stringify({
                                     creationTime: new Date().toGMTString(),
-                                    signInType: "email"
+                                    signInType: "google"
                                 })
                             }).then((res) => res.json())
                             .then(response => {

@@ -21,20 +21,26 @@ export async function addUser(uid, creationTime, signInType) {
     const documentRef = db.collection('users').doc(uid);
     return documentRef.get().then(async (docSnapshot) => {
         if (!docSnapshot.exists) {
-            return await db.collection('users').doc(uid).set({
-                creationTime: creationTime,
-                signInType: signInType
-            }).then(() => {
+            try {
+                await db.collection('users').doc(uid).set({
+                    creationTime: creationTime,
+                    signInType: signInType
+                });
                 const profileCollectionRef = documentRef.collection('profile');
-                return profileCollectionRef.doc('profile').set({
-                    set : false
-                })
-            })
+                await profileCollectionRef.doc('profile').set({ set: false });
+            } catch (error) {
+                // Handle the error here and return a specific value or throw it again if needed.
+                console.error("Error while setting data:", error);
+                throw error;
+            }
         }
     }).catch((error) => {
-        return error;
+        // Handle any error that occurred before calling set()
+        console.error("Error while fetching document:", error);
+        throw error;
     });
 }
+
 
 export async function getUsers() {
     return await db.collection('users').get()

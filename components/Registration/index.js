@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { useState } from 'react'
+import cookieCutter from "cookie-cutter"
 import Input from './Input';
 import Select from './Select';
 
@@ -13,7 +14,7 @@ const userInfoField = [
             { value: "female", text: "Female" },
         ]
     },
-    { label: "Date of Birth", type: "date", id: 'bod' },
+    { label: "Date of Birth", type: "date", id: 'dob' },
     { label: "Phone No.", type: "number", id: 'number', placeholder: "Phone Number" },
     // { label: "Email", type: "email", id: 'email', placeholder: "E-mail" },
 ]
@@ -48,7 +49,7 @@ const schoolInfoField = [
         ]
     },
     {
-        label: "Joining Year", id: "joiningyear", option: [
+        label: "Joining Year", id: "joiningYear", option: [
             { value: "", text: "Year of Joining" },
             { value: "2018", text: "2018" },
             { value: "2019", text: "2019" },
@@ -60,7 +61,7 @@ const schoolInfoField = [
         ]
     },
     {
-        label: "Graduation Year", id: "graduationyear", option: [
+        label: "Graduation Year", id: "graduationYear", option: [
             { value: "", text: "Year of Graduation" },
             { value: "2023", text: "2023" },
             { value: "2024", text: "2024" },
@@ -80,12 +81,12 @@ const Registration = () => {
         lastName: "",
         number: "",
         gender: "",
-        bod: "",
+        dob: "",
         school: "",
         program: "",
         hostel: "",
-        joiningyear: "",
-        graduationyear: "",
+        joiningYear: "",
+        graduationYear: "",
     });
     const [img, setimg] = useState(null);
 
@@ -115,44 +116,44 @@ const Registration = () => {
         const formData = new FormData();
 
         if (img) {
-            formData.append('image', img);
+            formData.append('photo', img);
         }
         formData.append('firstName', state.firstName);
         formData.append('lastName', state.lastName);
         formData.append('number', state.number);
-        formData.append('bod', state.bod);
+        formData.append('dob', state.dob);
         formData.append('gender', state.gender);
         formData.append('school', state.school);
         formData.append('program', state.program);
         formData.append('hostel', state.hostel);
-        formData.append('graduationyear', state.graduationyear);
-        formData.append('joiningyear', state.joiningyear);
+        formData.append('graduationYear', state.graduationYear);
+        formData.append('joiningYear', state.joiningYear);
 
-        // await fetch('/api/createUser', {
-        //     method: "POST",
-        //     headers: {
-        //         'authorization': `Bearer ${cookieCutter.get('atkn')}`
-        //     },
-        //     body: formData
-        // }).then(res => res.json()).then(data => {
-        //     console.log(data)
-        //     setimg(null);
-        //     setvalue({
-        //         firstName: "",
-        //         lastName: "",
-        //         number: "",
-        //         gender: "",
-        //         bod: "",
-        //         school: "",
-        //         program: "",
-        //         hostel: "",
-        //         joiningyear: "",
-        //         graduationyear: "",
-        //     })
-        // }).catch(err => {
-        //     console.log(err);
-        //     setLoading(false);
-        // })
+        await fetch('/api/register', {
+            method: "POST",
+            headers: {
+                'authorization': `Bearer ${cookieCutter.get('userToken')}`
+            },
+            body: formData
+        }).then(res => res.json()).then(data => {
+            console.log(data)
+            setimg(null);
+            setvalue({
+                firstName: "",
+                lastName: "",
+                number: "",
+                gender: "",
+                dob: "",
+                school: "",
+                program: "",
+                hostel: "",
+                joiningYear: "",
+                graduationYear: "",
+            })
+        }).catch(err => {
+            console.log(err);
+            setLoading(false);
+        })
         // console.log(img);
         console.log(state)
     }

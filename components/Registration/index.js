@@ -78,9 +78,6 @@ const Registration = () => {
         }).catch(err => {
             console.log("somthing not working ", err);
         })
-
-        // console.log(img);
-        // console.log(state)
     }
 
     const fileAttached = (e) => {

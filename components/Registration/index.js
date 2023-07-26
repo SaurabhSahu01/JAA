@@ -112,22 +112,28 @@ const Registration = () => {
 
     const register = async (e) => {
         e.preventDefault();
+        console.log(state);
         // final registration
         const formData = new FormData();
-
         if (img) {
             formData.append('photo', img);
         }
-        formData.append('firstName', state.firstName);
-        formData.append('lastName', state.lastName);
-        formData.append('number', state.number);
-        formData.append('dob', state.dob);
-        formData.append('gender', state.gender);
-        formData.append('school', state.school);
-        formData.append('program', state.program);
-        formData.append('hostel', state.hostel);
-        formData.append('graduationYear', state.graduationYear);
-        formData.append('joiningYear', state.joiningYear);
+        Object.keys(state).forEach((key) => {
+            //console.log(key, state[key])
+            formData.append(key, state[key]);
+        });
+        // formData.append('firstName', state.firstName);
+        // formData.append('lastName', state.lastName);
+        // formData.append('number', state.number);
+        // formData.append('dob', state.dob);
+        // formData.append('gender', state.gender);
+        // formData.append('school', state.school);
+        // formData.append('program', state.program);
+        // formData.append('hostel', state.hostel);
+        // formData.append('graduationYear', state.graduationYear);
+        // formData.append('joiningYear', state.joiningYear);
+        // formData.append("hello", "hello");
+        console.log(formData);
 
         await fetch('/api/register', {
             method: "POST",
@@ -137,25 +143,25 @@ const Registration = () => {
             body: formData
         }).then(res => res.json()).then(data => {
             console.log(data)
-            setimg(null);
-            setvalue({
-                firstName: "",
-                lastName: "",
-                number: "",
-                gender: "",
-                dob: "",
-                school: "",
-                program: "",
-                hostel: "",
-                joiningYear: "",
-                graduationYear: "",
-            })
+            // setimg(null);
+            // setvalue({
+            //     firstName: "",
+            //     lastName: "",
+            //     number: "",
+            //     gender: "",
+            //     dob: "",
+            //     school: "",
+            //     program: "",
+            //     hostel: "",
+            //     joiningYear: "",
+            //     graduationYear: "",
+            // })
         }).catch(err => {
-            console.log(err);
-            setLoading(false);
+            console.log("somthing not working ", err);
         })
+
         // console.log(img);
-        console.log(state)
+        // console.log(state)
     }
 
     const fileAttached = (e) => {
@@ -173,21 +179,21 @@ const Registration = () => {
         return (
             <div className='flex items-center justify-center pt-10'>
                 <div className={`w-[55px] h-[55px] md:w-[65px] md:h-[65px] bg-blue-600  rounded-full flex items-center justify-center p-2`}>
-                    {firstStep && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[75%] h-[75%] text-white">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    {firstStep && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[75%] h-[75%] text-white">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                     }
                 </div>
                 <div className={`w-[15%] h-2  ${firstStep ? "bg-blue-600" : "bg-gray-100"}`}></div>
                 <div className={`w-[50px] h-[50px] md:w-[65px] md:h-[65px]  ${firstStep ? "bg-blue-600" : "bg-gray-100"} rounded-full flex items-center justify-center p-2`}>
-                    {secondStep && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[75%] h-[75%] text-white">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    {secondStep && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[75%] h-[75%] text-white">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>}
                 </div>
                 <div className={`w-[15%] h-2  ${secondStep ? "bg-blue-600" : "bg-gray-100"}`}></div>
                 <div className={`w-[50px] h-[50px] md:w-[65px] md:h-[65px]  ${secondStep ? "bg-blue-600" : "bg-gray-100"} rounded-full flex items-center justify-center p-2`}>
-                    {thirdStep && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-[75%] h-[75%] text-white">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    {thirdStep && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-[75%] h-[75%] text-white">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>}
                 </div>
             </div>
@@ -203,12 +209,12 @@ const Registration = () => {
                         {userInfoField.map((tag, index) => {
                             {/* console.log(tag); */ }
                             return (
-                                <>
+                                <div key={index}>
 
-                                    {tag.type ? <Input key={index} data={tag} state={state} onChangeHandler={onChangeHandler} /> :
-                                        <Select key={index} data={tag} state={state} onChangeHandler={onChangeHandler} />}
+                                    {tag.type ? <Input data={tag} state={state} onChangeHandler={onChangeHandler} /> :
+                                        <Select data={tag} state={state} onChangeHandler={onChangeHandler} />}
 
-                                </>
+                                </div>
                             )
                         })}
                     </div>
@@ -227,12 +233,12 @@ const Registration = () => {
                     {schoolInfoField.map((tag, index) => {
                         {/* console.log(tag); */ }
                         return (
-                            <>
+                            <div key={index}>
 
                                 {tag.type ? <Input data={tag} state={state} onChangeHandler={onChangeHandler} /> :
                                     <Select data={tag} state={state} onChangeHandler={onChangeHandler} />}
 
-                            </>
+                            </div>
                         )
                     })}
                 </div>
@@ -278,10 +284,10 @@ const Registration = () => {
 
     return (
         <div>
-        <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute w-full min-h-screen bg-cover top-0 right-0'></div>
+            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute w-full min-h-screen bg-cover top-0 right-0'></div>
             <div className='flex flex-col bg-cover bg-[#7f9ae5] bg-opacity-50 p-4 relative w-10/12 md:w-[30rem] mx-auto mt-10 shadow-lg rounded-lg'>
-                {!firstStep && <Link href="/login" className='flex items-center text-blue-600 w-fit  absolute top-2 right-[5%] md:right-[12%]'>Already a member? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                {!firstStep && <Link href="/login" className='flex items-center text-blue-600 w-fit  absolute top-2 right-[5%] md:right-[12%]'>Already a member? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                 </svg>
                 </Link>}
                 {topLine()}

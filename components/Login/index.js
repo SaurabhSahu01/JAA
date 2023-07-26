@@ -47,6 +47,29 @@ function Login() {
     const handleShowPassword = (e) => {
         setValues({ ...values, showPassword: !values.showPassword })
     }
+
+    const isprofileSet = async () => {
+        await fetch('/api/isprofileset', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'authorization': `Bearer ${cookieCutter.get('userToken')}`
+            }
+        }).then((res) => {
+            const data = res.json()
+            return data
+        }).then((res) => {
+            if(res.set){
+                router.push('/')
+            }
+            else{
+                router.push('/registration')
+            }
+        })
+        .catch((err) => {
+            console.log("error ")
+        })
+    }
     const handleLogin = async (e) => {
         e.preventDefault();
         setlogInProgress(true);
@@ -56,25 +79,25 @@ function Login() {
                 console.log("user = ", user);
                 cookieCutter.set('userToken', user.accessToken);
                 cookieCutter.set('uid', user.uid);
-                changeMaxAge('userToken', 24*3600);
-                changeMaxAge('uid', 24*3600);
+                changeMaxAge('userToken', 24 * 3600);
+                changeMaxAge('uid', 24 * 3600);
                 setlogInProgress(false);
-                fetch('/api/adduser',{
+                fetch('/api/adduser', {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json; charset=UTF-8',
                         'authorization': `Bearer ${cookieCutter.get('userToken')}`
                     },
-                    body : JSON.stringify({
+                    body: JSON.stringify({
                         creationTime: new Date().toGMTString(),
                         signInType: "email"
                     })
                 }).then((res) => res.json())
-                .then(response => {
-                    console.log(response);
-                    router.push("/");
-                })
-                .catch(err => console.log(err))
+                    .then(response => {
+                        console.log(response);
+                        isprofileSet();
+                    })
+                    .catch(err => console.log(err))
             })
             .catch((err) => {
                 setlogInProgress(false);
@@ -141,22 +164,22 @@ function Login() {
                             cookieCutter.set('uid', user.uid);
                             changeMaxAge('userToken', 24 * 3600);
                             changeMaxAge('uid', 24 * 3600);
-                            fetch('/api/adduser',{
+                            fetch('/api/adduser', {
                                 method: "POST",
                                 headers: {
                                     'Content-type': 'application/json; charset=UTF-8',
                                     'authorization': `Bearer ${cookieCutter.get('userToken')}`
                                 },
-                                body : JSON.stringify({
+                                body: JSON.stringify({
                                     creationTime: new Date().toGMTString(),
                                     signInType: "google"
                                 })
                             }).then((res) => res.json())
-                            .then(response => {
-                                console.log(response);
-                                router.push("/");
-                            })
-                            .catch(err => console.log(err))
+                                .then(response => {
+                                    console.log(response);
+                                    isprofileSet();
+                                })
+                                .catch(err => console.log(err))
                         }).catch((error) => {
                             // Handle Errors here.
                             const errorCode = error.code;

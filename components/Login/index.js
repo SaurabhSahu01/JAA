@@ -79,8 +79,10 @@ function Login() {
                 console.log("user = ", user);
                 cookieCutter.set('userToken', user.accessToken);
                 cookieCutter.set('uid', user.uid);
-                changeMaxAge('userToken', 24 * 3600);
-                changeMaxAge('uid', 24 * 3600);
+                cookieCutter.set('refreshToken', user.refreshToken);
+                changeMaxAge('userToken', 30 * 24 * 3600);
+                changeMaxAge('uid', 30 * 24 * 3600);
+                changeMaxAge('refreshToken', 30 * 24 * 3600);
                 setlogInProgress(false);
                 fetch('/api/adduser', {
                     method: "POST",
@@ -95,7 +97,7 @@ function Login() {
                 }).then((res) => res.json())
                     .then(response => {
                         console.log(response);
-                        isprofileSet();
+                        router.push("/");
                     })
                     .catch(err => console.log(err))
             })
@@ -162,8 +164,10 @@ function Login() {
                             // setting cookies 
                             cookieCutter.set('userToken', user.accessToken);
                             cookieCutter.set('uid', user.uid);
-                            changeMaxAge('userToken', 24 * 3600);
-                            changeMaxAge('uid', 24 * 3600);
+                            cookieCutter.set('refreshToken', user.refreshToken);
+                            changeMaxAge('userToken', 30 * 24 * 3600);
+                            changeMaxAge('uid', 30 * 24 * 3600);
+                            changeMaxAge('refreshToken', 30 * 24 * 3600);
                             fetch('/api/adduser', {
                                 method: "POST",
                                 headers: {
@@ -177,7 +181,7 @@ function Login() {
                             }).then((res) => res.json())
                                 .then(response => {
                                     console.log(response);
-                                    isprofileSet();
+                                    router.push("/");
                                 })
                                 .catch(err => console.log(err))
                         }).catch((error) => {

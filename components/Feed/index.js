@@ -1,6 +1,7 @@
 import React from 'react'
-import Layout from '../Layout'
 import cookieCutter from "cookie-cutter"
+import JNUNews from './JNUNews'
+
 function Feed() {
   React.useEffect(() => {
     fetch('/api/isprofileset', {
@@ -11,8 +12,10 @@ function Feed() {
     }).then(res => res.json()).then(res => console.log(res)).catch(e => console.log(e))
   }, [])
   return (
-        <div>this is feed</div>
-  )
+        <>
+          <JNUNews/>
+        </>
+  ) 
 }
 
 export default Feed

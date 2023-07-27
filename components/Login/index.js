@@ -56,25 +56,27 @@ function Login() {
                 console.log("user = ", user);
                 cookieCutter.set('userToken', user.accessToken);
                 cookieCutter.set('uid', user.uid);
-                changeMaxAge('userToken', 24*3600);
-                changeMaxAge('uid', 24*3600);
+                cookieCutter.set('refreshToken', user.refreshToken);
+                changeMaxAge('userToken', 3600);
+                changeMaxAge('uid', 24 * 3600);
+                changeMaxAge('refreshToken', 24 * 3600);
                 setlogInProgress(false);
-                fetch('/api/adduser',{
+                fetch('/api/adduser', {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json; charset=UTF-8',
                         'authorization': `Bearer ${cookieCutter.get('userToken')}`
                     },
-                    body : JSON.stringify({
+                    body: JSON.stringify({
                         creationTime: new Date().toGMTString(),
                         signInType: "email"
                     })
                 }).then((res) => res.json())
-                .then(response => {
-                    console.log(response);
-                    router.push("/");
-                })
-                .catch(err => console.log(err))
+                    .then(response => {
+                        console.log(response);
+                        router.push("/");
+                    })
+                    .catch(err => console.log(err))
             })
             .catch((err) => {
                 setlogInProgress(false);
@@ -139,24 +141,26 @@ function Login() {
                             // setting cookies 
                             cookieCutter.set('userToken', user.accessToken);
                             cookieCutter.set('uid', user.uid);
-                            changeMaxAge('userToken', 24 * 3600);
+                            cookieCutter.set('refreshToken', user.refreshToken);
+                            changeMaxAge('userToken', 3600);
                             changeMaxAge('uid', 24 * 3600);
-                            fetch('/api/adduser',{
+                            changeMaxAge('refreshToken', 24 * 3600);
+                            fetch('/api/adduser', {
                                 method: "POST",
                                 headers: {
                                     'Content-type': 'application/json; charset=UTF-8',
                                     'authorization': `Bearer ${cookieCutter.get('userToken')}`
                                 },
-                                body : JSON.stringify({
+                                body: JSON.stringify({
                                     creationTime: new Date().toGMTString(),
                                     signInType: "google"
                                 })
                             }).then((res) => res.json())
-                            .then(response => {
-                                console.log(response);
-                                router.push("/");
-                            })
-                            .catch(err => console.log(err))
+                                .then(response => {
+                                    console.log(response);
+                                    router.push("/");
+                                })
+                                .catch(err => console.log(err))
                         }).catch((error) => {
                             // Handle Errors here.
                             const errorCode = error.code;

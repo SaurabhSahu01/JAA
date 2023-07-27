@@ -151,6 +151,7 @@ function Header() {
                                     <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => {
                                         deleteCookie('userToken');
                                         deleteCookie('uid');
+                                        deleteCookie('refreshToken');
                                         router.push('/')
                                         setTimeout(() => {
                                             window.location.reload();

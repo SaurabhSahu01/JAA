@@ -71,13 +71,13 @@ const schoolInfoField = [
 
 
 const Profile = () => {
-    const [isdesable, setdesable] = useState(true);
+    const [isdisable, setDisable] = useState(true);
     const [img, setimg] = useState(null);
     const [state, setstate] = useState({
         firstName: "",
         lastName: "",
         number: "",
-        email:"",
+        email: "",
         gender: "",
         bod: "",
         school: "",
@@ -93,7 +93,7 @@ const Profile = () => {
             firstName: "Shubham",
             lastName: "tanwar",
             number: "1234567890",
-            email:"shubham151@gmail.com",
+            email: "shubham151@gmail.com",
             gender: "male",
             bod: "2023-07-14",
             school: "soe",
@@ -123,7 +123,7 @@ const Profile = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(state);
-        setdesable(true);
+        setDisable(true);
     }
 
     return (
@@ -132,7 +132,7 @@ const Profile = () => {
                 <div className=" w-[100px] h-[100px]">
                     {img === null ? <img src="/login/lable.png" className='w-full h-full' alt="" /> : <img src={img} className='w-full h-full rounded-full' alt="" />}
                 </div>
-                {!isdesable && <div className=" shrink-0 mt-6">
+                {!isdisable && <div className=" shrink-0 mt-6">
                     <input
                         type="file"
                         id="fileUploader"
@@ -145,55 +145,68 @@ const Profile = () => {
                     </label>
                 </div>}
             </div>
-
             <div className='flex flex-col items-center mt-4 p-1 md:p-3'>
-                <div className=' m-2 text-lg font-bold'>Welcome, User</div>
-                <table className='flex flex-col w-[90%] md:w-[26rem]  bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
-                    <h1 className='text-center font-bold text-xl p-2'>User Info</h1>
-                    <tbody className=''>
-
-                        {useInfoField.map((tag, index) => {
-                            {/* console.log(tag); */}
-                            return (
-                                <tr className=' w-full' key={index}>
-                                    <td className=' w-[50%] text-right'>
-                                        <label htmlFor={tag?.id} className=' min-w-fit'>{tag.label}:</label>
-                                    </td>
-                                    <td className='text-left'>
-                                        {tag.type ? <Input data={tag} state={state} isdesable={isdesable} onChangeHandler={onChangeHandler} /> :
-                                            <Select data={tag} state={state} isdesable={isdesable} onChangeHandler={onChangeHandler} />}
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                <div className='m-2 text-lg font-bold'>Welcome, User</div>
+                <table className='w-full md:w-[26rem] bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
+                    <thead>
+                        <tr>
+                            <th colSpan="2" className="text-center font-bold text-xl p-2">
+                                User Info
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {useInfoField.map((tag, index) => (
+                            <tr className='w-full' key={index}>
+                                <td className='w-[50%] text-right'>
+                                    <label htmlFor={tag?.id} className='min-w-fit'>
+                                        {tag.label}:
+                                    </label>
+                                </td>
+                                <td className='text-left'>
+                                    {tag.type ? (
+                                        <Input data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
+                                    ) : (
+                                        <Select data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
 
             <div className='flex flex-col items-center p-1 md:p-3 '>
-                <table className='flex flex-col w-[90%] md:w-[26rem]  bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
-                    <h1 className='text-center font-bold text-xl p-2'>school Info</h1>
-                    <tbody className='w-full'>
-
-                        {schoolInfoField.map((tag, index) => {
-                            {/* console.log(tag); */}
-                            return (
-                                <tr className=' w-full' key={index}>
-                                    <td className=' w-[54%] text-right'>
-                                        <label htmlFor={tag?.id} className=' min-w-fit'>{tag.label}:</label>
-                                    </td>
-                                    <td className='text-left'>
-                                        {tag.type ? <Input data={tag} state={state} isdesable={isdesable} onChangeHandler={onChangeHandler} /> :
-                                            <Select data={tag} state={state} isdesable={isdesable} onChangeHandler={onChangeHandler} />}
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                <table className='w-full md:w-[26rem] bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
+                    <thead>
+                        <tr>
+                            <th colSpan="2" className="text-center font-bold text-xl p-2">
+                                School Info
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {schoolInfoField.map((tag, index) => (
+                            <tr className='w-full' key={index}>
+                                <td className='w-[54%] text-right'>
+                                    <label htmlFor={tag?.id} className='min-w-fit'>
+                                        {tag.label}:
+                                    </label>
+                                </td>
+                                <td className='text-left'>
+                                    {tag.type ? (
+                                        <Input data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
+                                    ) : (
+                                        <Select data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
             <div className=' absolute bg-white rounded-md top-2 right-2 w-fit cursor-pointer'>
-                {isdesable ? <svg onClick={() => setdesable(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                {isdisable ? <svg onClick={() => setDisable(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                 </svg> :
                     <button className=' w-fit' type='submit'>

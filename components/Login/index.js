@@ -53,22 +53,23 @@ function Login() {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
-                'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+
             }
         }).then((res) => {
             const data = res.json()
             return data
         }).then((res) => {
-            if(res.set){
+            if (res.set) {
                 router.push('/')
             }
-            else{
+            else {
                 router.push('/registration')
             }
         })
-        .catch((err) => {
-            console.log("error ")
-        })
+            .catch((err) => {
+                console.log("error ")
+            })
     }
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -88,7 +89,7 @@ function Login() {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json; charset=UTF-8',
-                        'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
                     },
                     body: JSON.stringify({
                         creationTime: new Date().toGMTString(),
@@ -97,7 +98,8 @@ function Login() {
                 }).then((res) => res.json())
                     .then(response => {
                         console.log(response);
-                        router.push("/");
+                        // router.push("/");
+                        isprofileSet();
                     })
                     .catch(err => console.log(err))
             })
@@ -172,7 +174,8 @@ function Login() {
                                 method: "POST",
                                 headers: {
                                     'Content-type': 'application/json; charset=UTF-8',
-                                    'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+
                                 },
                                 body: JSON.stringify({
                                     creationTime: new Date().toGMTString(),

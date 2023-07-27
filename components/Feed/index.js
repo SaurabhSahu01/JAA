@@ -1,17 +1,32 @@
 import React from 'react'
-import Layout from '../Layout'
-import cookieCutter from "cookie-cutter"
+import JNUNews from './JNUNews'
+import { newsAPI } from '@/firebase.config';
+
 function Feed() {
+  const [mount, setMount] = React.useState(false);
   React.useEffect(() => {
-    fetch('/api/isprofileset', {
-      headers: {
-        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
-        'content-type': 'application/json'
-      }
-    }).then(res => res.json()).then(res => console.log(res)).catch(e => console.log(e))
+    if (!localStorage.getItem('JNUNews')) {
+      console.log("if")
+      // fetch from the API and store the data in the localStorage
+      fetch(`https://newsapi.org/v2/everything?q=JNU&from=2023-06-27&sortBy=publishedAt&apiKey=${newsAPI}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          localStorage.setItem('JNUNews', JSON.stringify(data.articles));
+          setMount(true);
+        })
+        .catch(err => {
+          console.log("error fetching the newsAPI, ", err);
+        })
+    }
+    else{
+      setMount(true);
+    }
   }, [])
   return (
-        <div>this is feed</div>
+    mount && <>
+      <JNUNews />
+    </>
   )
 }
 

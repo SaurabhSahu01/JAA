@@ -11,6 +11,7 @@ function Feed() {
       fetch(`https://newsapi.org/v2/everything?q=JNU&from=2023-06-27&sortBy=publishedAt&apiKey=${newsAPI}`)
         .then(res => res.json())
         .then(data => {
+          console.log(data);
           localStorage.setItem('JNUNews', JSON.stringify(data.articles));
           setMount(true);
         })

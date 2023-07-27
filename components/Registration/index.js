@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { useState } from 'react'
 import cookieCutter from "cookie-cutter"
 import { useRouter } from 'next/router';
@@ -52,7 +51,7 @@ const Registration = () => {
         await fetch('/api/register', {
             method: "POST",
             headers: {
-                'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
             },
             body: formData
         }).then(res => res.json()).then(data => {

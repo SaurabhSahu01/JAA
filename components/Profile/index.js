@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import cookieCutter from "cookie-cutter";
 import Input from './Input';
 import Select from './Select';
+import Link from 'next/link';
 
 const useInfoField = [
     { label: "Name", type: "text", id: 'firstName', placeholder: "FirstName" },
@@ -11,9 +13,9 @@ const useInfoField = [
             { value: "female", text: "Female" },
         ]
     },
-    { label: "Date of Birth", type: "date", id: 'bod' },
+    { label: "Date of Birth", type: "date", id: 'dob' },
     { label: "Phone No.", type: "number", id: 'number', placeholder: "Phone Number" },
-    { label: "Email", type: "email", id: 'email', placeholder: "E-mail" },
+    // { label: "Email", type: "email", id: 'email', placeholder: "E-mail" },
 ]
 
 const schoolInfoField = [
@@ -46,7 +48,7 @@ const schoolInfoField = [
         ]
     },
     {
-        label: "Joining Year", id: "joiningyear", option: [
+        label: "Joining Year", id: "joiningYear", option: [
             { value: "", text: "Year of Joining" },
             { value: "2018", text: "2018" },
             { value: "2019", text: "2019" },
@@ -58,7 +60,7 @@ const schoolInfoField = [
         ]
     },
     {
-        label: "Graduation Year", id: "graduationyear", option: [
+        label: "Graduation Year", id: "graduationYear", option: [
             { value: "", text: "Year of Graduation" },
             { value: "2023", text: "2023" },
             { value: "2024", text: "2024" },
@@ -72,6 +74,7 @@ const schoolInfoField = [
 
 const Profile = () => {
     const [isdisable, setDisable] = useState(true);
+    const [isProfile, setProfile] = useState(true);
     const [img, setimg] = useState(null);
     const [state, setstate] = useState({
         firstName: "",
@@ -79,38 +82,48 @@ const Profile = () => {
         number: "",
         email: "",
         gender: "",
-        bod: "",
+        dob: "",
         school: "",
         program: "",
         hostel: "",
-        joiningyear: "",
-        graduationyear: "",
+        joiningYear: "",
+        graduationYear: "",
     });
 
     // change state with student details...
     useEffect(() => {
-        setstate({
-            firstName: "Shubham",
-            lastName: "tanwar",
-            number: "1234567890",
-            email: "shubham151@gmail.com",
-            gender: "male",
-            bod: "2023-07-14",
-            school: "soe",
-            program: "btech",
-            hostel: "mahimandvi",
-            joiningyear: "2020",
-            graduationyear: "2025",
-        })
-        // img ...........
 
+        const getProfile = async () => {
+            await fetch('/api/getprofile', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+                }
+            }).then((res) => {
+                return res.json()
+            }).then((res) => {
+                // console.log(res.data);
+                if (res.data.set) {
+                    const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = res.data;
+                    setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
+                    setimg(res.data.photo)
+                }
+                else  setProfile(false);
+            }).catch((err) => console.log(err));
+        }
+        getProfile();
     }, []);
 
-    const fileAttached = (event) => {
-        if (event.target.files && event.target.files[0]) {
-            setimg(URL.createObjectURL(event.target.files[0]));
+    const fileAttached = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setimg(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
-        console.log(img);
     }
 
     const onChangeHandler = (e) => {
@@ -120,14 +133,32 @@ const Profile = () => {
     }
 
     // after updating
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(state);
+        // console.log(state);
+        const formData = new FormData();
+        if (img) {
+            formData.append('photo', img);
+        }
+        Object.keys(state).forEach((key) => {
+            //console.log(key, state[key])
+            formData.append(key, state[key]);
+        });
+
+        await fetch('/api/register', {
+            method: "POST",
+            headers: {
+                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+            },
+            body: formData
+        }).then((res)=>{return res.json()}).then((res)=>{
+            console.log(res)
+        }).catch((err)=>console.log(err));
         setDisable(true);
     }
 
     return (
-        <form onSubmit={handleSubmit} style={{ backgroundImage: "url(/gallery/jnu/1636141627078.jpg)" }} className=' relative m-6 bg-cover mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
+       isProfile ? <form onSubmit={handleSubmit} style={{ backgroundImage: "url(/gallery/jnu/1636141627078.jpg)" }} className=' relative m-6 bg-cover mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
             <div className='flex flex-col items-center relative'>
                 <div className=" w-[100px] h-[100px]">
                     {img === null ? <img src="/login/lable.png" className='w-full h-full' alt="" /> : <img src={img} className='w-full h-full rounded-full' alt="" />}
@@ -145,7 +176,7 @@ const Profile = () => {
                     </label>
                 </div>}
             </div>
-            <div className='flex flex-col items-center mt-4 p-1 md:p-3'>
+            <div className='flex flex-col items-center mt-4 p-1 md:p-3 '>
                 <div className='m-2 text-lg font-bold'>Welcome, User</div>
                 <table className='w-full md:w-[26rem] bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
                     <thead>
@@ -216,7 +247,9 @@ const Profile = () => {
                     </button>
                 }
             </div>
-        </form>
+        </form>:<div className=' relative m-6 mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
+            <Link href='/registration'>Please Complete Your Detailes</Link>
+        </div>
     )
 }
 

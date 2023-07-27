@@ -184,7 +184,7 @@ function Login() {
                             }).then((res) => res.json())
                                 .then(response => {
                                     console.log(response);
-                                    router.push("/");
+                                    isprofileSet();
                                 })
                                 .catch(err => console.log(err))
                         }).catch((error) => {

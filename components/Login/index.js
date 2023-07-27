@@ -57,9 +57,9 @@ function Login() {
                 cookieCutter.set('userToken', user.accessToken);
                 cookieCutter.set('uid', user.uid);
                 cookieCutter.set('refreshToken', user.refreshToken);
-                changeMaxAge('userToken', 3600);
-                changeMaxAge('uid', 24 * 3600);
-                changeMaxAge('refreshToken', 24 * 3600);
+                changeMaxAge('userToken', 30 * 24 * 3600);
+                changeMaxAge('uid', 30 * 24 * 3600);
+                changeMaxAge('refreshToken', 30 * 24 * 3600);
                 setlogInProgress(false);
                 fetch('/api/adduser', {
                     method: "POST",
@@ -142,9 +142,9 @@ function Login() {
                             cookieCutter.set('userToken', user.accessToken);
                             cookieCutter.set('uid', user.uid);
                             cookieCutter.set('refreshToken', user.refreshToken);
-                            changeMaxAge('userToken', 3600);
-                            changeMaxAge('uid', 24 * 3600);
-                            changeMaxAge('refreshToken', 24 * 3600);
+                            changeMaxAge('userToken', 30 * 24 * 3600);
+                            changeMaxAge('uid', 30 * 24 * 3600);
+                            changeMaxAge('refreshToken', 30 * 24 * 3600);
                             fetch('/api/adduser', {
                                 method: "POST",
                                 headers: {

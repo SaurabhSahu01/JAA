@@ -47,6 +47,30 @@ function Login() {
     const handleShowPassword = (e) => {
         setValues({ ...values, showPassword: !values.showPassword })
     }
+
+    const isprofileSet = async () => {
+        await fetch('/api/isprofileset', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+
+            }
+        }).then((res) => {
+            const data = res.json()
+            return data
+        }).then((res) => {
+            if (res.set) {
+                router.push('/')
+            }
+            else {
+                router.push('/registration')
+            }
+        })
+            .catch((err) => {
+                console.log("error ")
+            })
+    }
     const handleLogin = async (e) => {
         e.preventDefault();
         setlogInProgress(true);
@@ -65,7 +89,7 @@ function Login() {
                     method: "POST",
                     headers: {
                         'Content-type': 'application/json; charset=UTF-8',
-                        'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
                     },
                     body: JSON.stringify({
                         creationTime: new Date().toGMTString(),
@@ -74,7 +98,8 @@ function Login() {
                 }).then((res) => res.json())
                     .then(response => {
                         console.log(response);
-                        router.push("/");
+                        // router.push("/");
+                        isprofileSet();
                     })
                     .catch(err => console.log(err))
             })
@@ -149,7 +174,8 @@ function Login() {
                                 method: "POST",
                                 headers: {
                                     'Content-type': 'application/json; charset=UTF-8',
-                                    'authorization': `Bearer ${cookieCutter.get('userToken')}`
+                                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+
                                 },
                                 body: JSON.stringify({
                                     creationTime: new Date().toGMTString(),
@@ -158,7 +184,7 @@ function Login() {
                             }).then((res) => res.json())
                                 .then(response => {
                                     console.log(response);
-                                    router.push("/");
+                                    isprofileSet();
                                 })
                                 .catch(err => console.log(err))
                         }).catch((error) => {

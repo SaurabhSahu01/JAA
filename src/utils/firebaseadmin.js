@@ -50,16 +50,16 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
     if (photo !== null) {
         //console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
         const bucket = storage.bucket();
-        const destinationPath = photo.originalFilename;
-        // console.log("destinationPath = ", destinationPath)
-        destinationPath && await bucket.upload(photo.filepath, {
+        const destinationPath = photo[0].originalFilename;
+        console.log("destinationPath = ", destinationPath)
+        destinationPath && await bucket.upload(photo[0].filepath, {
             destination: destinationPath,
             metadata: {
-                contentType: photo.mimetype
+                contentType: photo[0].mimetype
             }
         });
 
-        const downloadURL = photo && await bucket.file(destinationPath).getSignedUrl({
+        const downloadURL = destinationPath && await bucket.file(destinationPath).getSignedUrl({
             action: "read",
             expires: '03-01-2500'
         })

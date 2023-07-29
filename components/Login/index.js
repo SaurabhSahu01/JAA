@@ -49,27 +49,34 @@ function Login() {
     }
 
     const isprofileSet = async () => {
-        await fetch('/api/isprofileset', {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+        // check for the cookies if the profile is set or not, then make the api call
+        if (cookieCutter.get('profileSet')) {
+            router.push('/');
+        }
+        else {
+            await fetch('/api/isprofileset', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
 
-            }
-        }).then((res) => {
-            const data = res.json()
-            return data
-        }).then((res) => {
-            if (res.set) {
-                router.push('/')
-            }
-            else {
-                router.push('/registration')
-            }
-        })
-            .catch((err) => {
-                console.log("error ")
+                }
+            }).then((res) => {
+                const data = res.json()
+                return data
+            }).then((res) => {
+                if (res.set) {
+                    cookieCutter.set('profileSet', true);
+                    router.push('/')
+                }
+                else {
+                    router.push('/registration')
+                }
             })
+                .catch((err) => {
+                    console.log("error ")
+                })
+        }
     }
     const handleLogin = async (e) => {
         e.preventDefault();

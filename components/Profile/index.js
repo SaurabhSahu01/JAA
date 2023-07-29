@@ -94,6 +94,7 @@ const Profile = () => {
     useEffect(() => {
 
         const getProfile = async () => {
+            // if the profile is set (cookie - profileSet), then store the profile info in the localStorage and avoid unnecessary network calls
             await fetch('/api/getprofile', {
                 method: 'GET',
                 headers: {

@@ -17,7 +17,7 @@ export default async function middleware(req) {
     if(userToken && refreshToken && (url.includes('/login') || url.includes('/signup'))){
         return NextResponse.redirect(`${domain}/`);
     }
-    if(!profileSet){
+    if(userToken && profileSet === false){
         return NextResponse.redirect(`${domain}/registration`);
     }
     if(!atkn && (url.includes('/adminpanel'))){

@@ -17,16 +17,39 @@ function Header() {
     const router = useRouter();
     const [userDropdown, setUserDropdown] = React.useState(false);
     const [userToken, setUserToken] = React.useState(false);
+    const [userPic, setUserPic] = React.useState(null);
 
     React.useEffect(() => {
-        if(cookieCutter.get('userToken')){
+        if (cookieCutter.get('userToken')) {
             setUserToken(true);
         }
-        else{
+        else {
             setUserToken(false);
         }
     }, [])
-    
+
+    React.useEffect(() => {
+        if (cookieCutter.get('profileSet') && !localStorage.getItem('profile')) {
+            fetch('/api/getprofile', {
+                method: "GET",
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    //console.log(data.data);
+                    localStorage.setItem('profile', JSON.stringify(data.data))
+                })
+                .catch(err => console.log("some error in header, ", err))
+        }
+        if (localStorage.getItem('profile')) {
+            const profilepic = JSON.parse(localStorage.getItem('profile')).photo;
+            setUserPic(profilepic);
+        }
+    }, [])
+
     return (
         <>
             <div className='flex justify-between items-center bg-[#f2f4f6] sticky top-0 py-2 md:px-5 xs:px-3 z-10'>
@@ -133,8 +156,8 @@ function Header() {
                 </ul>
                 <div>
                     {
-                            userToken ?
-                            <UserCircleIcon className='h-[3rem] w-[3rem] text-primarycolor cursor-pointer' onClick={() => setUserDropdown(userDropdown => !userDropdown)} /> :
+                        userToken ?
+                            (userPic !== null) ? <img src={`${userPic}`} alt="userpic" className='w-[3rem] h-[3rem] rounded-full cursor-pointer' onClick={() => setUserDropdown(userDropdown => !userDropdown)}/> : <UserCircleIcon className='h-[3rem] w-[3rem] text-primarycolor cursor-pointer' onClick={() => setUserDropdown(userDropdown => !userDropdown)} /> :
                             <Link href="/login">
                                 <div className='bg-primarycolor text-white rounded-sm py-1 px-3'>Login</div>
                             </Link>
@@ -143,7 +166,7 @@ function Header() {
                         userDropdown ?
                             <ul className='absolute sm:top-[3.8rem] md:right-[2rem] xs:top-[3.5rem] xs:right-[0.5rem] w-[6rem] h-fit flex flex-col justify-center items-center gap-1 p-2 bg-slate-100  text-black select-none shadow-lg'>
                                 <li>
-                                    <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => { 
+                                    <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => {
                                         router.push('/profile')
                                     }}><UserIcon className='h-[1rem] w-[1rem]' />Profile</span>
                                 </li>

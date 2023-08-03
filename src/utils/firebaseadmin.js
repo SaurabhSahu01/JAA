@@ -47,6 +47,7 @@ export async function getUsers() {
 }
 
 export async function register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo = null) {
+    console.log(photo);
     if(photo !== null && typeof(photo) === 'string'){
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,

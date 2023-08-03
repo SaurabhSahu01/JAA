@@ -27,6 +27,7 @@ const Registration = () => {
         graduationYear: "",
     });
     const [img, setimg] = useState(null);
+    const [selectImage, setSelectImage] = useState(null);
 
     const onChangeHandler = (e) => {
         let value = e.target.value;
@@ -45,7 +46,7 @@ const Registration = () => {
         // final registration
         const formData = new FormData();
         if (img) {
-            formData.append('photo', img);
+            formData.append('photo', selectImage);
         }
         Object.keys(state).forEach((key) => {
             //console.log(key, state[key])
@@ -86,6 +87,7 @@ const Registration = () => {
 
     const fileAttached = (e) => {
         const file = e.target.files[0];
+        setSelectImage(file);
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {

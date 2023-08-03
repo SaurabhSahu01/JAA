@@ -14,7 +14,9 @@ const ThirdStepRegistration = ({register, fileAttached, img, setSecondStep, }) =
                         id="fileUploader"
                         className=' opacity-0 absolute top-10 right-0 w-10'
                         accept="image/jpeg, image/png, image/jpg"
-                        onChange={fileAttached}
+                        onChange={(e) => {
+                            fileAttached(e)
+                        }}
                     />
                     <label htmlFor="fileUploader" className=' p-2 bg-blue-500 text-slate-200 rounded-lg  cursor-pointer'>
                         {img ? 'Change Photo' : 'Upload Photo'}

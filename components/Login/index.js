@@ -144,7 +144,7 @@ function Login() {
 
                     {mailerr ? (<span className="text-red-500">Invalid email!</span>) : (<></>)}
                     {loginerr ? (<span className="text-red-500">Incorrect email or password!</span>) : (<></>)}
-                    {logInProgress ? (<div><Loader color="#1B2D56" loading={logInProgress} /></div>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105" onClick={handleLogin}>
+                    {logInProgress ? (<div><Loader color="#1B2D56" loading={logInProgress} size={20}/></div>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105" onClick={handleLogin}>
                         Sign In
                     </button>) : (<button className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor cursor-not-allowed" disabled>
                         Sign In

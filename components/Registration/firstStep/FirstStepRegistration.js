@@ -3,7 +3,7 @@ import Input from '../tags/Input'
 import Select from '../tags/Select'
 import { userInfoField } from './userInfoField'
 
-const FirstStepRegistration = ({state, setFirstStep, onChangeHandler}) => {
+const FirstStepRegistration = ({ state, setFirstStep, onChangeHandler }) => {
 
     const firstStepDone = (e) => {
         e.preventDefault();
@@ -28,7 +28,7 @@ const FirstStepRegistration = ({state, setFirstStep, onChangeHandler}) => {
                         )
                     })}
                 </div>
-                <button type='submit' className=' text-white bg-[#1B2D56] text-lg font-medium p-2 rounded-lg m-5 px-10'>Next</button>
+                <button type='submit' className=' text-white bg-[#1B2D56] text-lg font-medium p-2 rounded-sm m-5 px-10'>Next</button>
             </form>
 
         </div>

@@ -7,8 +7,8 @@ const Input = ({data, state, isdesable, onChangeHandler}) => {
             id={data.id}
             value={state[data.id]}
             placeholder={data.placeholder}
-            className={`w-full h-14 bg-gray-200 rounded-xl outline-none border-none px-5 text-gray-400"}  `}
-            autoComplete="off"
+            className={`text-gray-800  rounded-sm  bg-gray-200 block w-full px-5 py-2  placeholder-gray-400 outline-none border-none shadow-xl`}
+            autoComplete='on'
             required
             onChange={onChangeHandler} 
             disabled={isdesable}

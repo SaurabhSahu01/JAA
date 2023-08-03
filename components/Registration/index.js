@@ -5,6 +5,7 @@ import ProgressLine from './progressLine/ProgressLine';
 import FirstStepRegistration from './firstStep/FirstStepRegistration';
 import SecondStepRegistration from './secondStep.js/SecondStepRegistration';
 import ThirdStepRegistration from './thirdStep/ThirdStepRegistration';
+import Loader from '../common/Loader';
 
 const Registration = () => {
     const router = useRouter();
@@ -12,6 +13,7 @@ const Registration = () => {
     const [secondStep, setSecondStep] = useState(false);
     const [thirdStep, setThirdStep] = useState(false);
     const [registered, setRegistered] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [state, setvalue] = React.useState({
         firstName: "",
         lastName: "",
@@ -37,7 +39,9 @@ const Registration = () => {
 
     const register = async (e) => {
         e.preventDefault();
-        console.log(state);
+        setRegistered(false);
+        setLoading(true);
+        //console.log(state);
         // final registration
         const formData = new FormData();
         if (img) {
@@ -55,7 +59,7 @@ const Registration = () => {
             },
             body: formData
         }).then(res => res.json()).then(data => {
-            console.log(data)
+            //console.log(data)
             setimg(null);
             setvalue({
                 firstName: "",
@@ -70,10 +74,11 @@ const Registration = () => {
                 graduationYear: "",
             })
             setRegistered(true);
+            setLoading(false);
             setTimeout(() => {
                 setRegistered(false);
                 router.push("/")
-            }, 3000)
+            }, 200)
         }).catch(err => {
             console.log("somthing not working ", err);
         })
@@ -92,16 +97,23 @@ const Registration = () => {
 
     return (
         <div>
+            {
+                loading ? <div className='h-screen w-full absolute top-0 right-0 z-[200] backdrop-blur-sm'>
+                    <Loader color="#1B2D56" loading={loading} size={70}/>
+                </div> : <></>
+            }
             {registered ? <div className='fixed top-0 right-2 text-lg font-medium text-green-500 p-2 shadow-xl rounded-md z-50'>
                 Registered all your details successfully
             </div> : <></>}
             <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute w-full min-h-screen bg-cover top-0 right-0'></div>
-            <div className='flex flex-col bg-cover bg-[#7f9ae5] bg-opacity-50 p-4 relative w-10/12 md:w-[30rem] mx-auto mt-10 shadow-lg rounded-lg'>
-                <ProgressLine firstStep={firstStep} secondStep={secondStep} thirdStep={thirdStep}/>
-                <div className='w-[95%] m-4 mt-10'>
-                    {!firstStep && <FirstStepRegistration state={state} setFirstStep={setFirstStep} onChangeHandler={onChangeHandler}/>}
-                    {firstStep && !secondStep && <SecondStepRegistration state={state} setSecondStep={setSecondStep} setFirstStep={setFirstStep} onChangeHandler={onChangeHandler}/>}
-                    {secondStep && <ThirdStepRegistration register={register} img={img} setSecondStep={setSecondStep} fileAttached={fileAttached} />}
+            <div className='w-full h-screen flex justify-center items-center'>
+                <div className='flex flex-col justify-around bg-cover bg-white/10 backdrop-blur-md w-[30rem] sm:h-[35rem] md:h-[30rem] py-3'>
+                    <ProgressLine firstStep={firstStep} secondStep={secondStep} thirdStep={thirdStep} />
+                    <div className='w-[95%] m-4 mt-10'>
+                        {!firstStep && <FirstStepRegistration state={state} setFirstStep={setFirstStep} onChangeHandler={onChangeHandler} />}
+                        {firstStep && !secondStep && <SecondStepRegistration state={state} setSecondStep={setSecondStep} setFirstStep={setFirstStep} onChangeHandler={onChangeHandler} />}
+                        {secondStep && <ThirdStepRegistration register={register} img={img} setSecondStep={setSecondStep} fileAttached={fileAttached} />}
+                    </div>
                 </div>
             </div>
         </div>

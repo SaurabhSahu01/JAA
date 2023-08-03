@@ -27,10 +27,10 @@ const SecondStepRegistration = ({state, setSecondStep, setFirstStep, onChangeHan
                 })}
             </div>
             <div className=' flex gap-3'>
-                <button className=' text-white bg-[#1B2D56] text-lg font-medium p-2 rounded-lg m-5 px-10' onClick={() => {
+                <button className='text-white bg-[#1B2D56] text-lg font-medium p-2 rounded-sm m-5 px-10' onClick={() => {
                     setFirstStep(false);
                 }}>Back</button>
-                <button type='submit' className=' text-white bg-[#1B2D56] text-lg font-medium p-2 rounded-lg m-5 px-10'>Next</button>
+                <button type='submit' className=' text-white bg-[#1B2D56] text-lg font-medium p-2 rounded-sm m-5 px-10'>Next</button>
             </div>
         </form>
     )

@@ -47,8 +47,24 @@ export async function getUsers() {
 }
 
 export async function register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo = null) {
-    if (photo !== null && typeof(photo) !== 'string') {
-        //console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
+    if(photo !== null && typeof(photo) === 'string'){
+        return db.collection('users').doc(uid).collection('profile').doc('profile').set({
+            set: true,
+            firstName: firstName[0],
+            lastName: lastName[0],
+            number: number[0],
+            gender: gender[0],
+            dob: dob[0],
+            school: school[0],
+            program: program[0],
+            hostel: hostel[0],
+            joiningYear: joiningYear[0],
+            graduationYear: graduationYear[0],
+            photo: photo
+        }, { merge: true })
+    }
+    else if (photo !== null) {
+        console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
         const bucket = storage.bucket();
         const destinationPath = photo[0].originalFilename;
         console.log("destinationPath = ", destinationPath)
@@ -78,23 +94,8 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
             photo: downloadURL[0]
         }, { merge: true })
     }
-    else if(photo !== null && typeof(photo) === 'string'){
-        return db.collection('users').doc(uid).collection('profile').doc('profile').set({
-            set: true,
-            firstName: firstName[0],
-            lastName: lastName[0],
-            number: number[0],
-            gender: gender[0],
-            dob: dob[0],
-            school: school[0],
-            program: program[0],
-            hostel: hostel[0],
-            joiningYear: joiningYear[0],
-            graduationYear: graduationYear[0],
-            photo: photo
-        }, { merge: true })
-    }
     else {
+        console.log("photo null");
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
             firstName: firstName[0],

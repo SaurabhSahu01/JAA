@@ -189,7 +189,7 @@ const Profile = () => {
 
                     <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-1 w-[150px] h-[150px]'>
                         {
-                            incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt='user profile' /> : selectImg ? <img src={selectImg} alt="selected profile pic" className='w-full h-full rounded-full object-cover overflow-hidden' /> : <img src="/icons/profileIcon.png" />
+                            selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img src={incomingImage} alt="selected profile pic" className='w-full h-full rounded-full object-cover overflow-hidden' /> : <img src="/icons/profileIcon.png" />
                         }
                     </div>
                     {

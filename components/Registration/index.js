@@ -6,6 +6,7 @@ import FirstStepRegistration from './firstStep/FirstStepRegistration';
 import SecondStepRegistration from './secondStep.js/SecondStepRegistration';
 import ThirdStepRegistration from './thirdStep/ThirdStepRegistration';
 import Loader from '../common/Loader';
+import { changeMaxAge } from '@/src/utils/login';
 
 const Registration = () => {
     const router = useRouter();
@@ -61,6 +62,8 @@ const Registration = () => {
             body: formData
         }).then(res => res.json()).then(data => {
             //console.log(data)
+            cookieCutter.set('profileSet', true);
+            changeMaxAge('profileSet', 30 * 24 * 3600);
             setimg(null);
             setvalue({
                 firstName: "",

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 export default async function middleware(req) {
     let profileSet = req.cookies.get('profileSet');
+    //console.log(profileSet.value)
     let userToken = req.cookies.get('userToken');
     let refreshToken = req.cookies.get('refreshToken');
     let atkn = req.cookies.get('atkn');
@@ -11,7 +12,7 @@ export default async function middleware(req) {
     const domain = `${protocol}://${host}`;
     console.log(domain)
 
-    if(userToken && refreshToken && profileSet && (url.includes('/registration'))){
+    if(userToken && refreshToken && (profileSet.value === 'true') && (url.includes('/registration'))){
         return NextResponse.redirect(`${domain}/`);
     }
     if (!userToken && !refreshToken && (url.includes('/feeds') || url.includes('/jobs') || url.includes('/messages') || url.includes('/join'))) {

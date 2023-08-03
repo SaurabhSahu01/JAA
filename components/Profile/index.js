@@ -4,17 +4,16 @@ import { PencilSquareIcon, BookmarkIcon, ArrowUpOnSquareIcon, TrashIcon } from '
 import Select from './tags/Select';
 import { fields } from './Fields';
 import Input from './tags/Input';
-
-
-
-
+import Loader from '../common/Loader';
 
 const Profile = () => {
     const [isdisable, setDisable] = useState(true);
     const [isProfile, setProfile] = useState(true);
     const [editProfile, setEditProfile] = useState(false);
+    const [incomingImage, setIncomingImage] = useState(null);
     const [img, setImg] = useState(null);
     const [selectImg, setSelectImg] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [state, setstate] = useState({
         firstName: "",
         lastName: "",
@@ -45,9 +44,9 @@ const Profile = () => {
                 localStorage.setItem('profile', JSON.stringify(res.data));
                 const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = res.data;
                 setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
-                setImg(res.data.photo)
+                setIncomingImage(res.data.photo)
             }
-            else{
+            else {
                 router.push('/registeration')
             }
         }).catch((err) => console.log(err));
@@ -60,28 +59,28 @@ const Profile = () => {
             router.push('/registration');
         }
         else {
-            if (JSON.parse(localStorage.getItem('profile') )!== null) {
+            if (JSON.parse(localStorage.getItem('profile')) !== null) {
                 // handel it
                 const details = JSON.parse(localStorage.getItem('profile'));
                 const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = details;
                 setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
-                setImg(details.photo)
+                setIncomingImage(details.photo)
                 // console.log("hello")
             }
             else {
                 getProfile();
             }
         }
-    }, []);
+    }, [incomingImage]);
 
 
     const fileAttached = (e) => {
         const file = e.target.files[0];
-        setSelectImg(file)
+
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImg(reader.result);
+                setSelectImg(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -95,16 +94,17 @@ const Profile = () => {
 
     // after updating
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         // console.log(state);
         const formData = new FormData();
-        if (selectImg){
-            console.log(selectImg)
-            formData.append('photo', selectImg);
-        }
-        else{
-            console.log(typeof(img))
+        if (img) {
+            console.log("new image is chosen")
             formData.append('photo', img);
+        }
+        else {
+            console.log("same old image")
+            formData.append('photo', incomingImage);
         }
 
         Object.keys(state).forEach((key) => {
@@ -119,15 +119,24 @@ const Profile = () => {
             },
             body: formData
         }).then((res) => { return res.json() }).then((res) => {
+            setLoading(false);
             console.log(res)
             getProfile();
-        }).catch((err) => console.log(err));
+        }).catch((err) => {
+            setLoading(false);
+            console.log(err);
+        });
         setDisable(true);
     }
-    
+
 
     return (
         <>
+            {
+                loading ? <div className='h-screen w-full absolute top-0 right-0 z-[200] backdrop-blur-sm'>
+                    <Loader color="#1B2D56" loading={loading} size={70} />
+                </div> : <></>
+            }
             <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute top-0 bg-cover w-full min-h-screen'></div>
             <form onSubmit={handleSubmit} className=' relative bg-cover bg-white/10 backdrop-blur-md mx-auto my-16 shadow-xl flex flex-col items-center w-[85%] md:w-[39rem]'>
                 {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.png)" }} className='rounded-lg h-[8rem] w-full'> */}
@@ -178,9 +187,9 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-2 w-[150px] h-[150px]'>
+                    <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-1 w-[150px] h-[150px]'>
                         {
-                            img ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={img} alt='user profile' /> : <img src="/login/lable.png" />
+                            incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt='user profile' /> : selectImg ? <img src={selectImg} alt="selected profile pic" className='w-full h-full rounded-full object-cover overflow-hidden' /> : <img src="/icons/profileIcon.png" />
                         }
                     </div>
                     {
@@ -200,6 +209,7 @@ const Profile = () => {
                                 className=' opacity-0 absolute top-10 right-0 w-10'
                                 accept="image/jpeg, image/png, image/jpg"
                                 onChange={(e) => {
+                                    setImg(e.target.files[0]);
                                     fileAttached(e)
                                 }}
                             />

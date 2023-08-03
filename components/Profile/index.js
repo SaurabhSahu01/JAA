@@ -1,81 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import cookieCutter from "cookie-cutter";
-import Input from './Input';
-import Select from './Select';
-import Link from 'next/link';
+import { PencilSquareIcon, BookmarkIcon, ArrowUpOnSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
+import Select from './tags/Select';
+import { fields } from './Fields';
+import Input from './tags/Input';
 
-const useInfoField = [
-    { label: "Name", type: "text", id: 'firstName', placeholder: "FirstName" },
-    {
-        label: "Gender", id: 'gender', option: [
-            { value: "", text: "Select Gender" },
-            { value: "male", text: "Male" },
-            { value: "female", text: "Female" },
-        ]
-    },
-    { label: "Date of Birth", type: "date", id: 'dob' },
-    { label: "Phone No.", type: "number", id: 'number', placeholder: "Phone Number" },
-    // { label: "Email", type: "email", id: 'email', placeholder: "E-mail" },
-]
 
-const schoolInfoField = [
-    {
-        label: "school", id: "school", option: [
-            { value: "", text: "Select School" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-        ]
-    },
-    {
-        label: "Program", id: "program", option: [
-            { value: "", text: "Select Program" },
-            { value: "btech", text: "B.Tech" },
-            { value: "bsc", text: "B.Sc" },
-            { value: "ba", text: "B.Art" },
-        ]
-    },
-    {
-        label: "Hostel", id: "hostel", option: [
-            { value: "", text: "Select Hostel" },
-            { value: "mahimandvi", text: "Mahi-Mandvi" },
-            { value: "lohit", text: "Lohit" },
-            { value: "periyar", text: "Periyar" },
-            { value: "satulaj", text: "Satulaj" },
-            { value: "ganga", text: "Ganga" },
-        ]
-    },
-    {
-        label: "Joining Year", id: "joiningYear", option: [
-            { value: "", text: "Year of Joining" },
-            { value: "2018", text: "2018" },
-            { value: "2019", text: "2019" },
-            { value: "2020", text: "2020" },
-            { value: "2021", text: "2021" },
-            { value: "2022", text: "2022" },
-            { value: "2023", text: "2023" },
-            { value: "2024", text: "2024" },
-        ]
-    },
-    {
-        label: "Graduation Year", id: "graduationYear", option: [
-            { value: "", text: "Year of Graduation" },
-            { value: "2023", text: "2023" },
-            { value: "2024", text: "2024" },
-            { value: "2025", text: "2025" },
-            { value: "2026", text: "2026" },
-            { value: "2027", text: "2027" },
-        ]
-    },
-]
+
 
 
 const Profile = () => {
     const [isdisable, setDisable] = useState(true);
     const [isProfile, setProfile] = useState(true);
+    const [editProfile, setEditProfile] = useState(false);
     const [img, setimg] = useState(null);
+    const [selectImg, setSelectImg] = useState(null);
     const [state, setstate] = useState({
         firstName: "",
         lastName: "",
@@ -90,34 +29,55 @@ const Profile = () => {
         graduationYear: "",
     });
 
+    // get Profile 
+    const getProfile = async () => {
+        await fetch('/api/getprofile', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+            }
+        }).then((res) => {
+            return res.json()
+        }).then((res) => {
+            // console.log(res.data);
+            if (res.data.set) {
+                localStorage.setItem('profile', JSON.stringify(res.data));
+                const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = res.data;
+                setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
+                setimg(res.data.photo)
+            }
+            else{
+                router.push('/registeration')
+            }
+        }).catch((err) => console.log(err));
+    }
+
     // change state with student details...
     useEffect(() => {
 
-        const getProfile = async () => {
-            // if the profile is set (cookie - profileSet), then store the profile info in the localStorage and avoid unnecessary network calls
-            await fetch('/api/getprofile', {
-                method: 'GET',
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
-                }
-            }).then((res) => {
-                return res.json()
-            }).then((res) => {
-                // console.log(res.data);
-                if (res.data.set) {
-                    const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = res.data;
-                    setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
-                    setimg(res.data.photo)
-                }
-                else  setProfile(false);
-            }).catch((err) => console.log(err));
+        if (!cookieCutter.get('profileSet')) {
+            router.push('/registration');
         }
-        getProfile();
+        else {
+            if (JSON.parse(localStorage.getItem('profile') )!== null) {
+                // handel it
+                const details = JSON.parse(localStorage.getItem('profile'));
+                const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = details;
+                setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
+                setimg(details.photo)
+                // console.log("hello")
+            }
+            else {
+                getProfile();
+            }
+        }
     }, []);
+
 
     const fileAttached = (e) => {
         const file = e.target.files[0];
+        setSelectImg(file)
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -138,9 +98,15 @@ const Profile = () => {
         e.preventDefault();
         // console.log(state);
         const formData = new FormData();
-        if (img) {
+        if (selectImg){
+            console.log(selectImg)
+            formData.append('photo', selectImg);
+        }
+        else{
+            console.log(typeof(img))
             formData.append('photo', img);
         }
+
         Object.keys(state).forEach((key) => {
             //console.log(key, state[key])
             formData.append(key, state[key]);
@@ -152,106 +118,121 @@ const Profile = () => {
                 "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
             },
             body: formData
-        }).then((res)=>{return res.json()}).then((res)=>{
+        }).then((res) => { return res.json() }).then((res) => {
             console.log(res)
-        }).catch((err)=>console.log(err));
+            getProfile();
+        }).catch((err) => console.log(err));
         setDisable(true);
     }
+    
 
     return (
-       isProfile ? <form onSubmit={handleSubmit} style={{ backgroundImage: "url(/gallery/jnu/1636141627078.jpg)" }} className=' relative m-6 bg-cover mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
-            <div className='flex flex-col items-center relative'>
-                <div className=" w-[100px] h-[100px]">
-                    {img === null ? <img src="/login/lable.png" className='w-full h-full' alt="" /> : <img src={img} className='w-full h-full rounded-full' alt="" />}
-                </div>
-                {!isdisable && <div className=" shrink-0 mt-6">
-                    <input
-                        type="file"
-                        id="fileUploader"
-                        className=' opacity-0 absolute top-10 right-0 w-10'
-                        accept="image/jpeg, image/png, image/jpg"
-                        onChange={fileAttached}
-                    />
-                    <label htmlFor="fileUploader" className=' p-2 bg-blue-400 rounded-lg  cursor-pointer'>
-                        Upload Photo
-                    </label>
-                </div>}
-            </div>
-            <div className='flex flex-col items-center mt-4 p-1 md:p-3 '>
-                <div className='m-2 text-lg font-bold'>Welcome, User</div>
-                <table className='w-full md:w-[26rem] bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
-                    <thead>
-                        <tr>
-                            <th colSpan="2" className="text-center font-bold text-xl p-2">
-                                User Info
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {useInfoField.map((tag, index) => (
-                            <tr className='w-full' key={index}>
-                                <td className='w-[50%] text-right'>
-                                    <label htmlFor={tag?.id} className='min-w-fit'>
-                                        {tag.label}:
-                                    </label>
-                                </td>
-                                <td className='text-left'>
-                                    {tag.type ? (
-                                        <Input data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
-                                    ) : (
-                                        <Select data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+        <>
+            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute top-0 bg-cover w-full min-h-screen'></div>
+            <form onSubmit={handleSubmit} className=' relative bg-cover bg-white/10 backdrop-blur-md mx-auto my-16 shadow-xl flex flex-col items-center w-[85%] md:w-[39rem]'>
+                {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.png)" }} className='rounded-lg h-[8rem] w-full'> */}
 
-            <div className='flex flex-col items-center p-1 md:p-3 '>
-                <table className='w-full md:w-[26rem] bg-[#e4eafb] rounded-lg p-1 md:p-4 mt-2 overflow-hidden shadow-md'>
-                    <thead>
-                        <tr>
-                            <th colSpan="2" className="text-center font-bold text-xl p-2">
-                                School Info
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {schoolInfoField.map((tag, index) => (
-                            <tr className='w-full' key={index}>
-                                <td className='w-[54%] text-right'>
-                                    <label htmlFor={tag?.id} className='min-w-fit'>
-                                        {tag.label}:
-                                    </label>
-                                </td>
-                                <td className='text-left'>
-                                    {tag.type ? (
-                                        <Input data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
-                                    ) : (
-                                        <Select data={tag} state={state} isDisable={isdisable} onChangeHandler={onChangeHandler} />
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className=' absolute bg-white rounded-md top-2 right-2 w-fit cursor-pointer'>
-                {isdisable ? <svg onClick={() => setDisable(false)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                </svg> :
-                    <button className=' w-fit' type='submit'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
-                        </svg>
-                    </button>
+                {isdisable &&
+                    <div onClick={() => setDisable(false)} className=' absolute bg-white rounded-md top-2 right-2 w-fit cursor-pointer p-1 z-10'>
+                        <PencilSquareIcon className='w-6 h-6' />
+                    </div>
                 }
-            </div>
-        </form>:<div className=' relative m-6 mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
-            <Link href='/registration'>Please Complete Your Detailes</Link>
-        </div>
+                <div className=' relative flex flex-col items-center md:items-start justify-start bg-[#1B2D56] h-[8rem] w-full'>
+                    <div className='w-fit mt-2 md:mt-10'>
+                        {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName.charAt(0).toUpperCase() + state.firstName.slice(1)} {state.lastName.charAt(0).toUpperCase() + state.lastName.slice(1)}</h1> :
+                            <div className=' flex w-full md:ml-10 mb-1'>
+                                <input
+                                    type="text"
+                                    id='firstName'
+                                    value={state.firstName}
+                                    onChange={onChangeHandler}
+                                    className={`text-white rounded-sm p-2 w-full md:w-fit  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}
+                                    autoComplete="off"
+                                    required
+                                    disabled={isdisable} />
+                                <input
+                                    type="text"
+                                    id='firstName'
+                                    value={state.lastName}
+                                    onChange={onChangeHandler}
+                                    className={`text-white rounded-sm w-full md:w-fit p-2  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}
+                                    autoComplete="off"
+                                    required
+                                    disabled={isdisable} />
+                            </div>
+                        }
+                        <div className='w-fit md:ml-10 '>
+                            {isdisable ? <p className='text-white font-normal text-sm'>{state.gender}</p> :
+                                <select id="gender"
+                                    value={state.gender}
+                                    onChange={onChangeHandler}
+                                    autoComplete='off'
+                                    className={`bg-transparent w-[6rem] text-white p-1 ml-2 placeholder-gray-400 ${isdisable ? "outline-none border-none appearance-none" : ""}`}
+                                    required
+                                    isDisable={isdisable}
+                                >
+                                    <option className=' text-black' value="">Select Gender</option>
+                                    <option className=' text-black' value="male">Male</option>
+                                    <option className=' text-black' value="female">Female</option>
+                                </select>}
+                        </div>
+                    </div>
+
+                    <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-2 w-[150px] h-[150px]'>
+                        {
+                            img ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={img} alt='user profile' /> : <img src="/login/lable.png" />
+                        }
+                    </div>
+                    {
+                        !isdisable && img &&
+                        <div onClick={() => {
+                            setSelectImg(null);
+                            setimg(null);
+                        }} className=' absolute -bottom-24 right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-14 md:right-8 bg-white p-1 hover:text-red-800 rounded-full cursor-pointer'>
+                            <TrashIcon className='w-4 h-4' />
+                        </div>
+                    }
+                    {!isdisable &&
+                        <div className='absolute -bottom-[8.2rem] right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-24 md:right-8'>
+                            <input
+                                type="file"
+                                id="fileUploader"
+                                className=' opacity-0 absolute top-10 right-0 w-10'
+                                accept="image/jpeg, image/png, image/jpg"
+                                onChange={(e) => {
+                                    fileAttached(e)
+                                }}
+                            />
+                            <label htmlFor="fileUploader" className=' p-2 bg-blue-500 text-slate-200 rounded-lg  cursor-pointer'>
+                                {img ? 'Change Photo' : 'Upload Photo'}
+                            </label>
+                        </div>
+                    }
+                </div>
+
+
+                <div className={`grid grid-cols-1  md:grid-cols-2 gap-3 p-6 mx-auto ${isdisable ? "mt-20 md:mt-16" : " mt-[7.5rem] md:mt-20"} `}>
+                    {
+                        fields.map((data, index) => {
+                            return (
+                                <div className=' flex items-center ' key={index}>
+                                    <div className='rounded-full shadow-xl'>
+                                        {<data.icon className='w-6 h-6 ' />}
+                                    </div>
+                                    <div className='relative m-3 bg-gray-50 rounded-md p-2 w-full'>
+                                        <p className='absolute -top-5 p-1 left-2 font-normal text-xs text-gray-900'>{data.leble}</p>
+                                        {data.tag === "select" ? <Select onChangeHandler={onChangeHandler} data={data} state={state} isDisable={isdisable} /> :
+                                            <Input data={data} onChangeHandler={onChangeHandler} state={state} isDisable={isdisable} />}
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+
+                {!isdisable && <button type='submit' className='px-6 py-2 m-2 rounded-md text-base font-normal bg-[#1B2D56] hover:bg-[#2e416b] text-white'>Save</button>}            </form>
+        </>
     )
 }
 
-export default Profile
+export default Profile;

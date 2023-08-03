@@ -1,13 +1,14 @@
 import React from 'react'
 
 const Input = ({data, state, isDisable, onChangeHandler}) => {
+    // console.log(data)
     return (
         <input
             type={data.type}
-            id={data.id}
-            value={state[data.id]}
+            id={data.field}
+            value={state[data.field]}
             placeholder={data.placeholder}
-            className={`bg-gray-200 w-fit outline-none border-none p-[2px] ml-2 ${isDisable ? " bg-transparent" : "bg-white"}  `}
+            className={`text-black  rounded-sm bg-transparent block w-full px-5 py-2  outline-none border-none`}
             autoComplete="off"
             required
             onChange={onChangeHandler} 

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 export default async function middleware(req) {
+    let profileSet = req.cookies.get('profileSet');
     let userToken = req.cookies.get('userToken');
     let refreshToken = req.cookies.get('refreshToken');
     let atkn = req.cookies.get('atkn');
@@ -15,6 +16,9 @@ export default async function middleware(req) {
     }
     if(userToken && refreshToken && (url.includes('/login') || url.includes('/signup'))){
         return NextResponse.redirect(`${domain}/`);
+    }
+    if(!profileSet){
+        return NextResponse.redirect(`${domain}/registration`);
     }
     if(!atkn && (url.includes('/adminpanel'))){
         return NextResponse.redirect(`${domain}/adminlogin`);

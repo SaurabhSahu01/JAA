@@ -67,9 +67,12 @@ function Login() {
             }).then((res) => {
                 if (res.set) {
                     cookieCutter.set('profileSet', true);
+                    changeMaxAge('profileSet', 30 * 24 * 3600);
                     router.push('/')
                 }
                 else {
+                    cookieCutter.set('profileSet', false);
+                    changeMaxAge('profileSet', 30 * 24 * 3600);
                     router.push('/registration')
                 }
             })

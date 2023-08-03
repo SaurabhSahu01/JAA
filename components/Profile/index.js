@@ -13,7 +13,7 @@ const Profile = () => {
     const [isdisable, setDisable] = useState(true);
     const [isProfile, setProfile] = useState(true);
     const [editProfile, setEditProfile] = useState(false);
-    const [img, setimg] = useState(null);
+    const [img, setImg] = useState(null);
     const [selectImg, setSelectImg] = useState(null);
     const [state, setstate] = useState({
         firstName: "",
@@ -45,7 +45,7 @@ const Profile = () => {
                 localStorage.setItem('profile', JSON.stringify(res.data));
                 const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = res.data;
                 setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
-                setimg(res.data.photo)
+                setImg(res.data.photo)
             }
             else{
                 router.push('/registeration')
@@ -65,7 +65,7 @@ const Profile = () => {
                 const details = JSON.parse(localStorage.getItem('profile'));
                 const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = details;
                 setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
-                setimg(details.photo)
+                setImg(details.photo)
                 // console.log("hello")
             }
             else {
@@ -81,7 +81,7 @@ const Profile = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setimg(reader.result);
+                setImg(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -187,7 +187,7 @@ const Profile = () => {
                         !isdisable && img &&
                         <div onClick={() => {
                             setSelectImg(null);
-                            setimg(null);
+                            setImg(null);
                         }} className=' absolute -bottom-24 right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-14 md:right-8 bg-white p-1 hover:text-red-800 rounded-full cursor-pointer'>
                             <TrashIcon className='w-4 h-4' />
                         </div>

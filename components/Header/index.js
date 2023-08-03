@@ -153,6 +153,7 @@ function Header() {
                                         deleteCookie('uid');
                                         deleteCookie('refreshToken');
                                         deleteCookie('profileSet');
+                                        localStorage.clear();
                                         router.push('/')
                                         setTimeout(() => {
                                             window.location.reload();

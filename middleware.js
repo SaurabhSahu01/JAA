@@ -12,7 +12,7 @@ export default async function middleware(req) {
     const domain = `${protocol}://${host}`;
     console.log(domain)
 
-    if(userToken && refreshToken && (profileSet.value === 'true') && (url.includes('/registration'))){
+    if(userToken && refreshToken && (profileSet?.value === 'true') && (url.includes('/registration'))){
         return NextResponse.redirect(`${domain}/`);
     }
     if (!userToken && !refreshToken && (url.includes('/feeds') || url.includes('/jobs') || url.includes('/messages') || url.includes('/join'))) {

@@ -75,7 +75,6 @@ const Profile = () => {
         }
     }, [incomingImage]);
 
-
     const fileAttached = (e) => {
         const file = e.target.files[0];
 
@@ -105,7 +104,7 @@ const Profile = () => {
             formData.append('photo', img);
         }
         else {
-            console.log("same old image")
+            console.log("same old image", incomingImage)
             formData.append('photo', incomingImage);
         }
 

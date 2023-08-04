@@ -47,19 +47,78 @@ function Login() {
     const handleShowPassword = (e) => {
         setValues({ ...values, showPassword: !values.showPassword })
     }
+
+    const isprofileSet = async () => {
+        // check for the cookies if the profile is set or not, then make the api call
+        if (cookieCutter.get('profileSet')) {
+            router.push('/');
+        }
+        else {
+            fetch('/api/isprofileset', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+
+                }
+            }).then((res) => {
+                const data = res.json()
+                return data
+            }).then((res) => {
+                setlogInProgress(false);
+                if (res.set) {
+                    cookieCutter.set('profileSet', true);
+                    changeMaxAge('profileSet', 30 * 24 * 3600);
+                    setTimeout(() => {
+                        router.push('/');
+                    }, 100);
+                }
+                else {
+                    cookieCutter.set('profileSet', false);
+                    changeMaxAge('profileSet', 30 * 24 * 3600);
+                    router.push('/registration')
+                }
+            })
+                .catch((err) => {
+                    setlogInProgress(false);
+                    console.log("error ")
+                })
+        }
+    }
     const handleLogin = async (e) => {
         e.preventDefault();
         setlogInProgress(true);
         await loginwithemail(values.username, values.password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                // console.log("user = ", user);
+                console.log("user = ", user);
                 cookieCutter.set('userToken', user.accessToken);
                 cookieCutter.set('uid', user.uid);
-                changeMaxAge('userToken', 24*3600);
-                changeMaxAge('uid', 24*3600);
+                cookieCutter.set('refreshToken', user.refreshToken);
+                changeMaxAge('userToken', 30 * 24 * 3600);
+                changeMaxAge('uid', 30 * 24 * 3600);
+                changeMaxAge('refreshToken', 30 * 24 * 3600);
                 setlogInProgress(false);
-                router.push("/");
+                fetch('/api/adduser', {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+                    },
+                    body: JSON.stringify({
+                        creationTime: new Date().toGMTString(),
+                        signInType: "email"
+                    })
+                }).then((res) => res.json())
+                    .then(response => {
+                        console.log(response);
+                        // router.push("/");
+                        isprofileSet();
+                    })
+                    .catch(err => {
+                        setlogInProgress(false);
+                        console.log(err);
+                    })
             })
             .catch((err) => {
                 setlogInProgress(false);
@@ -68,6 +127,11 @@ function Login() {
     }
     return (
         <div className='h-screen flex md:flex-row xs:flex-col items-center justify-center gap-[4rem] select-none'>
+            {
+                logInProgress ? <div className='h-screen w-full absolute top-0 right-0 z-[200] backdrop-blur-sm'>
+                    <Loader color="#1B2D56" loading={logInProgress} size={70} />
+                </div> : <></>
+            }
             <div className='rounded-sm w-fit h-fit py-10 px-5 flex flex-col items-center justify-center gap-5 bg-primarycolor shadow-xl'>
                 <div className='min-w-[300px] h-[300px] px-5 py-5 flex flex-col gap-4 justify-center items-center bg-slate-100 box-border'>
                     <div className="w-full rounded-sm py-1 outline-none bg-white flex justify-between items-center shadow-lg">
@@ -95,7 +159,7 @@ function Login() {
 
                     {mailerr ? (<span className="text-red-500">Invalid email!</span>) : (<></>)}
                     {loginerr ? (<span className="text-red-500">Incorrect email or password!</span>) : (<></>)}
-                    {logInProgress ? (<div><Loader color="#1B2D56" loading={logInProgress} /></div>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105" onClick={handleLogin}>
+                    {logInProgress ? (<div><Loader color="#1B2D56" loading={logInProgress} size={20}/></div>) : ((!mailerr && values.username !== "" && values.password !== "") ? (<button type="submit" className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor transition duration-150 hover:scale-105" onClick={handleLogin}>
                         Sign In
                     </button>) : (<button className="mt-4 text-white rounded-sm py-1 px-3 bg-primarycolor cursor-not-allowed" disabled>
                         Sign In
@@ -119,15 +183,37 @@ function Login() {
 
                             // The signed-in user info.
                             const user = result.user;
-                            // console.log("user = ", user);
+                            console.log("user = ", user);
 
                             // setting cookies 
                             cookieCutter.set('userToken', user.accessToken);
                             cookieCutter.set('uid', user.uid);
-                            changeMaxAge('userToken', 24 * 3600);
-                            changeMaxAge('uid', 24 * 3600);
-                            router.push("/");
+                            cookieCutter.set('refreshToken', user.refreshToken);
+                            changeMaxAge('userToken', 30 * 24 * 3600);
+                            changeMaxAge('uid', 30 * 24 * 3600);
+                            changeMaxAge('refreshToken', 30 * 24 * 3600);
+                            fetch('/api/adduser', {
+                                method: "POST",
+                                headers: {
+                                    'Content-type': 'application/json; charset=UTF-8',
+                                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+
+                                },
+                                body: JSON.stringify({
+                                    creationTime: new Date().toGMTString(),
+                                    signInType: "google"
+                                })
+                            }).then((res) => res.json())
+                                .then(response => {
+                                    console.log(response);
+                                    isprofileSet();
+                                })
+                                .catch(err => {
+                                    setlogInProgress(false);
+                                    console.log(err);
+                                })
                         }).catch((error) => {
+                            setlogInProgress(false);
                             // Handle Errors here.
                             const errorCode = error.code;
                             const errorMessage = error.message;

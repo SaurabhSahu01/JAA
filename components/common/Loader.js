@@ -7,7 +7,7 @@ function Loader(props) {
         <div className='w-full h-full flex justify-center items-center'>
             <ClipLoader
                 color={props.color}
-                size={20}
+                size={props.size}
                 aria-label="Loading Spinner"
                 data-testid="loader"
                 loading={props.loading}

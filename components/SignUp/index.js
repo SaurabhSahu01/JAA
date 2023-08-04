@@ -115,7 +115,7 @@ function SignUp() {
                                 Sign Up
                             </button>) : (<button className="w-full text-white mt-4 rounded-lg py-2 bg-primarycolor/20 cursor-not-allowed" disabled>
                                 Sign Up
-                            </button>) : <div className='mt-4'><Loader color="#1B2D56" loading={signUpProgress} /></div>}
+                            </button>) : <div className='mt-4'><Loader color="#1B2D56" loading={signUpProgress} size={20}/></div>}
                         </div>
                         <span className="text-center text-sm my-3 cursor-default">
                             Already have an account? <button

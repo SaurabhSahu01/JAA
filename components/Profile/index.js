@@ -138,110 +138,109 @@ const Profile = () => {
                     <Loader color="#1B2D56" loading={loading} size={70} />
                 </div> : <></>
             }
-            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute top-0 bg-cover w-full min-h-screen'></div>
-            <form onSubmit={handleSubmit} className=' relative bg-cover bg-white/10 backdrop-blur-md mx-auto my-16 shadow-xl flex flex-col items-center w-[85%] md:w-[39rem]'>
-                {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.png)" }} className='rounded-lg h-[8rem] w-full'> */}
+            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className=' -mt-16 pt-10 pb-4 bg-cover w-full min-h-screen'>
 
-                {isdisable &&
-                    <div onClick={() => setDisable(false)} className=' absolute bg-white rounded-md top-2 right-2 w-fit cursor-pointer p-1 z-10'>
-                        <PencilSquareIcon className='w-6 h-6' />
-                    </div>
-                }
-                <div className=' relative flex flex-col items-center md:items-start justify-start bg-[#1B2D56] h-[8rem] w-full'>
-                    <div className='w-fit mt-2 md:mt-10'>
-                        {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName.charAt(0).toUpperCase() + state.firstName.slice(1)} {state.lastName.charAt(0).toUpperCase() + state.lastName.slice(1)}</h1> :
-                            <div className=' flex w-full md:ml-10 mb-1'>
-                                <input
-                                    type="text"
-                                    id='firstName'
-                                    value={state.firstName}
-                                    onChange={onChangeHandler}
-                                    className={`text-white rounded-sm p-2 w-full md:w-fit  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}
-                                    autoComplete="off"
-                                    required
-                                    disabled={isdisable} />
-                                <input
-                                    type="text"
-                                    id='lastName'
-                                    value={state.lastName}
-                                    onChange={onChangeHandler}
-                                    className={`text-white rounded-sm w-full md:w-fit p-2  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}
-                                    autoComplete="off"
-                                    required
-                                    disabled={isdisable} />
+                <form onSubmit={handleSubmit} className=' relative bg-cover bg-white/10 backdrop-blur-md mx-auto my-16 shadow-xl flex flex-col items-center w-[85%] md:w-[39rem]'>
+                    {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.png)" }} className='rounded-lg h-[8rem] w-full'> */}
+
+                    {isdisable &&
+                        <div onClick={() => setDisable(false)} className=' absolute bg-white rounded-md top-2 right-2 w-fit cursor-pointer p-1 z-10'>
+                            <PencilSquareIcon className='w-6 h-6' />
+                        </div>
+                    }
+                    <div className=' relative flex flex-col items-center md:items-start justify-start bg-[#1B2D56] h-[8rem] w-full'>
+                        <div className='w-fit mt-2 md:mt-10'>
+                            {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName.charAt(0).toUpperCase() + state.firstName.slice(1)} {state.lastName.charAt(0).toUpperCase() + state.lastName.slice(1)}</h1> :
+                                <div className=' flex w-full md:ml-10 mb-1'>
+                                    <input
+                                        type="text"
+                                        id='firstName'
+                                        value={state.firstName}
+                                        onChange={onChangeHandler}
+                                        className={`text-white rounded-sm p-2 w-full md:w-fit  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}
+                                        autoComplete="off"
+                                        required
+                                        disabled={isdisable} />
+                                    <input
+                                        type="text"
+                                        id='lastName'
+                                        value={state.lastName}
+                                        onChange={onChangeHandler}
+                                        className={`text-white rounded-sm w-full md:w-fit p-2  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}
+                                        autoComplete="off"
+                                        required
+                                        disabled={isdisable} />
+                                </div>
+                            }
+                            <div className='w-fit md:ml-10 '>
+                                {isdisable ? <p className='text-white font-normal text-sm'>{state.gender}</p> :
+                                    <select id="gender"
+                                        value={state.gender}
+                                        onChange={onChangeHandler}
+                                        autoComplete='off'
+                                        className={`bg-transparent w-[6rem] text-white p-1 ml-2 placeholder-gray-400 ${isdisable ? "outline-none border-none appearance-none" : ""}`}
+                                        required
+                                        isDisable={isdisable}
+                                    >
+                                        <option className=' text-black' value="">Select Gender</option>
+                                        <option className=' text-black' value="male">Male</option>
+                                        <option className=' text-black' value="female">Female</option>
+                                    </select>}
+                            </div>
+                        </div>
+
+                        <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-1 w-[150px] h-[150px]'>
+                            {
+                                selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.png" />
+                            }
+                        </div>
+                        {
+                            !isdisable && (selectImg || incomingImage) &&
+                            <div onClick={()=>deleteImg()} className=' absolute -bottom-24 right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-14 md:right-8 bg-white p-1 hover:text-red-800 rounded-full cursor-pointer'>
+                                <TrashIcon className='w-4 h-4' />
                             </div>
                         }
-                        <div className='w-fit md:ml-10 '>
-                            {isdisable ? <p className='text-white font-normal text-sm'>{state.gender}</p> :
-                                <select id="gender"
-                                    value={state.gender}
-                                    onChange={onChangeHandler}
-                                    autoComplete='off'
-                                    className={`bg-transparent w-[6rem] text-white p-1 ml-2 placeholder-gray-400 ${isdisable ? "outline-none border-none appearance-none" : ""}`}
-                                    required
-                                    isDisable={isdisable}
-                                >
-                                    <option className=' text-black' value="">Select Gender</option>
-                                    <option className=' text-black' value="male">Male</option>
-                                    <option className=' text-black' value="female">Female</option>
-                                </select>}
-                        </div>
-                    </div>
-
-                    <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-1 w-[150px] h-[150px]'>
-                        {
-                            selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img src={incomingImage} alt="selected profile pic" className='w-full h-full rounded-full object-cover overflow-hidden' /> : <img src="/icons/profileIcon.png" />
+                        {!isdisable &&
+                            <div className='absolute -bottom-[8.2rem] right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-24 md:right-8'>
+                                <input
+                                    type="file"
+                                    id="fileUploader"
+                                    className=' opacity-0 absolute top-10 right-0 w-10'
+                                    accept="image/jpeg, image/png, image/jpg"
+                                    onChange={(e) => {
+                                        setImg(e.target.files[0]);
+                                        fileAttached(e)
+                                    }}
+                                />
+                                <label htmlFor="fileUploader" className=' p-2 bg-blue-500 text-slate-200 rounded-lg  cursor-pointer'>
+                                    {img ? 'Change Photo' : 'Upload Photo'}
+                                </label>
+                            </div>
                         }
                     </div>
-                    {
-                        !isdisable && img &&
-                        <div onClick={() => {
-                            setSelectImg(null);
-                            setImg(null);
-                        }} className=' absolute -bottom-24 right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-14 md:right-8 bg-white p-1 hover:text-red-800 rounded-full cursor-pointer'>
-                            <TrashIcon className='w-4 h-4' />
-                        </div>
-                    }
-                    {!isdisable &&
-                        <div className='absolute -bottom-[8.2rem] right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-24 md:right-8'>
-                            <input
-                                type="file"
-                                id="fileUploader"
-                                className=' opacity-0 absolute top-10 right-0 w-10'
-                                accept="image/jpeg, image/png, image/jpg"
-                                onChange={(e) => {
-                                    setImg(e.target.files[0]);
-                                    fileAttached(e)
-                                }}
-                            />
-                            <label htmlFor="fileUploader" className=' p-2 bg-blue-500 text-slate-200 rounded-lg  cursor-pointer'>
-                                {img ? 'Change Photo' : 'Upload Photo'}
-                            </label>
-                        </div>
-                    }
-                </div>
 
 
-                <div className={`grid grid-cols-1  md:grid-cols-2 gap-3 p-6 mx-auto ${isdisable ? "mt-20 md:mt-16" : " mt-[7.5rem] md:mt-20"} `}>
-                    {
-                        fields.map((data, index) => {
-                            return (
-                                <div className=' flex items-center ' key={index}>
-                                    <div className='rounded-full shadow-xl'>
-                                        {<data.icon className='w-6 h-6 ' />}
+                    <div className={`grid grid-cols-1  md:grid-cols-2 gap-3 p-6 mx-auto ${isdisable ? "mt-20 md:mt-16" : " mt-[7.5rem] md:mt-20"} `}>
+                        {
+                            fields.map((data, index) => {
+                                return (
+                                    <div className=' flex items-center ' key={index}>
+                                        <div className='rounded-full shadow-xl'>
+                                            {<data.icon className='w-6 h-6 ' />}
+                                        </div>
+                                        <div className='relative m-3 bg-gray-50 rounded-md p-2 w-full'>
+                                            <p className='absolute -top-5 p-1 left-2 font-normal text-xs text-gray-900'>{data.leble}</p>
+                                            {data.tag === "select" ? <Select onChangeHandler={onChangeHandler} data={data} state={state} isDisable={isdisable} /> :
+                                                <Input data={data} onChangeHandler={onChangeHandler} state={state} isDisable={isdisable} />}
+                                        </div>
                                     </div>
-                                    <div className='relative m-3 bg-gray-50 rounded-md p-2 w-full'>
-                                        <p className='absolute -top-5 p-1 left-2 font-normal text-xs text-gray-900'>{data.leble}</p>
-                                        {data.tag === "select" ? <Select onChangeHandler={onChangeHandler} data={data} state={state} isDisable={isdisable} /> :
-                                            <Input data={data} onChangeHandler={onChangeHandler} state={state} isDisable={isdisable} />}
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                                )
+                            })
+                        }
+                    </div>
 
-                {!isdisable && <button type='submit' className='px-6 py-2 m-2 rounded-md text-base font-normal bg-[#1B2D56] hover:bg-[#2e416b] text-white'>Save</button>}            </form>
+                    {!isdisable && <button type='submit' className='px-6 py-2 m-2 rounded-md text-base font-normal bg-[#1B2D56] hover:bg-[#2e416b] text-white'>Save</button>}            </form>
+            </div>
         </>
     )
 }

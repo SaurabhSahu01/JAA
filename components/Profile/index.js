@@ -134,7 +134,7 @@ const Profile = () => {
     return (
         <>
             {
-                loading ? <div className='h-screen w-full absolute top-0 right-0 z-[200] backdrop-blur-sm'>
+                loading ? <div className='h-screen w-full fixed top-0 right-0 z-[200] backdrop-blur-sm'>
                     <Loader color="#1B2D56" loading={loading} size={70} />
                 </div> : <></>
             }

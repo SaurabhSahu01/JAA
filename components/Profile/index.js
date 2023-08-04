@@ -162,7 +162,7 @@ const Profile = () => {
                                     disabled={isdisable} />
                                 <input
                                     type="text"
-                                    id='firstName'
+                                    id='lastName'
                                     value={state.lastName}
                                     onChange={onChangeHandler}
                                     className={`text-white rounded-sm w-full md:w-fit p-2  placeholder-gray-400 ${isdisable ? "outline-none border-none" : ""} bg-transparent text-base mr-2`}

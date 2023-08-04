@@ -5,8 +5,10 @@ import Select from './tags/Select';
 import { fields } from './Fields';
 import Input from './tags/Input';
 import Loader from '../common/Loader';
+import { useRouter } from 'next/router';
 
 const Profile = () => {
+    const router = useRouter();
     const [isdisable, setDisable] = useState(true);
     const [isProfile, setProfile] = useState(true);
     const [editProfile, setEditProfile] = useState(false);
@@ -47,7 +49,7 @@ const Profile = () => {
                 setIncomingImage(res.data.photo)
             }
             else {
-                router.push('/registeration')
+                router.push('/registration')
             }
         }).catch((err) => console.log(err));
     }

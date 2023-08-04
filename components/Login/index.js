@@ -54,7 +54,7 @@ function Login() {
             router.push('/');
         }
         else {
-            await fetch('/api/isprofileset', {
+            fetch('/api/isprofileset', {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8',
@@ -65,10 +65,13 @@ function Login() {
                 const data = res.json()
                 return data
             }).then((res) => {
+                setlogInProgress(false);
                 if (res.set) {
                     cookieCutter.set('profileSet', true);
                     changeMaxAge('profileSet', 30 * 24 * 3600);
-                    router.push('/')
+                    setTimeout(() => {
+                        router.push('/');
+                    }, 100);
                 }
                 else {
                     cookieCutter.set('profileSet', false);
@@ -77,6 +80,7 @@ function Login() {
                 }
             })
                 .catch((err) => {
+                    setlogInProgress(false);
                     console.log("error ")
                 })
         }
@@ -111,7 +115,10 @@ function Login() {
                         // router.push("/");
                         isprofileSet();
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        setlogInProgress(false);
+                        console.log(err);
+                    })
             })
             .catch((err) => {
                 setlogInProgress(false);
@@ -120,6 +127,11 @@ function Login() {
     }
     return (
         <div className='h-screen flex md:flex-row xs:flex-col items-center justify-center gap-[4rem] select-none'>
+            {
+                logInProgress ? <div className='h-screen w-full absolute top-0 right-0 z-[200] backdrop-blur-sm'>
+                    <Loader color="#1B2D56" loading={logInProgress} size={70} />
+                </div> : <></>
+            }
             <div className='rounded-sm w-fit h-fit py-10 px-5 flex flex-col items-center justify-center gap-5 bg-primarycolor shadow-xl'>
                 <div className='min-w-[300px] h-[300px] px-5 py-5 flex flex-col gap-4 justify-center items-center bg-slate-100 box-border'>
                     <div className="w-full rounded-sm py-1 outline-none bg-white flex justify-between items-center shadow-lg">
@@ -196,8 +208,12 @@ function Login() {
                                     console.log(response);
                                     isprofileSet();
                                 })
-                                .catch(err => console.log(err))
+                                .catch(err => {
+                                    setlogInProgress(false);
+                                    console.log(err);
+                                })
                         }).catch((error) => {
+                            setlogInProgress(false);
                             // Handle Errors here.
                             const errorCode = error.code;
                             const errorMessage = error.message;

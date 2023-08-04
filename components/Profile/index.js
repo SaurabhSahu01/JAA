@@ -15,6 +15,7 @@ const Profile = () => {
     const [incomingImage, setIncomingImage] = useState(null);
     const [img, setImg] = useState(null);
     const [selectImg, setSelectImg] = useState(null);
+    const [deletePic, setDeletePic] = useState(false);
     const [loading, setLoading] = useState(false);
     const [state, setstate] = useState({
         firstName: "",
@@ -99,17 +100,23 @@ const Profile = () => {
         e.preventDefault();
         // console.log(state);
         const formData = new FormData();
+        console.log("img = ", img);
         if (img) {
             console.log("new image is chosen")
+            formData.append('photo', img);
+        }
+        else if(deletePic){
+            console.log("image is removed")
             formData.append('photo', img);
         }
         else {
             console.log("same old image", incomingImage)
             formData.append('photo', incomingImage);
         }
+        console.log(formData.photo)
 
         Object.keys(state).forEach((key) => {
-            //console.log(key, state[key])
+            console.log(key, state[key])
             formData.append(key, state[key]);
         });
 
@@ -128,6 +135,12 @@ const Profile = () => {
             console.log(err);
         });
         setDisable(true);
+    }
+
+    const deleteImg = () =>{
+        setDeletePic(true);
+        setSelectImg(null);
+        setImg(null);
     }
 
 
@@ -191,7 +204,9 @@ const Profile = () => {
 
                         <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-1 w-[150px] h-[150px]'>
                             {
-                                selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.png" />
+                                // new image > image removed > incoming image
+                                selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : (!deletePic && incomingImage) ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.png" />
+                                // selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.png" />
                             }
                         </div>
                         {

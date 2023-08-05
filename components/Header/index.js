@@ -20,7 +20,9 @@ function Header() {
     const [userPic, setUserPic] = React.useState(null);
 
     React.useEffect(() => {
-        const eventSource = new EventSource('/api/sse');
+        const uid = cookieCutter.get('uid');
+        const apiendpoint = `/api/sse?UID=${uid}`;
+        const eventSource = new EventSource(apiendpoint);
     
         eventSource.onmessage = (event) => {
           const data = JSON.parse(event.data);

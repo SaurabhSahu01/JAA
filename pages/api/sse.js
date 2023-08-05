@@ -1,7 +1,7 @@
 import { db } from "@/src/utils/firebase";
 
 export default function handler(req, res) {
-    
+    const uid = req.query.UID;
     // Set response headers for SSE
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
@@ -13,7 +13,7 @@ export default function handler(req, res) {
   
     // Set up a timer to send updates at regular intervals
     const intervalId = setInterval(() => {
-      const eventData = JSON.stringify({ message: 'This is a real-time update.' });
+      const eventData = JSON.stringify({ message: uid });
       res.write(`data: ${eventData}\n\n`);
     }, 1000); // Send an update every 5 seconds
   

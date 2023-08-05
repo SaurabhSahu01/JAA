@@ -10,7 +10,7 @@ function Home() {
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data.message);
+      //console.log(data.message);
       localStorage.setItem('profile', JSON.stringify(data.message));
     };
 

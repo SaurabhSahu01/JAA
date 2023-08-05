@@ -5,7 +5,7 @@ import cookieCutter from 'cookie-cutter';
 function Home() {
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
-    const apiendpoint = `/api/sse?UID=${uid}`;
+    const apiendpoint = `/api/getupdatedprofile?UID=${uid}`;
     const eventSource = new EventSource(apiendpoint);
 
     eventSource.onmessage = (event) => {

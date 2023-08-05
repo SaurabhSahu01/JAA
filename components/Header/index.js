@@ -20,27 +20,6 @@ function Header() {
     const [userPic, setUserPic] = React.useState(null);
 
     React.useEffect(() => {
-        const uid = cookieCutter.get('uid');
-        const apiendpoint = `/api/sse?UID=${uid}`;
-        const eventSource = new EventSource(apiendpoint);
-    
-        eventSource.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          console.log(data.message);
-        };
-    
-        eventSource.onerror = (error) => {
-          console.error('SSE error:', error);
-          eventSource.close();
-        };
-    
-        // Clean up the EventSource when the component is unmounted
-        return () => {
-          eventSource.close();
-        };
-      }, []);
-    
-    React.useEffect(() => {
         if (cookieCutter.get('userToken')) {
             setUserToken(true);
         }

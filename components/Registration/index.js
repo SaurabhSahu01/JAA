@@ -63,7 +63,7 @@ const Registration = () => {
         }).then(res => res.json()).then(data => {
             //console.log(data)
             cookieCutter.set('profileSet', true);
-            changeMaxAge('profileSet', 3600);
+            changeMaxAge('profileSet', 30 * 24 * 3600);
             setimg(null);
             setvalue({
                 firstName: "",

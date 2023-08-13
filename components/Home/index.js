@@ -1,28 +1,21 @@
 import React from 'react'
 import Image from 'next/image'
 import cookieCutter from 'cookie-cutter';
+import { db } from '@/src/utils/firebase';
+import { doc, onSnapshot } from "firebase/firestore"
 
 function Home() {
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
-    const apiendpoint = `/api/getupdatedprofile?UID=${uid}`;
-    const eventSource = new EventSource(apiendpoint);
-
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      //console.log(data.message);
-      localStorage.setItem('profile', JSON.stringify(data.message));
-    };
-
-    eventSource.onerror = (error) => {
-      console.error('SSE error:', error);
-      eventSource.close();
-    };
-
-    // Clean up the EventSource when the component is unmounted
-    return () => {
-      eventSource.close();
-    };
+    if (uid) {
+      const profileRef = doc(db, 'users', uid, 'profile', 'profile');
+      const unsubscribe = onSnapshot(profileRef, snapshot => {
+        localStorage.setItem('profile', JSON.stringify(snapshot.data()));
+      });
+      return () =>{
+        unsubscribe();
+      }
+    }
   }, []);
   return (
     <div>

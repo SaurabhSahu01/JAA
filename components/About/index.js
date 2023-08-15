@@ -5,33 +5,42 @@ import MemberCard from './MemberCard';
 function About() {
   return (
     <>
-      <div className='w-11/12 mx-auto my-10  p-3 pt-2'>
-        <h1 className='text-3xl my-5 font-semibold'>About JAA</h1>
-        <div className='bg-white p-3 rounded-lg shadow-sm self-center flex flex-col md:flex-row w-full text-base font-normal'>
-          <p className='p-2 text-justify md:w-2/4'>Our JNU days are the common thread that binds us and being alumni of JNU is a natural continuation of that journey. We all should be connected and cherish the memories of the most important years of our lives spent in the environs of JNU. A major credit for our success in life is attributed to JNU and its unique way of formal and informal teaching, learning and training. Despite being settled in our respective routines and careers and striving for greater heights, we can never forget the contribution of JNU in shaping our lives. We must resolve to find time to pay back to our alma mater in a way which will make JNU a better place to live and study. The JNU Alumni Association (JAA) is a forum that can help connect you to your alma mater. JAA is dedicated to bringing together the alumni on a common platform and building a channel of personal and professional support for members through &apos;self-help&apos; offered from within the community. JAA is proud to have, as its alumni, a collective of more than 80,000 social scientists, scientists, civil servants, literary critics, media experts, foreign language experts, journalists, political leaders, social activists, technologists, managers and entrepreneurs, who have served and still contributing meaningfully to the growth and betterment of our society. This number needs to and will continue to grow. JAA, apart from serving as a base for information about the alumni, has been initiating and implementing programs and organizing events important for the alumni and the alma mater.</p>
+      <div className='w-full bg-white p-1 sm:p-3'>
+        <div className=' w-full sm:w-10/12 mx-auto p-3'>
+          <h1 className='text-3xl my-5 font-semibold'>About JAA</h1>
+          <div className='rounded-lg shadow-sm self-center flex flex-col md:flex-row w-full text-base font-normal'>
+            <p className='p-4 text-justify md:w-2/4 bg-[#F5F5F5] rounded-md'>
+              Our JNU days echo within us, weaving our paths and culminating in our esteemed status as JNU alumni. As we embark on a lifelong journey of learning, we remain connected, cherishing the unforgettable memories formed during our pivotal years at JNU. We owe a debt of gratitude to this institution, where formal and informal education shaped us into the individuals we are today.
+              <br />
+              <br />
+              To honor this debt, let's pledge to contribute our time and efforts to enhance our alma mater, ensuring JNU thrives as a beacon of knowledge and growth. Together, we can create a nurturing environment that elevates JNU to new heights of excellence. The Alumni Association of JNU (JAA) reconnects us with our cherished alma mater. JAA fosters a sense of community among alumni, offering personal and professional support through community-driven initiatives.</p>
 
-          <p className='p-2 my-2 md:mx-2 text-justify md:w-[50%]'>JNU is a leading national centre of excellence in higher education which aims to rank among the top universities of the world. JNU believes in excellence combined with social responsibility and commitment, and strives to become a benchmark for Indian universities. It is envisioned that the members of JAA will work as ambassadors of JNU and make it a global brand. JAA recognizes the alumni as important stakeholders in JNU&apos;s continuing quest to provide quality and meaningful education. It realises the enormous benefits that can be attained from the engagement and support of its alumni who have considerable expertise in diverse fields and can help identify strategic directions for JNU in the 21st century. One of the key objectives of JAA is also to expand its base of Life Members, who could be associated with JNU and the fellow alumni in various productive ways. Association of an alumnus with JNU as a Life Member of JAA serves as a bridge between the alumni community and the university. In this spirit, JAA exhorts the alumni to acquire Life Membership of JAA. Information about the same and the relevant process for acquiring membership have been provided in the website of JAA.</p>
-        </div>
-
-
-        <div className='mt-16 mx-6'>
-          <h1 className=' text-2xl font-semibold text-center py-4'>Executive Committee</h1>
-          <div className=' flex flex-wrap gap-2 items-center justify-center'>
-            {
-              exclusiveimg.map((data, index) => (
-                <MemberCard data={data} key={index} />
-              ))
-            }
+            <p className='p-4 mt-10 md:mt-0 md:ml-10 text-justify md:w-[50%] bg-[#F5F5F5] rounded-md'>Our esteemed alumni, including social scientists, scientists, civil servants, literary critics, media experts, foreign language specialists, journalists, political leaders, social activists, technologists, managers, and entrepreneurs, continue to make significant contributions to society's betterment. Together, we will expand our ranks and reinforce our impact.
+              <br />
+              <br />
+              JAA aims to broaden our base of Life Members, fostering enduring connections between alumni and JNU. Acquiring Life Membership serves as a testament to our continued association. We encourage all alumni to embark on this profound journey by obtaining detailed information on the JAA website.</p>
           </div>
 
-          <div className=' mt-16'>
-          <h1 className=' text-2xl font-semibold text-center py-4'>Development Committee</h1>
-            <div className=' flex flex-wrap gap-2 items-center justify-center'>
+
+          <div className='mt-16 mx-6'>
+            <h1 className=' text-3xl font-semibold text-center py-4 font-serif'>Executive Committee</h1>
+            <div className=' flex flex-wrap gap-1 md:gap-2 items-center justify-center'>
               {
-                developmentimg.map((data, index) => (
+                exclusiveimg.map((data, index) => (
                   <MemberCard data={data} key={index} />
                 ))
               }
+            </div>
+
+            <div className=' mt-16'>
+              <h1 className=' text-2xl font-semibold text-center py-4'>Development Committee</h1>
+              <div className=' flex flex-wrap gap-3 items-center justify-center'>
+                {
+                  developmentimg.map((data, index) => (
+                    <MemberCard data={data} key={index} />
+                  ))
+                }
+              </div>
             </div>
           </div>
         </div>

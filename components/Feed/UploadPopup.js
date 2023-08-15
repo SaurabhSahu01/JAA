@@ -6,6 +6,7 @@ function UploadPopup({ setWantShare }) {
     const [img, setimg] = React.useState(null);
     const [showImg, setShowImg] = React.useState(null);
     const [profileimg, setprofileimg] = React.useState(null);
+    const [name, setName] = React.useState(null);
 
     const fileAttached = (e) => {
         const file = e.target.files[0];
@@ -21,6 +22,7 @@ function UploadPopup({ setWantShare }) {
     React.useEffect(() => {
         if (localStorage.getItem('profile')) {
             setprofileimg(JSON.parse(localStorage.getItem('profile'))['photo']);
+            setName(JSON.parse(localStorage.getItem('profile'))["firstName"] + " " + JSON.parse(localStorage.getItem('profile'))["lastName"])
         }
     }, []);
 
@@ -37,7 +39,7 @@ function UploadPopup({ setWantShare }) {
                     <div className='w-full flex flex-col p-1 md:p-2'>
                         <div className='flex items-center gap-2'>
                             <img src={profileimg} className='w-8 h-8 rounded-full' alt="profile photo" />
-                            <p className=' font-semibold text-base'>Ankit Rowat</p>
+                            <p className='font-semibold text-base text-slate-600'>{name}</p>
                         </div>
                         <textarea className='w-full h-[20rem] outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans' rows={1} cols={33} placeholder='write something here'></textarea>
                     <div className={`${img ? 'block' : 'hidden'}`}>

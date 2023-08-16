@@ -3,6 +3,7 @@ import Image from 'next/image'
 import cookieCutter from 'cookie-cutter';
 import { db } from '@/src/utils/firebase';
 import { doc, onSnapshot } from "firebase/firestore"
+import secureLocalStorage from 'react-secure-storage';
 
 function Home() {
   React.useEffect(() => {
@@ -10,7 +11,7 @@ function Home() {
     if (uid) {
       const profileRef = doc(db, 'users', uid, 'profile', 'profile');
       const unsubscribe = onSnapshot(profileRef, snapshot => {
-        localStorage.setItem('profile', JSON.stringify(snapshot.data()));
+        secureLocalStorage.setItem('profile', JSON.stringify(snapshot.data()));
       });
       return () =>{
         unsubscribe();

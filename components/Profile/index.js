@@ -6,6 +6,7 @@ import { fields } from './Fields';
 import Input from './tags/Input';
 import Loader from '../common/Loader';
 import { useRouter } from 'next/router';
+import secureLocalStorage from 'react-secure-storage';
 
 const Profile = () => {
     const router = useRouter();
@@ -44,7 +45,7 @@ const Profile = () => {
         }).then((res) => {
             // console.log(res.data);
             if (res.data.set) {
-                localStorage.setItem('profile', JSON.stringify(res.data));
+                secureLocalStorage.setItem('profile', JSON.stringify(res.data));
                 const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = res.data;
                 setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
                 setIncomingImage(res.data.photo)
@@ -62,9 +63,9 @@ const Profile = () => {
             router.push('/registration');
         }
         else {
-            if (JSON.parse(localStorage.getItem('profile')) !== null) {
+            if (JSON.parse(secureLocalStorage.getItem('profile')) !== null) {
                 // handel it
-                const details = JSON.parse(localStorage.getItem('profile'));
+                const details = JSON.parse(secureLocalStorage.getItem('profile'));
                 const { dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school } = details;
                 setstate({ dob, firstName, gender, graduationYear, hostel, joiningYear, lastName, number, program, school });
                 setIncomingImage(details.photo)

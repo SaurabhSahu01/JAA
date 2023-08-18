@@ -2,9 +2,26 @@ import React, { useState } from 'react'
 import FeedUpload from './FeedUpload'
 import UploadPopup from './UploadPopup'
 import Post from './Post'
+import { db } from '@/src/utils/firebase';
+import { onSnapshot } from "firebase/firestore"
+import { collection } from 'firebase/firestore';
+
 function Feed() {
 
   const [wantShare, setWantShare] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  React.useEffect(() => {
+    onSnapshot(collection(db, "posts"), (snap) => {
+      const postData = [];
+      snap.forEach((doc) =>
+        postData.push({ ...doc.data(), id: doc.id })
+      );
+      setPosts(postData);
+    });
+  }, []);
+
+  console.log(posts)
 
   return (
     <>
@@ -13,12 +30,20 @@ function Feed() {
         <div className=' mx-auto lg:mx-0 w-11/12'>
           <FeedUpload setWantShare={setWantShare} />
           <div className='w-full'>
+          {
+            posts.map((post, index)=>{
+              console.log(post)
+              return(
+                <Post data={post} key={index} />
+              )
+            })
+          }
+            {/* <Post />
             <Post />
             <Post />
             <Post />
             <Post />
-            <Post />
-            <Post />
+            <Post /> */}
           </div>
         </div>
         {/* <div className='fixed ml-[38rem] mt-0'>

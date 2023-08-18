@@ -3,7 +3,9 @@ import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline'
 import { HandThumbUpIcon } from '@heroicons/react/24/solid'
 
 
-const Post = () => {
+const Post = ({data}) => {
+
+    const {photo, content, date} = data;
 
     return (
         <div className='w-full h-fit bg-white rounded-xl px-4 my-4 flex flex-col items-start justify-center'>
@@ -16,11 +18,11 @@ const Post = () => {
             </div>
 
             <div className='w-full h-[20rem] text-left'>
-                <img src="/gallery/jnu/1649242971867.jpg" className='max-h-full w-full object-cover' alt="" />
+                <img src={photo} className='max-h-full w-full object-cover' alt="" />
             </div>
 
             <div className='w-full text-left'>
-                <p className='font-medium text-lg'>Some exciting news!</p>
+                <p className='font-medium text-lg'>{content}</p>
                 {/* <p className=' text-sm font-normal'>Jawaharlal Nehru University </p>
                 <p className=' text-sm font-normal' >School of Computer & Systems Sciences (SC&SS) </p>
                 <p className=' text-sm font-normal'>M. Tech, School of Computer & Systems Sciences (SC&SSS)</p>

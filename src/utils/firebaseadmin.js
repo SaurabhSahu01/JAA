@@ -48,7 +48,7 @@ export async function getUsers() {
 
 export async function register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo) {
     // console.log("photo", photo)
-    if(photo !== null && typeof(photo) === 'string'){
+    if (photo !== null && typeof (photo) === 'string') {
         console.log("photo is a string");
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
@@ -112,5 +112,41 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
             graduationYear: graduationYear[0],
             photo: null
         }, { merge: true })
+    }
+}
+
+export async function addpost(userid, postid, content, date, photo) {
+    if (photo !== null) {
+        console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
+        const bucket = storage.bucket();
+        const destinationPath = photo[0].originalFilename;
+        console.log("destinationPath = ", destinationPath)
+        destinationPath && await bucket.upload(photo[0].filepath, {
+            destination: destinationPath,
+            metadata: {
+                contentType: photo[0].mimetype
+            }
+        });
+
+        const downloadURL = destinationPath && await bucket.file(destinationPath).getSignedUrl({
+            action: "read",
+            expires: '03-01-2500'
+        })
+        return db.collection('posts').doc(postid).set({
+            postedBy: userid,
+            postId: postid,
+            content: content,
+            date: date,
+            photo: downloadURL[0]
+        })
+    }
+    else {
+        return db.collection('posts').doc(postid).set({
+            postedBy: userid,
+            postId: postid,
+            content: content,
+            date: date,
+            photo: null
+        })
     }
 }

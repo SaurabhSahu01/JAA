@@ -1,6 +1,7 @@
 import React from 'react'
 import { PhotoIcon } from "@heroicons/react/24/solid"
 import { XMarkIcon } from "@heroicons/react/24/solid"
+import secureLocalStorage from 'react-secure-storage';
 
 function UploadPopup({ setWantShare }) {
     const [img, setimg] = React.useState(null);
@@ -20,9 +21,9 @@ function UploadPopup({ setWantShare }) {
         }
     }
     React.useEffect(() => {
-        if (localStorage.getItem('profile')) {
-            setprofileimg(JSON.parse(localStorage.getItem('profile'))['photo']);
-            setName(JSON.parse(localStorage.getItem('profile'))["firstName"] + " " + JSON.parse(localStorage.getItem('profile'))["lastName"])
+        if (secureLocalStorage.getItem('profile')) {
+            setprofileimg(JSON.parse(secureLocalStorage.getItem('profile'))['photo']);
+            setName(JSON.parse(secureLocalStorage.getItem('profile'))["firstName"] + " " + JSON.parse(secureLocalStorage.getItem('profile'))["lastName"])
         }
     }, []);
 

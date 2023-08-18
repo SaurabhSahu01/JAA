@@ -1,12 +1,13 @@
 import React from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import secureLocalStorage from 'react-secure-storage';
 
 function FeedUpload({setWantShare}) {
 
     const [img, setimg] = React.useState(null);
     React.useEffect(() => {
-        if (localStorage.getItem('profile')) {
-            setimg(JSON.parse(localStorage.getItem('profile'))['photo']);
+        if (secureLocalStorage.getItem('profile')) {
+            setimg(JSON.parse(secureLocalStorage.getItem('profile'))['photo']);
         }
     }, []);
 

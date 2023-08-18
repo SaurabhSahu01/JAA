@@ -20,7 +20,7 @@ const Post = () => {
             </div>
 
             <div className='w-full text-left'>
-            <p className='font-medium text-lg'>Some exciting news!</p>
+                <p className='font-medium text-lg'>Some exciting news!</p>
                 {/* <p className=' text-sm font-normal'>Jawaharlal Nehru University </p>
                 <p className=' text-sm font-normal' >School of Computer & Systems Sciences (SC&SS) </p>
                 <p className=' text-sm font-normal'>M. Tech, School of Computer & Systems Sciences (SC&SSS)</p>
@@ -29,16 +29,20 @@ const Post = () => {
 
             <hr className='w-full h-[2px] bg-black/30 my-2' />
 
-            <div className='w-fit flex my-2 ml-auto'>
+            <div className='w-full flex justify-around items-center py-2'>
                 <div className='w-fit flex items-center mx-2 text-gray-600 hover:text-blue-500 cursor-pointer'>
                     <HandThumbUpIcon className='w-7 h-7' />
-                    {/* <span>Like</span> */}
+                    <span>Like</span>
                 </div>
                 <div className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 hover:text-blue-400'>
                     <ChatBubbleBottomCenterIcon className='w-7 h-7' />
-                    {/* <span>Like</span> */}
+                    <span>Comment</span>
                 </div>
             </div>
+            {/* <hr />
+            <div className=''>
+                 comments 
+             </div> */}
         </div>
     )
 }

@@ -9,12 +9,13 @@ const Post = ({data}) => {
 
     return (
         <div className='w-full h-fit bg-white rounded-xl px-4 my-4 flex flex-col items-start justify-center'>
-            <div className='flex items-center my-2'>
+            <div className='relative flex items-center my-2 w-full'>
                 <img src={profile.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full' />
                 <div className=''>
                     <p className=' font-semibold text-base'>{profile.firstName + " " + profile.lastName}</p>
                     <p className=' text-xs font-normal'>{profile.program.charAt(0).toUpperCase() + profile.program.slice(1)+" "+profile.joiningYear}</p>
                 </div>
+                <p className='absolute bottom-0 right-1 font-light text-[10px]'>{date}</p>
             </div>
 
             {photo && <div className='w-full h-[20rem] text-left'>

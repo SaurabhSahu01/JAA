@@ -5,7 +5,7 @@ import ImageViewer from 'react-simple-image-viewer';
 
 
 const Post = ({ data }) => {
-    console.log(data);
+    //console.log(data);
     const { photo, content, date, profile } = data;
     const [currentImage, setCurrentImage] = React.useState(0);
     const [isViewerOpen, setIsViewerOpen] = React.useState(false);

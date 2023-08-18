@@ -42,16 +42,11 @@ function UploadPopup({ setWantShare }) {
             const formData = new FormData();
             formData.append('photo', img);
             formData.append('content', content);
-            const currentDate = new Date();
+            const tempdate = new Date().toLocaleString().split(',');
+            const currentDate = tempdate[1] + " " + tempdate[0];
+            // console.log(currentDate);
 
-            // Use the toLocaleString() method with options
-            const dateString = currentDate.toLocaleString('en-GB', {
-                year: '2-digit',
-                month: '2-digit',
-                day: '2-digit',
-                timeZone: 'Asia/Kolkata'
-            });
-            formData.append('date', dateString);
+            formData.append('date', currentDate);
 
             await fetch('/api/addpost', {
                 method: "POST",

@@ -34,8 +34,9 @@ function UploadPopup({ setWantShare }) {
     }
 
     const postShare = async () => {
-        setLoading(true);
+
         if (content || img) {
+            setLoading(true);
             // post share
             // console.log(img, content);
             const formData = new FormData();

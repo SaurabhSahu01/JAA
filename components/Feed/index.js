@@ -21,7 +21,7 @@ function Feed() {
     });
   }, []);
 
-  console.log(posts)
+  // console.log(posts)
 
   return (
     <>
@@ -32,7 +32,7 @@ function Feed() {
           <div className='w-full'>
           {
             posts.map((post, index)=>{
-              console.log(post)
+              {/* console.log(post) */}
               return(
                 <Post data={post} key={index} />
               )

@@ -35,7 +35,7 @@ async function handler(req, res) {
                         const { photo } = files;
                         const postid = uid.slice(0, 7) + new Date().getTime();
                         // console.log(image2.originalFilename, image2.filepath, image2.mimetype)
-                        addpost(uid, postid, content, date, profile.data, photo).then(response => {
+                        addpost(uid, postid, content[0], date[0], profile.data, photo).then(response => {
                             console.log("image added", response);
                             res.status(200).json({
                                 status: 200,
@@ -52,7 +52,7 @@ async function handler(req, res) {
                     else {
                         const { content, date } = fields;
                         const postid = uid.slice(0, 7) + new Date().getTime();
-                        addpost(uid, postid, content, date, profile.data, null).then(response => {
+                        addpost(uid, postid, content[0], date[0], profile.data, null).then(response => {
                             console.log("image added", response);
                             res.status(200).json({
                                 status: 200,

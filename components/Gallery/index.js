@@ -41,11 +41,11 @@ function PhotoGallery() {
 
   return (
     <div>
-      <div className=' flex flex-col md:flex-row m-4'>
-        <button className={`p-1 w-fit border-solid border-b-2 ${category === "" ? " bg-[#1B2D56] text-white ":"" } border-gray-400  rounded-md m-4`} onClick={() => setcategory('')}>Show All</button>
-        <button className={`p-1 w-fit border-solid border-b-2 ${category === "events" ? " bg-[#1B2D56] text-white ":"" } border-gray-400  rounded-md m-4`} onClick={() => setcategory('events')}>Events</button>
-        <button className={`p-1 w-fit border-solid border-b-2 border-gray-400 ${category === "jnu" ? " bg-[#1B2D56] text-white ":"" }  rounded-md m-4`} onClick={() => setcategory('jnu')}>jnu</button>
-        <button className={`p-1 w-fit border-solid border-b-2 border-gray-400 ${category === "alumni meets" ? " bg-[#1B2D56] text-white ":"" }  rounded-md m-4`} onClick={() => setcategory('alumni meets')}>Alumni Meets</button>
+      <div className=' flex flex-wrap gap-2 m-4'>
+        <button className={`p-1 w-fit border-solid border-b-2 ${category === "" ? " bg-[#1B2D56] text-white ":"" } border-gray-400  rounded-md m-2 p-2`} onClick={() => setcategory('')}>Show All</button>
+        <button className={`p-1 w-fit border-solid border-b-2 ${category === "events" ? " bg-[#1B2D56] text-white ":"" } border-gray-400  rounded-md m-2 p-2`} onClick={() => setcategory('events')}>Events</button>
+        <button className={`p-1 w-fit border-solid border-b-2 border-gray-400 ${category === "jnu" ? " bg-[#1B2D56] text-white ":"" }  rounded-md m-2 p-2`} onClick={() => setcategory('jnu')}>jnu</button>
+        <button className={`p-1 w-fit border-solid border-b-2 border-gray-400 ${category === "alumni meets" ? " bg-[#1B2D56] text-white ":"" }  rounded-md m-2 p-2`} onClick={() => setcategory('alumni meets')}>Alumni Meets</button>
       </div>
 
       <div className=' flex flex-wrap justify-center'>

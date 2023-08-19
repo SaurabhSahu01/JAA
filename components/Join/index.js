@@ -1,8 +1,17 @@
 import React from 'react'
+import Typewriter from 'typewriter-effect';
 
 function Join() {
   return (
-    <div className='text-2xl font-bold'>Coming Soon...</div>
+    <>
+      <p className='text-3xl font-bold text-center'><Typewriter
+        options={{
+          strings: ['Blue Tick', 'Highlighted Comments', 'Stay Updated with Events'],
+          autoStart: true,
+          loop: true,
+        }}
+      /></p>
+    </>
   )
 }
 

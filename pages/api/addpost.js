@@ -1,7 +1,6 @@
 import apimiddleware from "./apimiddleware";
 import formidable from "formidable"
 import { addpost } from "@/src/utils/firebaseadmin";
-import { db } from "@/src/utils/firebaseadmin";
 
 export const config = {
     api: {

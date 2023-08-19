@@ -68,22 +68,18 @@ const Post = ({ data }) => {
                 <p className=' text-sm font-normal'> 2020 - 2024</p> */}
             </div>
 
-            {/* <hr className='w-full h-[2px] bg-black/30 my-2' /> */}
+            <hr className='w-full h-[2px] bg-black/30 my-2' />
 
-            {/* <div className='w-full flex justify-around items-center py-2'>
-                <div className='w-fit flex items-center mx-2 text-gray-600 hover:text-blue-500 cursor-pointer'>
-                    <HandThumbUpIcon className='w-7 h-7' />
-                    <span>Like</span>
+            <div className='w-full flex justify-around items-center py-2'>
+                <div className='w-fit flex justify-center items-center gap-2 mx-2 text-gray-600 cursor-pointer'>
+                    <HandThumbUpIcon className='w-7 h-7 hover:text-blue-400' />
+                    <span>0 Likes</span>
                 </div>
-                <div className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 hover:text-blue-400'>
+                <div className='w-fit flex justify-center items-center gap-2 mx-2 cursor-pointer text-gray-600'>
                     <ChatBubbleBottomCenterIcon className='w-7 h-7' />
-                    <span>Comment</span>
+                    <span>0 Comments</span>
                 </div>
-            </div> */}
-            {/* <hr />
-            <div className=''>
-                 comments 
-             </div> */}
+            </div>
         </div>
     )
 }

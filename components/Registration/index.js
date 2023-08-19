@@ -49,6 +49,9 @@ const Registration = () => {
         if (img) {
             formData.append('photo', selectImage);
         }
+        else{
+            formData.append('photo', 'null');
+        }
         Object.keys(state).forEach((key) => {
             //console.log(key, state[key])
             formData.append(key, state[key]);

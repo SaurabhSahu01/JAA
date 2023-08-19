@@ -202,8 +202,8 @@ const Profile = () => {
                                         isDisable={isdisable}
                                     >
                                         <option className=' text-black' value="">Select Gender</option>
-                                        <option className=' text-black' value="male">Male</option>
-                                        <option className=' text-black' value="female">Female</option>
+                                        <option className=' text-black' value="Male">Male</option>
+                                        <option className=' text-black' value="Female">Female</option>
                                     </select>}
                             </div>
                         </div>
@@ -251,7 +251,7 @@ const Profile = () => {
                                         </div>
                                         <div className='relative m-3 bg-gray-50 rounded-md p-2 w-full'>
                                             <p className='absolute -top-5 p-1 left-2 font-normal text-xs text-gray-900'>{data.leble}</p>
-                                            {data.tag === "select" ? <Select onChangeHandler={onChangeHandler} data={data} state={state} isDisable={isdisable} /> :
+                                            {data.option ? <Select onChangeHandler={onChangeHandler} data={data} state={state} isDisable={isdisable} /> :
                                                 <Input data={data} onChangeHandler={onChangeHandler} state={state} isDisable={isdisable} />}
                                         </div>
                                     </div>

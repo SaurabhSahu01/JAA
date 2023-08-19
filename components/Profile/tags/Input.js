@@ -5,8 +5,8 @@ const Input = ({data, state, isDisable, onChangeHandler}) => {
     return (
         <input
             type={data.type}
-            id={data.field}
-            value={state[data.field]}
+            id={data.id}
+            value={state[data.id]}
             placeholder={data.placeholder}
             className={`text-black  rounded-sm bg-transparent block w-full px-5 py-2  outline-none border-none`}
             autoComplete="off"

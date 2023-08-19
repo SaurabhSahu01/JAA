@@ -13,7 +13,8 @@ function FeedUpload({setWantShare}) {
 
     return (
         <div className='w-full flex items-center gap-1 mt-2'>
-            <img src={`${img}`} alt="profile pic" className='h-[3rem] w-[3rem] rounded-full object-cover hidden  sm:block' />
+            {img ? <img src={`${img}`} alt="profile pic" className='h-[3rem] w-[3rem] rounded-full object-cover hidden  sm:block' /> :
+            <img src='/icons/profileIcon.png'  className='w-[3rem] h-[3rem] rounded-full' />}
             {/* <div className='w-full relative xs:ml-2'>
                 <input
                     type="text"

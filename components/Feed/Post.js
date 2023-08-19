@@ -68,9 +68,9 @@ const Post = ({ data }) => {
                 <p className=' text-sm font-normal'> 2020 - 2024</p> */}
             </div>
 
-            <hr className='w-full h-[2px] bg-black/30 my-2' />
+            {/* <hr className='w-full h-[2px] bg-black/30 my-2' /> */}
 
-            <div className='w-full flex justify-around items-center py-2'>
+            {/* <div className='w-full flex justify-around items-center py-2'>
                 <div className='w-fit flex items-center mx-2 text-gray-600 hover:text-blue-500 cursor-pointer'>
                     <HandThumbUpIcon className='w-7 h-7' />
                     <span>Like</span>
@@ -79,7 +79,7 @@ const Post = ({ data }) => {
                     <ChatBubbleBottomCenterIcon className='w-7 h-7' />
                     <span>Comment</span>
                 </div>
-            </div>
+            </div> */}
             {/* <hr />
             <div className=''>
                  comments 

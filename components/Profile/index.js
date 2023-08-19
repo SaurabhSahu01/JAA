@@ -60,7 +60,12 @@ const Profile = () => {
     useEffect(() => {
 
         if (!cookieCutter.get('profileSet')) {
-            router.push('/registration');
+            if (!cookieCutter.get('refreshToken') || !cookieCutter.get('userToken') || !cookieCutter.get('uid')) {
+                router.push('/login');
+            }
+            else {
+                router.push('/registration');
+            }
         }
         else {
             if (JSON.parse(secureLocalStorage.getItem('profile')) !== null) {
@@ -106,7 +111,7 @@ const Profile = () => {
             console.log("new image is chosen")
             formData.append('photo', img);
         }
-        else if(deletePic){
+        else if (deletePic) {
             console.log("image is removed")
             formData.append('photo', img);
         }
@@ -138,7 +143,7 @@ const Profile = () => {
         setDisable(true);
     }
 
-    const deleteImg = () =>{
+    const deleteImg = () => {
         setDeletePic(true);
         setSelectImg(null);
         setImg(null);
@@ -212,7 +217,7 @@ const Profile = () => {
                         </div>
                         {
                             !isdisable && (selectImg || incomingImage) &&
-                            <div onClick={()=>deleteImg()} className=' absolute -bottom-24 right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-14 md:right-8 bg-white p-1 hover:text-red-800 rounded-full cursor-pointer'>
+                            <div onClick={() => deleteImg()} className=' absolute -bottom-24 right-[50%] translate-x-[50%] md:translate-x-0 md:-bottom-14 md:right-8 bg-white p-1 hover:text-red-800 rounded-full cursor-pointer'>
                                 <TrashIcon className='w-4 h-4' />
                             </div>
                         }

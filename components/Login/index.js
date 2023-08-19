@@ -191,7 +191,7 @@ function Login() {
                             cookieCutter.set('refreshToken', user.refreshToken);
                             changeMaxAge('userToken', 30 * 24 * 3600);
                             changeMaxAge('uid', 30 * 24 * 3600);
-                            changeMaxAge('refreshToken', 30 * 24 * 3600);
+                            changeMaxAge('refreshToken',30 * 24 * 3600);
                             fetch('/api/adduser', {
                                 method: "POST",
                                 headers: {

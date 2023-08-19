@@ -8,8 +8,8 @@ export const config = {
     },
 }
 
-async function handler(req, res){
-    if(req.method === "POST"){
+async function handler(req, res) {
+    if (req.method === "POST") {
         const form = formidable({ multiples: false });
         const { uid } = req.body;
 
@@ -23,7 +23,7 @@ async function handler(req, res){
                 return;
             }
             else {
-                if(fields && files.photo){
+                if (fields && files.photo) {
                     const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear } = fields;
                     const { photo } = files;
                     // console.log(image2.originalFilename, image2.filepath, image2.mimetype)
@@ -41,28 +41,45 @@ async function handler(req, res){
                         })
                     })
                 }
-                else{
+                else {
                     const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo } = fields;
                     //console.log(photo[0]);
                     //console.log(firstName);
-                    register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo[0]).then(response => {
-                        console.log("image added", response);
-                        res.status(200).json({
-                            status: 200,
-                            message: 'profile updated successfully'
-                        });
-                    }).catch(err => {
-                        console.log("error uploading the image : ", err);
-                        res.status(504).json({
-                            status: 504,
-                            message: "error registring the user"
+                    if (photo[0] === 'null') {
+                        register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, null).then(response => {
+                            console.log("image added", response);
+                            res.status(200).json({
+                                status: 200,
+                                message: 'profile updated successfully'
+                            });
+                        }).catch(err => {
+                            console.log("error uploading the image : ", err);
+                            res.status(504).json({
+                                status: 504,
+                                message: "error registring the user"
+                            })
                         })
-                    })
+                    }
+                    else {
+                        register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo[0]).then(response => {
+                            console.log("image added", response);
+                            res.status(200).json({
+                                status: 200,
+                                message: 'profile updated successfully'
+                            });
+                        }).catch(err => {
+                            console.log("error uploading the image : ", err);
+                            res.status(504).json({
+                                status: 504,
+                                message: "error registring the user"
+                            })
+                        })
+                    }
                 }
             }
         });
     }
-    else{
+    else {
         res.status(405).json({
             status: 405,
             message: "only POST allowed"

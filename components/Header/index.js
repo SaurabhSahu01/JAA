@@ -12,12 +12,14 @@ import { PowerIcon } from "@heroicons/react/24/solid"
 import { UserIcon } from "@heroicons/react/24/solid"
 import cookieCutter from "cookie-cutter"
 import { deleteCookie } from '@/src/utils/login'
+import secureLocalStorage from 'react-secure-storage';
 
 function Header() {
     const router = useRouter();
     const [userDropdown, setUserDropdown] = React.useState(false);
     const [userToken, setUserToken] = React.useState(false);
     const [userPic, setUserPic] = React.useState(null);
+    
 
     React.useEffect(() => {
         if (cookieCutter.get('userToken')) {
@@ -29,7 +31,7 @@ function Header() {
     }, [])
 
     React.useEffect(() => {
-        if (cookieCutter.get('profileSet') && !localStorage.getItem('profile')) {
+        if (cookieCutter.get('profileSet') && !secureLocalStorage.getItem('profile')) {
             fetch('/api/getprofile', {
                 method: "GET",
                 headers: {
@@ -40,12 +42,12 @@ function Header() {
                 .then(res => res.json())
                 .then(data => {
                     //console.log(data.data);
-                    localStorage.setItem('profile', JSON.stringify(data.data))
+                    secureLocalStorage.setItem('profile', JSON.stringify(data.data))
                 })
                 .catch(err => console.log("some error in header, ", err))
         }
-        if (localStorage.getItem('profile')) {
-            const profilepic = JSON.parse(localStorage.getItem('profile')).photo;
+        if (secureLocalStorage.getItem('profile')) {
+            const profilepic = JSON.parse(secureLocalStorage.getItem('profile')).photo;
             setUserPic(profilepic);
         }
     }, [])
@@ -176,7 +178,7 @@ function Header() {
                                         deleteCookie('uid');
                                         deleteCookie('refreshToken');
                                         deleteCookie('profileSet');
-                                        localStorage.clear();
+                                        secureLocalStorage.clear();
                                         router.push('/')
                                         setTimeout(() => {
                                             window.location.reload();

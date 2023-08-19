@@ -2,7 +2,7 @@ import React from 'react'
 
 function Join() {
   return (
-    <div>Join</div>
+    <div className='text-2xl font-bold'>Coming Soon...</div>
   )
 }
 

@@ -1,31 +1,56 @@
-import React from 'react'
-import JNUNews from './JNUNews'
-import { newsAPI } from '@/firebase.config';
+import React, { useState } from 'react'
+import FeedUpload from './FeedUpload'
+import UploadPopup from './UploadPopup'
+import Post from './Post'
+import { db } from '@/src/utils/firebase';
+import { onSnapshot } from "firebase/firestore"
+import { collection } from 'firebase/firestore';
 
 function Feed() {
-  const [mount, setMount] = React.useState(false);
+
+  const [wantShare, setWantShare] = useState(false);
+  const [posts, setPosts] = useState([]);
+
   React.useEffect(() => {
-    if (!localStorage.getItem('JNUNews')) {
-      console.log("if")
-      // fetch from the API and store the data in the localStorage
-      fetch(`https://newsapi.org/v2/everything?q=JNU&from=2023-06-27&sortBy=publishedAt&apiKey=${newsAPI}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          localStorage.setItem('JNUNews', JSON.stringify(data.articles));
-          setMount(true);
-        })
-        .catch(err => {
-          console.log("error fetching the newsAPI, ", err);
-        })
-    }
-    else{
-      setMount(true);
-    }
-  }, [])
+    onSnapshot(collection(db, "posts"), (snap) => {
+      const postData = [];
+      snap.forEach((doc) =>
+        postData.push({ ...doc.data(), id: doc.id })
+      );
+      setPosts(postData);
+    });
+  }, []);
+
+  // console.log(posts)
+
   return (
-    mount && <>
-      <JNUNews />
+    <>
+      {wantShare && <UploadPopup setWantShare={setWantShare} />}
+      <div className='max-w-[45rem] flex items-center mx-auto ' >
+        <div className=' mx-auto lg:mx-0 w-11/12'>
+          <FeedUpload setWantShare={setWantShare} />
+          <div className='w-full'>
+          {
+            posts.map((post, index)=>{
+              {/* console.log(post) */}
+              return(
+                <Post data={post} key={index} />
+              )
+            })
+          }
+            {/* <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post /> */}
+          </div>
+        </div>
+        {/* <div className='fixed ml-[38rem] mt-0'>
+        <p>Your Posts</p>
+        <p>Liked Posts</p>
+      </div> */}
+      </div>
     </>
   )
 }

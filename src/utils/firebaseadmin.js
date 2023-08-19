@@ -115,7 +115,7 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
     }
 }
 
-export async function addpost(userid, postid, content, date, profile, photo) {
+export async function addpost(userid, postid, content, date, photo) {
     if (photo !== null) {
         console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
         const bucket = storage.bucket();
@@ -137,7 +137,6 @@ export async function addpost(userid, postid, content, date, profile, photo) {
             postId: postid,
             content: content,
             date: date,
-            profile: profile,
             photo: downloadURL[0]
         })
     }
@@ -147,7 +146,6 @@ export async function addpost(userid, postid, content, date, profile, photo) {
             postId: postid,
             content: content,
             date: date,
-            profile: profile,
             photo: null
         })
     }

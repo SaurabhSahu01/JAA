@@ -1,12 +1,14 @@
 import Link from 'next/link';
-import React from 'react'
+import React from 'react';
+import cookieCutter from "cookie-cutter";
 
 function Contact() {
   const [state, setvalue] = React.useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    message: "",
+    'firstName': "",
+    'lastName': "",
+    'number':"",
+    'email': "",
+    'message': "",
   });
 
   const handleChange = (e) => {
@@ -15,9 +17,24 @@ function Contact() {
     setvalue({ ...state, [id]: value });
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(state);
+
+    await fetch('/api/contact', {
+      method: "POST",
+      headers: {
+        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(state),
+    }).then((res) => { return res.json() }).then((res) => {
+      // setLoading(false);
+      console.log(res)
+    }).catch((err) => {
+      // setLoading(false);
+      console.log(err);
+    });
   }
 
   return (
@@ -89,7 +106,7 @@ function Contact() {
             </div>
 
             <div className='flex flex-col m-2 mx-2 min-w-full'>
-              <label className='text-sm py-1' htmlFor="mobile">Mobile</label>
+              <label className='text-sm py-1' htmlFor="number">Mobile</label>
               <input className='border-b-2 bg-transparent px-2 py-1 enabled:hover:border-[#1B2D56] focus:outline-none' onChange={handleChange} value={state.number} id='number' type="tel" required />
             </div>
 

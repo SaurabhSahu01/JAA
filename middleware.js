@@ -15,9 +15,6 @@ export default async function middleware(req) {
     if(userToken && refreshToken && (profileSet?.value === 'true') && (url.includes('/registration'))){
         return NextResponse.redirect(`${domain}/`);
     }
-    if(userToken && refreshToken && (profileSet?.value === 'false') && ((url.includes('/feeds') || (url.includes('/gallery') || (url.includes('/join') || url.includes('/jobs') || url.includes('messages')))))){
-        return NextResponse.redirect(`${domain}/registration`);
-    }
     if (!userToken && !refreshToken && (url.includes('/feeds') || url.includes('/jobs') || url.includes('/messages') || url.includes('/join'))) {
         return NextResponse.redirect(`${domain}/login`);
     }

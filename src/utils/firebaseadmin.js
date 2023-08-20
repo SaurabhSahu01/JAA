@@ -153,3 +153,42 @@ export async function addpost(userid, postid, content, date, photo) {
         })
     }
 }
+
+export async function verificationMethod(uid, name, email, mobile, image1, image2){
+    console.log("image1",image1[0].mimetype);
+    console.log("image2", image2[0].mimetype);
+    const bucket = storage.bucket();
+    const destinationPath1 = image1[0].originalFilename;
+    const destinationPath2 = image2[0].originalFilename;
+
+    await bucket.upload(image1[0].filepath, {
+        destination: destinationPath1,
+        metadata: {
+            contentType: image1[0].mimetype
+        }
+    });
+    await bucket.upload(image2[0].filepath, {
+        destination: destinationPath2,
+        metadata: {
+            contentType: image2[0].mimetype
+        }
+    });
+
+    const downloadURL1 = await bucket.file(destinationPath1).getSignedUrl({
+        action: "read",
+        expires: '03-01-2500'
+    })
+    const downloadURL2 = await bucket.file(destinationPath2).getSignedUrl({
+        action: "read",
+        expires: '03-01-2500'
+    })
+    
+    return db.collection('verification').doc(uid).set({
+        uid: uid,
+        name: name,
+        email: email,
+        mobile: mobile,
+        image1: downloadURL1[0],
+        image2: downloadURL2[0]
+    })
+}

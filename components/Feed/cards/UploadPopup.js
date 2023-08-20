@@ -97,7 +97,7 @@ function UploadPopup({ setWantShare }) {
 
                             ></textarea>
                             <div className={`${img ? 'block' : 'hidden'}`}>
-                                {img && <img src={showImg} className='w-[5rem] h-[5rem] aspect-aut0 h-full object-center mx-auto' alt="" />}
+                                {img && <img src={showImg} className='w-[5rem] aspect-aut0 h-full object-center mx-auto' alt="" />}
                             </div>
                         </div>
                     </div>

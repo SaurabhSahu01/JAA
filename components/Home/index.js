@@ -185,7 +185,7 @@ function Home() {
               <div>
                 <h4 className="text-lg font-bold">Jyoti Kumar Singh</h4>
                 <p className="mt-1">
-                  Meet the dynamic force behind the JNU Alumni Association (Registered) - Mr. Jyoti Kumar Singh! A trailblazing visionary, he ignited the association's spark, setting it on a remarkable journey of growth and connection. What's truly captivating is how he initially steered this ship solo, channeling his passion into every aspect. As the association blossomed, it became a magnet for like-minded souls, eager to contribute and share in his dream. Mr. Singh's journey showcases the incredible allure of one person's vision, which ignited a fire that now unites and inspires many!
+                  Meet the dynamic force behind the JNU Alumni Association (Registered) - Mr. Jyoti Kumar Singh! A trailblazing visionary, he ignited the association&apos;s spark, setting it on a remarkable journey of growth and connection. What&apos;s truly captivating is how he initially steered this ship solo, channeling his passion into every aspect. As the association blossomed, it became a magnet for like-minded souls, eager to contribute and share in his dream. Mr. Singhlet&apos;s journey showcases the incredible allure of one personlet&apos;s vision, which ignited a fire that now unites and inspires many!
                 </p>
               </div>
             </div>

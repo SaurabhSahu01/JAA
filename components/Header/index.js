@@ -121,7 +121,7 @@ function Header() {
                     </li>
                     <li>
                         {
-                            router.pathname === "/jobs" ?
+                            router.pathname === "/join" ?
                                 <Link href="/join">
                                     <div className='flex flex-col justify-center items-center'>
                                         <CheckBadgeIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />

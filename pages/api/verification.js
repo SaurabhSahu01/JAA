@@ -1,6 +1,7 @@
 import apimiddleware from "./apimiddleware";
 import formidable from "formidable"
 import { verificationMethod } from "@/src/utils/firebaseadmin";
+import { db } from "@/src/utils/firebaseadmin";
 
 export const config = {
     api: {
@@ -28,10 +29,18 @@ async function handler(req, res){
                     const { image1, image2 } = files;
                     
                     verificationMethod(uid, name[0], email[0], mobile[0], image1, image2).then(response => {
-                        console.log('verificatin done');
-                        res.status(200).json({
-                            message: 'verification done'
-                        });
+                        // console.log('verificatin done');
+                        db.collection('users').doc(uid).set({
+                            verified: 'pending'
+                        }, {merge: true}).then(response => {
+                            res.status(200).json({
+                                message: 'verification status updated'
+                            });
+                        }).catch(err => {
+                            res.status(504).json({
+                                message: "verification status cannot be updated"
+                            })
+                        })
                     }).catch(err => {
                         console.log("error uploading the image : ", err);
                         res.status(504).json({

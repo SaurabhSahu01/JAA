@@ -1,57 +1,57 @@
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
-import {BuildingOffice2Icon} from "@heroicons/react/24/outline";
-import {PhoneIcon, CalendarDaysIcon, BookOpenIcon} from "@heroicons/react/24/outline";
+import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
+import { PhoneIcon, CalendarDaysIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 
 export const fields = [
     {
-        icon: BuildingOffice2Icon, leble: "School", field: "school", tag: "select", option: [
-            { value: "", text: "Select School" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
-            { value: "soe", text: "School of Engineering" },
+        icon: BuildingOffice2Icon, label: "school", field: "Select School", id: "school", option: [""
+            , "Atal Bihari Vajapayee School Of Management And Entrepreneurship", "Centre For The Study Of Law And Governance"
+            , "Centre For Sanskrit Studies"
+            , "School of International studies"
+            , "School Of Arts & Aesthetics"
+            , "School Of Biotechnology"
+            , "School Of Computational And Integrative Sciences"
+            , "Special Centre For Molecular Medicine"
+            , "Special Centre For Nanoscience"
+            , "School Of Computer And Systems Sciences"
+            , "School Of Environmental Sciences"
+            , "School Of Physical Sciences"
+            , "School Of International Studies-Centre For European Studies"
+            , "School Of Life Sciences"
+            , "School of Engineering"
+            , "School of languages"
         ]
     },
     {
-        icon: BookOpenIcon, leble: "Program", field: "program", tag: "select", option: [
-            { value: "", text: "Select Program" },
-            { value: "btech", text: "B.Tech" },
-            { value: "bsc", text: "B.Sc" },
-            { value: "ba", text: "B.Art" },
-        ]
+        icon: BookOpenIcon, label: "Program", field: "Select Program", id: "program", option: ["", "B.Tech", "M.Tech", "M.Sc", "B.A", "M.A", "PHD"],
     },
-    { icon: PhoneIcon, leble: "Mobile", field: "number", tag: "input", type:"number" },
+    { icon: PhoneIcon, leble: "Mobile", id: "number", tag: "input", type: "number" },
     {
-        icon: BuildingOfficeIcon, leble: "Hostel", field: "hostel", tag: "select", option: [
-            { value: "", text: "Select Hostel" },
-            { value: "mahimandvi", text: "Mahi-Mandvi" },
-            { value: "lohit", text: "Lohit" },
-            { value: "periyar", text: "Periyar" },
-            { value: "satulaj", text: "Satulaj" },
-            { value: "ganga", text: "Ganga" },
-        ]
-    },
-    {
-        icon: CalendarDaysIcon, leble: "Joining Year", field: "joiningYear", tag: "select", option: [
-            { value: "", text: "Year of Joining" },
-            { value: "2018", text: "2018" },
-            { value: "2019", text: "2019" },
-            { value: "2020", text: "2020" },
-            { value: "2021", text: "2021" },
-            { value: "2022", text: "2022" },
-            { value: "2023", text: "2023" },
-            { value: "2024", text: "2024" },
+        icon: BuildingOfficeIcon, label: "Hostel", field: "Select Hostel", id: "hostel", option: ["",
+            "Brahmaputra (boys)",
+            "Chandrabhaga (boys & girls)",
+            "Ganga (girls)",
+            "Godavari (girls)",
+            "Jhelum (boys)",
+            "Kaveri (boys)",
+            "Koyna (girls)",
+            "Lohit (boys & girls)",
+            "Mahi/Mandavi (boys)",
+            "Mahanadi (MRSH) (married students)",
+            "Narmada (boys)",
+            "Periyar (boys)",
+            "Sabarmati (boys & girls)",
+            "Shipra (girls)",
+            "Sutlej (boys)",
+            "Tapti (boys & girls)",
+            "Yamuna (Working Women)",
+            "Damodar"
         ]
     },
     {
-        icon: CalendarDaysIcon, leble: "Graduation Year", field: "graduationYear", tag: "select", option: [
-            { value: "", text: "Year of Graduation" },
-            { value: "2023", text: "2023" },
-            { value: "2024", text: "2024" },
-            { value: "2025", text: "2025" },
-            { value: "2026", text: "2026" },
-            { value: "2027", text: "2027" },
-        ]
+        icon: CalendarDaysIcon, label: "Joining Year", type: "number", id: 'joiningYear', placeholder: "Year of Joining",
+    },
+    {
+        icon: CalendarDaysIcon, type: "number", id: 'graduationYear', placeholder: "Year of Graduation", label: "Graduation Year",
     },
 ];

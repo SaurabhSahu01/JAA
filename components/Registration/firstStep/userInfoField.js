@@ -2,11 +2,7 @@ export const userInfoField = [
     { label: "firstName", type: "text", id: 'firstName', placeholder: "FirstName" },
     { label: "lastName", type: "text", id: 'lastName', placeholder: "lastName" },
     {
-        label: "Gender", id: 'gender', option: [
-            { value: "", text: "Select Gender" },
-            { value: "male", text: "Male" },
-            { value: "female", text: "Female" },
-        ]
+        label: "Gender", field:"Select Gender", id: 'gender', option: ["", "Male", "Female"],
     },
     { label: "Date of Birth", type: "date", id: 'dob' },
     { label: "Phone No.", type: "text", id: 'number', placeholder: "Phone Number" },

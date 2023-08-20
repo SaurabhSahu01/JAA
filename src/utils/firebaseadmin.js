@@ -24,7 +24,8 @@ export async function addUser(uid, creationTime, signInType) {
             try {
                 await db.collection('users').doc(uid).set({
                     creationTime: creationTime,
-                    signInType: signInType
+                    signInType: signInType,
+                    verified: false
                 });
                 const profileCollectionRef = documentRef.collection('profile');
                 await profileCollectionRef.doc('profile').set({ set: false });

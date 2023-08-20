@@ -138,7 +138,7 @@ export async function addpost(userid, postid, content, date, photo) {
             content: content,
             date: date,
             photo: downloadURL[0],
-            likes : 0
+            likes : []
         })
     }
     else {
@@ -148,7 +148,7 @@ export async function addpost(userid, postid, content, date, photo) {
             content: content,
             date: date,
             photo: null,
-            likes: 0
+            likes: []
         })
     }
 }

@@ -9,6 +9,7 @@ import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 
 const Post = ({ data }) => {
+    const uid = cookieCutter.get('uid');
     const router = useRouter();
     //console.log(data);
     const { photo, content, date, postedBy, postId, likes } = data;
@@ -97,7 +98,7 @@ const Post = ({ data }) => {
             <div className='w-full h-fit bg-white rounded-xl px-4 mt-4 flex flex-col items-start justify-center'>
                 <div className='relative flex items-center my-2 w-full'>
                     {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
-                        <img src='/icons/profileIcon.png' className='w-10 h-10 mr-4 rounded-full' />}
+                        <img src='/icons/profileIcon.png' className='w-10 h-10 rounded-full mr-4' />}
                     <div className=''>
                         <p className=' font-semibold text-base cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
                         {/* <p className=' text-xs font-normal'>{profile?.program.charAt(0).toUpperCase() + profile?.program.slice(1) + " " + profile?.joiningYear}</p> */}
@@ -140,11 +141,10 @@ const Post = ({ data }) => {
 
                 <div className='w-full flex justify-around items-center py-2'>
                     <div
-                        className='w-fit flex items-center justify-center mx-2 text-gray-600 hover:text-blue-500 cursor-pointer'
-                        onClick={() => actionLike('like')}
+                        className='w-fit flex items-center justify-center mx-2 text-gray-600'
                     >
-                        <HandThumbUpIcon className='w-7 h-7' />
-                        <span><span className='mx-[3px] text-blue-500'>{likes}</span>Likes</span>
+                        {likes.includes(uid) ? <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-blue-500' onClick={() => actionLike('unlike')}/> : <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-gray-500' onClick={() => actionLike('like')}/>}
+                        <span><span className='mx-[3px] text-blue-500'>{likes.length}</span>Likes</span>
                     </div>
                     <div
                         className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 hover:text-blue-400'

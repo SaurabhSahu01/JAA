@@ -162,10 +162,10 @@ const Post = ({ data }) => {
                         <p className='mx-[3px] text-blue-500 xs:text-sm md:text-md'>{likes.length} <span className='text-gray-500'>Likes</span></p>
                     </div>
                     <div
-                        className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 hover:text-blue-400'
+                        className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 '
                         onClick={() => setShowComment(!showComment)}
                     >
-                        <ChatBubbleBottomCenterIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] ' />
+                        <ChatBubbleBottomCenterIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] hover:text-blue-400' />
                         <span><span className='mx-[3px] text-blue-500'>{comments?.length}</span>Comment</span>
                     </div>
                     {(postedBy === uid ) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)}/> : <></>}

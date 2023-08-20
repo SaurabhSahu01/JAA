@@ -1,5 +1,6 @@
 import React from 'react'
 import Typewriter from 'typewriter-effect'
+import cookieCutter from "cookie-cutter";
 
 function Join() {
 
@@ -10,16 +11,20 @@ function Join() {
   const getVerified = async () => {
     if (reciept && proofJNU){
       // send it to admin with user id...
-      await fetch(`/api/`, {
+      const formData = new FormData();
+      formData.append('image1', reciept);
+      formData.append('image2', proofJNU);
+
+      await fetch(`/api/verification`, {
         method: "POST",
         headers: {
             "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
-            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: formData,
     }).then((res) => { return res.json() }).then((res) => {
         console.log(res);
-        setComment("")
+        setProofJNU(null)
+        setReciept(null);
     }).catch((err) => {
         console.log(err);
     });
@@ -31,7 +36,7 @@ function Join() {
       <div className='mt-10'>
         <div className='flex flex-col items-center'>
           <p className='text-3xl font-semibold'>JNU Alumni Association</p>
-          <p className='font-light text-sm text-blue-600'>
+          <div className='font-light text-sm text-blue-600'>
             <Typewriter
               options={{
                 strings: ['Be The Part Of This Alumni Family', 'Stay Connected and Stay Updated'],
@@ -39,7 +44,7 @@ function Join() {
                 loop: true,
               }}
             />
-          </p>
+          </div>
         </div>
 
 
@@ -57,7 +62,7 @@ function Join() {
           </div>
 
 
-          <div className='my-10 flex flex-col gap-4 items-center  md:flex-row md:justify-around md:items-center'>
+          <div className='my-10 flex flex-col gap-5 items-center  md:flex-row md:justify-around md:items-center'>
             <div className='relative w-min'>
               <input
                 type="file"

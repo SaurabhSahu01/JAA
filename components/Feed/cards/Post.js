@@ -7,6 +7,7 @@ import cookieCutter from "cookie-cutter";
 
 
 const Post = ({ data }) => {
+    const uid = cookieCutter.get('uid');
     const router = useRouter();
     //console.log(data);
     const { photo, content, date, postedBy, postId, likes } = data;
@@ -129,11 +130,10 @@ const Post = ({ data }) => {
 
                 <div className='w-full flex justify-around items-center py-2'>
                     <div
-                        className='w-fit flex items-center justify-center mx-2 text-gray-600 hover:text-blue-500 cursor-pointer'
-                        onClick={()=>actionLike('like')}
+                        className='w-fit flex items-center justify-center mx-2 text-gray-600'
                     >
-                        <HandThumbUpIcon className='w-7 h-7' />
-                        <span><span className='mx-[3px] text-blue-500'>{likes}</span>Likes</span>
+                        {likes.includes(uid) ? <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-blue-500' onClick={() => actionLike('unlike')}/> : <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-gray-500' onClick={() => actionLike('like')}/>}
+                        <span><span className='mx-[3px] text-blue-500'>{likes.length}</span>Likes</span>
                     </div>
                     <div
                         className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 hover:text-blue-400'

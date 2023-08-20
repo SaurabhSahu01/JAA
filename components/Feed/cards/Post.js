@@ -96,7 +96,7 @@ const Post = ({ data }) => {
     return (
         profile && <>
 
-            <div className='w-full h-fit bg-white rounded-xl px-4 mt-4 flex flex-col items-start justify-center'>
+            <div className='w-full h-fit bg-white rounded-lg px-4 mt-4 flex flex-col items-start justify-center'>
                 <div className='relative flex items-center my-2 w-full'>
                     {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
                         <img src='/icons/profileIcon.png' className='w-10 h-10 rounded-full mr-4' />}

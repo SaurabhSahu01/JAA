@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { HomeIcon } from "@heroicons/react/24/solid"
 import { NewspaperIcon } from "@heroicons/react/24/solid"
 import { PhotoIcon } from "@heroicons/react/24/solid"
-import { BriefcaseIcon } from "@heroicons/react/24/solid"
+import { CheckBadgeIcon } from "@heroicons/react/24/solid"
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
 import { UserCircleIcon } from "@heroicons/react/24/solid"
 import { PowerIcon } from "@heroicons/react/24/solid"
@@ -122,17 +122,17 @@ function Header() {
                     <li>
                         {
                             router.pathname === "/jobs" ?
-                                <Link href="/jobs">
+                                <Link href="/join">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <BriefcaseIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Jobs</span>
+                                        <CheckBadgeIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <span className='text-xs font-semibold text-primarycolor'>Join</span>
                                     </div>
                                 </Link>
                                 :
-                                <Link href="/jobs">
+                                <Link href="/join">
                                     <div className='flex flex-col justify-center items-center'>
-                                        <BriefcaseIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Jobs</span>
+                                        <CheckBadgeIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
+                                        <span className='text-xs font-light'>Join</span>
                                     </div>
                                 </Link>
                         }

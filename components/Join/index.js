@@ -17,14 +17,15 @@ function Join() {
       <div className='mt-10'>
         <div className='flex flex-col items-center'>
           <p className='text-3xl font-semibold'>JNU Alumni Association</p>
-          <p className='font-light text-sm'>join membership to get more features</p>
-          <Typewriter
-            options={{
-              strings: ['Blue Tick', 'Highlighted Comments', 'Stay Updated with Events'],
-              autoStart: true,
-              loop: true,
-            }}
-          />
+          <p className='font-light text-sm text-blue-600'>
+            <Typewriter
+              options={{
+                strings: ['Be The Part Of This Alumni Family', 'Stay Connected and Stay Updated'],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </p>
         </div>
 
 

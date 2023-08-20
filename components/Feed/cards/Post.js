@@ -6,12 +6,13 @@ import { useRouter } from 'next/router';
 import cookieCutter from "cookie-cutter";
 import { db } from '@/src/utils/firebase';
 import { onSnapshot, collection, doc } from 'firebase/firestore';
+import Comment from './Comment';
+import secureLocalStorage from 'react-secure-storage';
 
 
 const Post = ({ data }) => {
     const uid = cookieCutter.get('uid');
     const router = useRouter();
-    //console.log(data);
     const { photo, content, date, postedBy, postId, likes } = data;
     const [currentImage, setCurrentImage] = React.useState(0);
     const [isViewerOpen, setIsViewerOpen] = React.useState(false);
@@ -37,31 +38,34 @@ const Post = ({ data }) => {
                 "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
             },
         }).then((res) => { return res.json() }).then((res) => {
-            // setLoading(false);
-            // console.log(res);
             setProfile(res);
-            // setWantShare(false);
         }).catch((err) => {
-            // setLoading(false);
             console.log(err);
         });
     }
 
-    const getComment = async () => {
-        await fetch(`/api/getuserdata?q=${postedBy}&required=name`, {
-            method: "GET",
-            headers: {
-                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
-            },
-        }).then((res) => { return res.json() }).then((res) => {
-            // setLoading(false);
-            console.log(res);
-            setProfile(res);
-            // setWantShare(false);
-        }).catch((err) => {
-            // setLoading(false);
-            console.log(err);
-        });
+    const sendComment = async () => {
+        const datetime = new Date().toLocaleString().split(',');
+        const currentDate = datetime[1] + " " + datetime[0];
+        const data = {
+            comment,
+            datetime,
+        }
+        if (comment) {
+            await fetch(`/api/addcomment?pid=${postId}`, {
+                method: "POST",
+                headers: {
+                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then((res) => { return res.json() }).then((res) => {
+                console.log(res);
+                setComment("")
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     }
 
     const actionLike = async (action) => {
@@ -81,7 +85,6 @@ const Post = ({ data }) => {
     React.useEffect(() => {
         getProfile();
         // comments
-        // db.collection('posts').doc('#randomHASH').collection('comments').onSnapshot((snapshot) => { })
         const sub = onSnapshot(collection(doc(db, 'posts', postId), 'comments'), (snap) => {
             const postData = [];
             snap.forEach((doc) =>
@@ -92,7 +95,6 @@ const Post = ({ data }) => {
         });
     }, []);
 
-    console.log(comments);
     return (
         profile && <>
             <div className='w-full h-fit bg-white rounded-xl px-4 mt-4 flex flex-col items-start justify-center'>
@@ -143,7 +145,7 @@ const Post = ({ data }) => {
                     <div
                         className='w-fit flex items-center justify-center mx-2 text-gray-600'
                     >
-                        {likes.includes(uid) ? <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-blue-500' onClick={() => actionLike('unlike')}/> : <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-gray-500' onClick={() => actionLike('like')}/>}
+                        {likes.includes(uid) ? <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-blue-500' onClick={() => actionLike('unlike')} /> : <HandThumbUpIcon className='w-7 h-7 cursor-pointer text-gray-500' onClick={() => actionLike('like')} />}
                         <span><span className='mx-[3px] text-blue-500'>{likes.length}</span>Likes</span>
                     </div>
                     <div
@@ -151,10 +153,13 @@ const Post = ({ data }) => {
                         onClick={() => setShowComment(!showComment)}
                     >
                         <ChatBubbleBottomCenterIcon className='w-7 h-7' />
-                        <span>Comment</span>
+                        <span><span className='mx-[3px] text-blue-500'>{comments?.length}</span>Comment</span>
                     </div>
                 </div>
             </div>
+
+
+            {/*********************************** comment section************************************************** */}
 
             {showComment &&
                 <div className='px-4'>
@@ -172,11 +177,9 @@ const Post = ({ data }) => {
                         <div className='flex flex-col gap-2'>
                             {
                                 comments.map((c, index) => {
-                                    console.log(c);
+                                    {/* console.log(c); */}
                                     return (
-                                        <div>
-                                            hello
-                                        </div>
+                                        <Comment key={index} data={c} />
                                     )
                                 })
                             }
@@ -184,22 +187,26 @@ const Post = ({ data }) => {
                         <hr className='w-full h-[1px] border-r-2 border-black' />
                         <div className='w-full'>
                             <div className='relative flex items-center my-2 w-full'>
-                                {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
+                                {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
                                     <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
                                 <div className=''>
-                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
+                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName']+JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
                                 </div>
                             </div>
-
-                            <textarea
-                                className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans'
-                                rows={1}
-                                cols={33}
-                                placeholder='write comment here...'
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-
-                            ></textarea>
+                            <div className='flex justify-center'>
+                                <textarea
+                                    className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans'
+                                    rows={1}
+                                    cols={33}
+                                    placeholder='write comment here...'
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                ></textarea>
+                                <button
+                                    className='h-min p-2 bg-blue-200 rounded-md'
+                                    onClick={sendComment}
+                                >Comment</button>
+                            </div>
                         </div>
                     </div>
                 </div>

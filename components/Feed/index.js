@@ -31,26 +31,16 @@ function Feed() {
         <div className=' mx-auto lg:mx-0 w-11/12'>
           <FeedUpload setWantShare={setWantShare} />
           <div className='w-full'>
-          {
-            posts.map((post, index)=>{
-              {/* console.log(post) */}
-              return(
-                <Post data={post} key={index} />
-              )
-            })
-          }
-            {/* <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post /> */}
+            {
+              posts.map((post, index) => {
+                {/* console.log(post) */ }
+                return (
+                  <Post data={post} key={index} />
+                )
+              })
+            }
           </div>
         </div>
-        {/* <div className='fixed ml-[38rem] mt-0'>
-        <p>Your Posts</p>
-        <p>Liked Posts</p>
-      </div> */}
       </div>
     </>
   )

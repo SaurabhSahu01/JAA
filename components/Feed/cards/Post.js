@@ -4,6 +4,8 @@ import { HandThumbUpIcon, HandThumbDownIcon } from '@heroicons/react/24/solid'
 import ImageViewer from 'react-simple-image-viewer';
 import { useRouter } from 'next/router';
 import cookieCutter from "cookie-cutter";
+import { db } from '@/src/utils/firebase';
+import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 
 const Post = ({ data }) => {
@@ -35,7 +37,7 @@ const Post = ({ data }) => {
             },
         }).then((res) => { return res.json() }).then((res) => {
             // setLoading(false);
-            console.log(res);
+            // console.log(res);
             setProfile(res);
             // setWantShare(false);
         }).catch((err) => {
@@ -77,16 +79,25 @@ const Post = ({ data }) => {
 
     React.useEffect(() => {
         getProfile();
-        // getComment();
+        // comments
+        // db.collection('posts').doc('#randomHASH').collection('comments').onSnapshot((snapshot) => { })
+        const sub = onSnapshot(collection(doc(db, 'posts', postId), 'comments'), (snap) => {
+            const postData = [];
+            snap.forEach((doc) =>
+                postData.push({ ...doc.data(), id: doc.id })
+            );
+            postData.reverse();
+            setComments(postData);
+        });
     }, []);
 
+    console.log(comments);
     return (
         profile && <>
-
             <div className='w-full h-fit bg-white rounded-xl px-4 mt-4 flex flex-col items-start justify-center'>
                 <div className='relative flex items-center my-2 w-full'>
                     {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
-                        <img src='/icons/profileIcon.png' className='w-10 h-10 rounded-full' />}
+                        <img src='/icons/profileIcon.png' className='w-10 h-10 mr-4 rounded-full' />}
                     <div className=''>
                         <p className=' font-semibold text-base cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
                         {/* <p className=' text-xs font-normal'>{profile?.program.charAt(0).toUpperCase() + profile?.program.slice(1) + " " + profile?.joiningYear}</p> */}
@@ -130,7 +141,7 @@ const Post = ({ data }) => {
                 <div className='w-full flex justify-around items-center py-2'>
                     <div
                         className='w-fit flex items-center justify-center mx-2 text-gray-600 hover:text-blue-500 cursor-pointer'
-                        onClick={()=>actionLike('like')}
+                        onClick={() => actionLike('like')}
                     >
                         <HandThumbUpIcon className='w-7 h-7' />
                         <span><span className='mx-[3px] text-blue-500'>{likes}</span>Likes</span>
@@ -146,11 +157,11 @@ const Post = ({ data }) => {
             </div>
 
             {showComment &&
-                <>
+                <div className='px-4'>
                     <hr className='w-full h-[1px] border-r-2 border-black' />
-                    <div className='w-full h-fit bg-white rounded-xl px-4 mb-4 flex flex-col items-start justify-center'>
+                    <div className='w-full h-fit bg-white px-4 mb-4 flex flex-col items-start justify-center'>
                         <div className='relative flex items-center my-2 w-full'>
-                            {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-18 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
+                            {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
                                 <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
                             <div className=''>
                                 <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
@@ -158,9 +169,40 @@ const Post = ({ data }) => {
                         </div>
                         <hr className='w-full h-[2px] bg-black/30 my-1' />
                         <p>comments</p>
+                        <div className='flex flex-col gap-2'>
+                            {
+                                comments.map((c, index) => {
+                                    console.log(c);
+                                    return (
+                                        <div>
+                                            hello
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <hr className='w-full h-[1px] border-r-2 border-black' />
+                        <div className='w-full'>
+                            <div className='relative flex items-center my-2 w-full'>
+                                {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
+                                    <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
+                                <div className=''>
+                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
+                                </div>
+                            </div>
 
+                            <textarea
+                                className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans'
+                                rows={1}
+                                cols={33}
+                                placeholder='write comment here...'
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+
+                            ></textarea>
+                        </div>
                     </div>
-                </>
+                </div>
             }
         </>
 

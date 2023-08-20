@@ -154,7 +154,7 @@ export async function addpost(userid, postid, content, date, photo) {
     }
 }
 
-export async function verificationMethod(uid, name, email, mobile, image1, image2){
+export async function verificationMethod(uid, image1, image2){
     console.log("image1",image1[0].mimetype);
     console.log("image2", image2[0].mimetype);
     const bucket = storage.bucket();
@@ -185,9 +185,6 @@ export async function verificationMethod(uid, name, email, mobile, image1, image
     
     return db.collection('verification').doc(uid).set({
         uid: uid,
-        name: name,
-        email: email,
-        mobile: mobile,
         image1: downloadURL1[0],
         image2: downloadURL2[0]
     })

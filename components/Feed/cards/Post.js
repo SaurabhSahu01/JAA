@@ -5,12 +5,15 @@ import { HandThumbUpIcon, HandThumbDownIcon } from '@heroicons/react/24/solid'
 import ImageViewer from 'react-simple-image-viewer';
 import { useRouter } from 'next/router';
 import cookieCutter from "cookie-cutter";
+import { db } from '@/src/utils/firebase';
+import { onSnapshot, collection, doc } from 'firebase/firestore';
+import Comment from './Comment';
+import secureLocalStorage from 'react-secure-storage';
 
 
 const Post = ({ data }) => {
     const uid = cookieCutter.get('uid');
     const router = useRouter();
-    //console.log(data);
     const { photo, content, date, postedBy, postId, likes } = data;
     const [currentImage, setCurrentImage] = React.useState(0);
     const [isViewerOpen, setIsViewerOpen] = React.useState(false);
@@ -47,31 +50,34 @@ const Post = ({ data }) => {
                 "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
             },
         }).then((res) => { return res.json() }).then((res) => {
-            // setLoading(false);
-            console.log(res);
             setProfile(res);
-            // setWantShare(false);
         }).catch((err) => {
-            // setLoading(false);
             console.log(err);
         });
     }
 
-    const getComment = async () => {
-        await fetch(`/api/getuserdata?q=${postedBy}&required=name`, {
-            method: "GET",
-            headers: {
-                "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
-            },
-        }).then((res) => { return res.json() }).then((res) => {
-            // setLoading(false);
-            console.log(res);
-            setProfile(res);
-            // setWantShare(false);
-        }).catch((err) => {
-            // setLoading(false);
-            console.log(err);
-        });
+    const sendComment = async () => {
+        const datetime = new Date().toLocaleString().split(',');
+        const currentDate = datetime[1] + " " + datetime[0];
+        const data = {
+            comment,
+            datetime,
+        }
+        if (comment) {
+            await fetch(`/api/addcomment?pid=${postId}`, {
+                method: "POST",
+                headers: {
+                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then((res) => { return res.json() }).then((res) => {
+                console.log(res);
+                setComment("")
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     }
 
     const actionLike = async (action) => {
@@ -90,7 +96,15 @@ const Post = ({ data }) => {
 
     React.useEffect(() => {
         getProfile();
-        // getComment();
+        // comments
+        const sub = onSnapshot(collection(doc(db, 'posts', postId), 'comments'), (snap) => {
+            const postData = [];
+            snap.forEach((doc) =>
+                postData.push({ ...doc.data(), id: doc.id })
+            );
+            postData.reverse();
+            setComments(postData);
+        });
     }, []);
 
     return (
@@ -158,12 +172,15 @@ const Post = ({ data }) => {
                 </div>
             </div>
 
+
+            {/*********************************** comment section************************************************** */}
+
             {showComment &&
-                <>
+                <div className='px-4'>
                     <hr className='w-full h-[1px] border-r-2 border-black' />
-                    <div className='w-full h-fit bg-white rounded-xl px-4 mb-4 flex flex-col items-start justify-center'>
+                    <div className='w-full h-fit bg-white px-4 mb-4 flex flex-col items-start justify-center'>
                         <div className='relative flex items-center my-2 w-full'>
-                            {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-18 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
+                            {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
                                 <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
                             <div className=''>
                                 <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
@@ -171,9 +188,42 @@ const Post = ({ data }) => {
                         </div>
                         <hr className='w-full h-[2px] bg-black/30 my-1' />
                         <p>comments</p>
-
+                        <div className='flex flex-col gap-2'>
+                            {
+                                comments.map((c, index) => {
+                                    {/* console.log(c); */}
+                                    return (
+                                        <Comment key={index} data={c} />
+                                    )
+                                })
+                            }
+                        </div>
+                        <hr className='w-full h-[1px] border-r-2 border-black' />
+                        <div className='w-full'>
+                            <div className='relative flex items-center my-2 w-full'>
+                                {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
+                                    <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
+                                <div className=''>
+                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName']+JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
+                                </div>
+                            </div>
+                            <div className='flex justify-center'>
+                                <textarea
+                                    className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans'
+                                    rows={1}
+                                    cols={33}
+                                    placeholder='write comment here...'
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                ></textarea>
+                                <button
+                                    className='h-min p-2 bg-blue-200 rounded-md'
+                                    onClick={sendComment}
+                                >Comment</button>
+                            </div>
+                        </div>
                     </div>
-                </>
+                </div>
             }
         </>
 

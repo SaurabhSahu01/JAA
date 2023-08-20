@@ -166,7 +166,7 @@ const Post = ({ data }) => {
                         onClick={() => setShowComment(!showComment)}
                     >
                         <ChatBubbleBottomCenterIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem]' />
-                        <span className='xs:text-sm md:text-md ml-1'>Comment</span>
+                        <span className='xs:text-sm md:text-md ml-1'>{comments?.length} Comments</span>
                     </div>
                     {(postedBy === uid ) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)}/> : <></>}
                 </div>
@@ -187,10 +187,10 @@ const Post = ({ data }) => {
                             </div>
                         </div>
                         <hr className='w-full h-[2px] bg-black/30 my-1' />
-                        <p>comments</p>
+                        <p>comment</p>
                         <div className='flex flex-col gap-2'>
                             {
-                                comments.map((c, index) => {
+                                comments?.map((c, index) => {
                                     {/* console.log(c); */}
                                     return (
                                         <Comment key={index} data={c} />
@@ -217,7 +217,7 @@ const Post = ({ data }) => {
                                     onChange={(e) => setComment(e.target.value)}
                                 ></textarea>
                                 <button
-                                    className='h-min p-2 bg-blue-200 rounded-md'
+                                    className='h-min px-2 py-1 bg-primarycolor text-white rounded-sm'
                                     onClick={sendComment}
                                 >Comment</button>
                             </div>

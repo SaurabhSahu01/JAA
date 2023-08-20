@@ -3,7 +3,7 @@ import { PhotoIcon } from "@heroicons/react/24/solid"
 import { XMarkIcon } from "@heroicons/react/24/solid"
 import secureLocalStorage from 'react-secure-storage';
 import cookieCutter from "cookie-cutter";
-import Loader from '../common/Loader';
+import Loader from '../../common/Loader';
 
 function UploadPopup({ setWantShare }) {
     const [img, setimg] = React.useState(null);

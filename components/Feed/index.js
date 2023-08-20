@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import FeedUpload from './FeedUpload'
-import UploadPopup from './UploadPopup'
-import Post from './Post'
+import UploadPopup from './cards/UploadPopup'
+import Post from './cards/Post'
 import { db } from '@/src/utils/firebase';
 import { onSnapshot } from "firebase/firestore"
 import { collection } from 'firebase/firestore';
@@ -17,6 +17,7 @@ function Feed() {
       snap.forEach((doc) =>
         postData.push({ ...doc.data(), id: doc.id })
       );
+      postData.reverse();
       setPosts(postData);
     });
   }, []);

@@ -25,7 +25,7 @@ function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tailwind Blog Template</title>
         <meta name="author" content="David Grzyb" />
-        <meta name="description" content='true' />
+        <meta name="description" content />
         {/* Tailwind */}
         <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
         <style dangerouslySetInnerHTML={{ __html: "\n        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');\n\n        .font-family-karla {\n            font-family: karla;\n        }\n    " }} />
@@ -66,12 +66,6 @@ function Home() {
 
               <center>
                 <div className='inline-block pt-56 pb-12   w-full'>
-
-
-
-
-
-
                   <div class="inline-block mr-6 ml-6 ">
                     <a href=''>
                       <div class=" h-28 w-28  rounded-full items-center justify-center flex	" style={{ backgroundColor: '#1B2D56' }}>
@@ -168,48 +162,38 @@ function Home() {
               <p className="text-xl font-semibold pb-5 pt-5">Gallary</p>
               <div class="grid grid-cols-2 md:grid-cols-2 gap-2 home-gallary hide-scroll">
 
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu2.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu1.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-                <div><img class="h-30  max-w-full  rounded-lg" src={"/jnu/jnu3.jpg"} alt="" /></div>
-
-
-
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/254788437_618057452882154_1878271647435269536_n.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141590701.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141598497.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141608018.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141885670.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141880889.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141678775.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141786041.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141875442.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636142384814.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1649242971639.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141995292.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/IMG-20220807-WA0013.jpg"} alt="" /></div>
+                <div><img class="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1649242971649.jpg"} alt="" /></div>
 
               </div>
-
-
-
             </div>
-
           </aside>
           <div className=" flex-col-reverse sm:flex sm:flex-row container mx-auto sm:px-6 lg:px-8 mb-7 justify-between items-center">
             <div className="flex h-full w-3/4">
               <div>
                 <h4 className="text-lg font-bold">Jyoti Kumar Singh</h4>
                 <p className="mt-1">
-                Meet the dynamic force behind the JNU Alumni Association (Registered) - Mr. Jyoti Kumar Singh! A trailblazing visionary, he ignited the association's spark, setting it on a remarkable journey of growth and connection. What's truly captivating is how he initially steered this ship solo, channeling his passion into every aspect. As the association blossomed, it became a magnet for like-minded souls, eager to contribute and share in his dream. Mr. Singh's journey showcases the incredible allure of one person's vision, which ignited a fire that now unites and inspires many!
+                  Meet the dynamic force behind the JNU Alumni Association (Registered) - Mr. Jyoti Kumar Singh! A trailblazing visionary, he ignited the association's spark, setting it on a remarkable journey of growth and connection. What's truly captivating is how he initially steered this ship solo, channeling his passion into every aspect. As the association blossomed, it became a magnet for like-minded souls, eager to contribute and share in his dream. Mr. Singh's journey showcases the incredible allure of one person's vision, which ignited a fire that now unites and inspires many!
                 </p>
               </div>
             </div>
-              <div className="ml-4 w-full h-full">
-                <img
-                  className="rounded-xl h w-full border border-gray-300 bg-white text-gray-300"
-                  src='/jnu/jyoti1.jpg' />
-
-              </div>
-
-
+            <div className="ml-4 w-full h-full">
+              <img
+                className="rounded-xl h w-full border border-gray-300 bg-white text-gray-300"
+                src='/jnu/jyoti1.jpg' />
+            </div>
           </div>
         </div>
         <footer className="w-full border-t " style={{ backgroundColor: "#E9EFFF" }}>

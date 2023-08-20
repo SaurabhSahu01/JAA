@@ -1,6 +1,5 @@
 import apimiddleware from "./apimiddleware";
 import { db } from "@/src/utils/firebaseadmin";
-import axios from "axios";
 
 async function handler(req, res) {
     if (req.method === "POST") {

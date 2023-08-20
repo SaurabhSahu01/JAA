@@ -23,14 +23,14 @@ const Comment = ({ data }) => {
         getProfile();
     }, [])
     return (
-            <div className='relative flex items-center w-full'>
-                {user?.photo ? <img src={user?.photo} alt="user" className='w-7 h-7 object-cover mr-2 rounded-full cursor-pointer' /> :
-                    <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full mr-2' />}
-                <div className='relative w-full'>
-                    <p className=' font-normal text-sm'><span className=' font-medium cursor-pointer'>{user?.name}</span> commented {comment}</p>
-                    <p className=' font-light text-xs text-gray-500'>{date[0]+date[1]}</p>
-                </div>
+        <div className='relative flex items-center w-full'>
+            {user?.photo ? <img src={user?.photo} alt="user" className='w-7 h-7 object-cover mr-2 rounded-full cursor-pointer' /> :
+                <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full mr-2' />}
+            <div className='relative w-full'>
+                <p className=' font-normal text-sm'><span className=' font-medium cursor-pointer'>{user?.name}</span> commented {comment}</p>
+                <p className=' font-light text-xs text-gray-500'>{date[0] + date[1]}</p>
             </div>
+        </div>
     )
 }
 

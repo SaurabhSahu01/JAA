@@ -32,7 +32,7 @@ const Post = ({ data }) => {
         setIsViewerOpen(false);
     };
     const deletePost = (postID) => {
-        fetch(`/api/deletepost?pid=${postID}`,{
+        fetch(`/api/deletepost?pid=${postID}`, {
             method: "GET",
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -109,7 +109,6 @@ const Post = ({ data }) => {
 
     return (
         profile && <>
-
             <div className='w-full h-fit bg-white rounded-lg px-4 mt-4 flex flex-col items-start justify-center'>
                 <div className='relative flex items-center my-2 w-full'>
                     {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
@@ -168,7 +167,7 @@ const Post = ({ data }) => {
                         <ChatBubbleBottomCenterIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] hover:text-blue-400' />
                         <span><span className='mx-[3px] text-blue-500'>{comments?.length}</span>Comment</span>
                     </div>
-                    {(postedBy === uid ) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)}/> : <></>}
+                    {(postedBy === uid) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)} /> : <></>}
                 </div>
             </div>
 
@@ -191,7 +190,7 @@ const Post = ({ data }) => {
                         <div className='flex flex-col gap-2'>
                             {
                                 comments.map((c, index) => {
-                                    {/* console.log(c); */}
+                                    {/* console.log(c); */ }
                                     return (
                                         <Comment key={index} data={c} />
                                     )
@@ -204,7 +203,7 @@ const Post = ({ data }) => {
                                 {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
                                     <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
                                 <div className=''>
-                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName']+JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
+                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName'] + JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
                                 </div>
                             </div>
                             <div className='flex justify-center'>
@@ -226,8 +225,6 @@ const Post = ({ data }) => {
                 </div>
             }
         </>
-
-        // }
     )
 }
 

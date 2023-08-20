@@ -4,11 +4,25 @@ import Typewriter from 'typewriter-effect'
 function Join() {
 
   const [reciept, setReciept] = React.useState(null);
+  const [proofJNU, setProofJNU] = React.useState(null);
   const [uploaded, setUploaded] = React.useState(false);
 
   const getVerified = async () => {
-    if (reciept) {
+    if (reciept && proofJNU){
       // send it to admin with user id...
+      await fetch(`/api/`, {
+        method: "POST",
+        headers: {
+            "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    }).then((res) => { return res.json() }).then((res) => {
+        console.log(res);
+        setComment("")
+    }).catch((err) => {
+        console.log(err);
+    });
     }
   }
 
@@ -31,7 +45,7 @@ function Join() {
 
 
         <div className=' w-11/12 sm:w-5/6 mx-auto mt-10 bg-white rounded-md p-4'>
-          <h1 className=' font-semibold text-2xl text-blue-400'>Rs.500/- to join website membership as per below Bank Details and upload reciept</h1>
+          <h1 className=' font-semibold text-2xl text-blue-400'>Rs.500/- to join website membership as per below Bank Details and upload reciept & a proof of a jnu student</h1>
           <div className=' mt-10'>
             <h1 className='text-2xl font-semibold '>Bank Details:</h1>
             <div className=' font-light text-base leading-6'>
@@ -43,7 +57,7 @@ function Join() {
           </div>
 
 
-          <div className='my-10 flex flex-col gap-4  sm:flex-row sm:justify-around items-center'>
+          <div className='my-10 flex flex-col gap-4 items-center  md:flex-row md:justify-around md:items-center'>
             <div className='relative w-min'>
               <input
                 type="file"
@@ -55,7 +69,20 @@ function Join() {
                 }}
               />
               <label htmlFor="document" className=' p-2 bg-blue-400 hover:bg-blue-300 rounded-md text-base font-medium cursor-pointer inline-block w-max'>Upload Reciept here</label>
-              {reciept && <p className=' text-xs font-light text-center absolute -bottom-4 right-[50%] translate-x-[50%] w-max '>1 file uploded</p>}
+              {reciept && <p className=' text-xs font-light text-center absolute -bottom-4 right-[50%] translate-x-[50%]'>1 file uploded</p>}
+            </div>
+            <div className='relative w-min'>
+              <input
+                type="file"
+                id='proof'
+                className='hidden'
+                accept="image/png, image/jpeg"
+                onChange={(e) => {
+                  setProofJNU(e.target.files[0]);
+                }}
+              />
+              <label htmlFor="proof" className=' p-2 bg-blue-400 hover:bg-blue-300 rounded-md text-base font-medium cursor-pointer inline-block w-max'>Upload Proof here</label>
+              {proofJNU && <p className=' text-xs font-light text-center absolute -bottom-4 right-[50%] translate-x-[50%] w-max '>1 file uploded</p>}
             </div>
             <button
               className={` ${!reciept ? " cursor-not-allowed" : " cursor-pointer"} py-2 px-3 bg-slate-400 hover:bg-slate-300 text-base rounded-lg`}

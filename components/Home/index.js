@@ -13,7 +13,7 @@ function Home() {
       const unsubscribe = onSnapshot(profileRef, snapshot => {
         secureLocalStorage.setItem('profile', JSON.stringify(snapshot.data()));
       });
-      return () =>{
+      return () => {
         unsubscribe();
       }
     }
@@ -25,7 +25,7 @@ function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tailwind Blog Template</title>
         <meta name="author" content="David Grzyb" />
-        <meta name="description" content />
+        <meta name="description" content='true' />
         {/* Tailwind */}
         <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
         <style dangerouslySetInnerHTML={{ __html: "\n        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');\n\n        .font-family-karla {\n            font-family: karla;\n        }\n    " }} />
@@ -55,7 +55,7 @@ function Home() {
 
 
               <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer ">
-                <img class="object-cover w-full z-0" style={{ height: '600px' }} src={"/jnu/jnu1.jpg"} />
+                <img class="object-cover w-full z-0" style={{ height: '600px' }} src={"/jnu/library.jpg"} />
 
                 <div class="absolute top-0 left-0 px-6 py-4">
                   <h4 class="mb-3 text-xl font-semibold tracking-tight text-white">This is the title</h4>
@@ -110,40 +110,12 @@ function Home() {
                         <p class="mt-2 text-gray-800 text-center"> Click Here To see More </p> </div> </a>
                   </div>
 
-
-
-
-
-
                 </div>
               </center>
 
-
-
-
-
-
-
             </article>
 
-
-
-
-
-
-
-
-
-
-
-
-
           </section>
-
-
-
-
-
 
           {/* Sidebar Section */}
           <aside className="w-full md:w-1/3 flex flex-col items-center px-3 mt-5    ">
@@ -221,6 +193,24 @@ function Home() {
             </div>
 
           </aside>
+          <div className=" flex-col-reverse sm:flex sm:flex-row container mx-auto sm:px-6 lg:px-8 mb-7 justify-between items-center">
+            <div className="flex h-full w-3/4">
+              <div>
+                <h4 className="text-lg font-bold">Jyoti Kumar Singh</h4>
+                <p className="mt-1">
+                Meet the dynamic force behind the JNU Alumni Association (Registered) - Mr. Jyoti Kumar Singh! A trailblazing visionary, he ignited the association's spark, setting it on a remarkable journey of growth and connection. What's truly captivating is how he initially steered this ship solo, channeling his passion into every aspect. As the association blossomed, it became a magnet for like-minded souls, eager to contribute and share in his dream. Mr. Singh's journey showcases the incredible allure of one person's vision, which ignited a fire that now unites and inspires many!
+                </p>
+              </div>
+            </div>
+              <div className="ml-4 w-full h-full">
+                <img
+                  className="rounded-xl h w-full border border-gray-300 bg-white text-gray-300"
+                  src='/jnu/jyoti1.jpg' />
+
+              </div>
+
+
+          </div>
         </div>
         <footer className="w-full border-t " style={{ backgroundColor: "#E9EFFF" }}>
 

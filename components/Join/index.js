@@ -69,7 +69,7 @@ function Join() {
   })
 
   return (
-    <div className='h-screen w-full bg-[url("/bg/Animated.svg")] bg-cover bg-center bg-fixed'>
+    <div className='h-screen w-full bg-cover bg-center bg-fixed'>
       <div>
         <Toaster toastOptions={{ duration: 1000 }} position='top-center' />
         <div className='flex flex-col items-center'>

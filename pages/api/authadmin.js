@@ -8,8 +8,8 @@ async function preHash(PrePassword) {
 }
 
 async function handler(req, res) {
-    const serverSidePasscodeHash = await preHash('Hgm#2023@bakraw');
-    const serverSideUsernameHash = await preHash('BAK_RAW');
+    const serverSidePasscodeHash = await preHash('JNUAlumniAssociation');
+    const serverSideUsernameHash = await preHash('JAA12345');
     console.log(serverSidePasscodeHash, serverSideUsernameHash);
     const password = req.body.password;
     const username = req.body.username;

@@ -24,11 +24,10 @@ async function handler(req, res){
                 return;
             }
             else {
-                if(fields && files.image1 && files.image2){
-                    const { name, email, mobile } = fields;
+                if(files.image1 && files.image2){
                     const { image1, image2 } = files;
                     
-                    verificationMethod(uid, name[0], email[0], mobile[0], image1, image2).then(response => {
+                    verificationMethod(uid, image1, image2).then(response => {
                         // console.log('verificatin done');
                         db.collection('users').doc(uid).set({
                             verified: 'pending'

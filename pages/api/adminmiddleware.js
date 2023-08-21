@@ -1,4 +1,4 @@
-import { validateJwt } from "@/src/util/JwtUtils";
+import { validateJwt } from "../../src/utils/JwtUtils";
 
 const adminmiddleware = handler => async (req, res) => {
     const tokenString = req.headers['authorization'] ? req.headers['authorization'].split(" ") : null;

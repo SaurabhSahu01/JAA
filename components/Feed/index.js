@@ -19,13 +19,21 @@ function Feed() {
     getDoc(documentRef).then(docSnapshot => {
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
-        if(data.verified === false || data.verified === 'pending'){
+        if (data.verified === false || data.verified === 'pending') {
           setTimeout(() => {
             router.push('/join');
           }, 100)
         }
-        else{
+        else {
           setVerified(true);
+          onSnapshot(collection(db, "posts"), (snap) => {
+            const postData = [];
+            snap.forEach((doc) =>
+              postData.push({ ...doc.data(), id: doc.id })
+            );
+            postData.reverse();
+            setPosts(postData);
+          });
         }
       }
       else {
@@ -36,16 +44,6 @@ function Feed() {
     })
   }, [])
 
-  React.useEffect(() => {
-    verified && onSnapshot(collection(db, "posts"), (snap) => {
-      const postData = [];
-      snap.forEach((doc) =>
-        postData.push({ ...doc.data(), id: doc.id })
-      );
-      postData.reverse();
-      setPosts(postData);
-    });
-  }, []);
 
   // console.log(posts)
 

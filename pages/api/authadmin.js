@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { createJWT } from "@/src/util/JwtUtils";
+import { createJWT } from "../../src/utils/JwtUtils";
 
 async function preHash(PrePassword) {
     const saltRounds = 10;

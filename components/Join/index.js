@@ -31,7 +31,7 @@ function Join() {
       <div className='mt-10'>
         <div className='flex flex-col items-center'>
           <p className='text-3xl font-semibold'>JNU Alumni Association</p>
-          <p className='font-light text-sm text-blue-600'>
+          <div className='font-light text-sm text-blue-600'>
             <Typewriter
               options={{
                 strings: ['Be The Part Of This Alumni Family', 'Stay Connected and Stay Updated'],
@@ -39,7 +39,7 @@ function Join() {
                 loop: true,
               }}
             />
-          </p>
+          </div>
         </div>
 
 

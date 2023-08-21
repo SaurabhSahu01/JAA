@@ -1,6 +1,7 @@
 import React from 'react'
 import Typewriter from 'typewriter-effect'
 import cookieCutter from "cookie-cutter";
+import { toast, Toaster } from 'react-hot-toast';
 
 function Join() {
 
@@ -9,7 +10,7 @@ function Join() {
   const [uploaded, setUploaded] = React.useState(false);
 
   const getVerified = async () => {
-    if (reciept && proofJNU){
+    if (reciept && proofJNU) {
       // send it to admin with user id...
       const formData = new FormData();
       formData.append('image1', reciept);
@@ -18,25 +19,62 @@ function Join() {
       await fetch(`/api/verification`, {
         method: "POST",
         headers: {
-            "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
+          "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
         },
         body: formData,
-    }).then((res) => { return res.json() }).then((res) => {
+      }).then((res) => { return res.json() }).then((res) => {
         console.log(res);
         setProofJNU(null)
         setReciept(null);
-    }).catch((err) => {
+      }).catch((err) => {
         console.log(err);
-    });
+      });
     }
   }
+  React.useEffect(() => {
+    toast.custom((t) => (
+      <div
+        className={`${t.visible ? 'animate-enter' : 'animate-leave'
+          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      >
+        <div className="flex-1 w-0 p-4">
+          <div className="flex items-start">
+            <div className="flex-shrink-0 pt-0.5">
+              <img
+                className="h-[2rem] w-[2rem] object-contain"
+                src="/header/JNUlogo.png"
+                alt="JNU icon"
+              />
+            </div>
+            <div className="ml-3 flex-1">
+              <p className="text-sm font-medium text-gray-900">
+                JNU Alumni Association
+              </p>
+              <p className="mt-1 text-sm text-gray-500">
+                Please Join The Alumni Family
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="flex border-l border-gray-200">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-primarycolor hover:text-primarycolor focus:outline-none focus:ring-2 focus:ring-primarycolor"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    ))
+  })
 
   return (
-    <>
-      <div className='mt-10'>
+    <div className='h-screen w-full bg-[url("/bg/Animated.svg")] bg-cover bg-center bg-fixed'>
+      <div>
+        <Toaster toastOptions={{ duration: 1000 }} position='top-center' />
         <div className='flex flex-col items-center'>
-          <p className='text-3xl font-semibold'>JNU Alumni Association</p>
-          <div className='font-light text-sm text-blue-600'>
+          <p className='text-3xl font-semibold text-primarycolor tracking-wider'>JNU Alumni Association</p>
+          <div className='text-sm text-primarycolor font-light'>
             <Typewriter
               options={{
                 strings: ['Be The Part Of This Alumni Family', 'Stay Connected and Stay Updated'],
@@ -98,7 +136,7 @@ function Join() {
 
 
       </div>
-    </>
+    </div>
   )
 }
 

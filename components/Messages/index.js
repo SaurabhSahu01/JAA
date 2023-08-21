@@ -3,10 +3,10 @@ import { db } from '@/src/utils/firebase';
 import { onSnapshot, doc, collection, getDoc } from "firebase/firestore"
 import cookieCutter from 'cookie-cutter';
 import { useRouter } from 'next/router';
-import { toast, Toaster } from "react-hot-toast";
 
 function Messages() {
   const router = useRouter();
+  const [verified, setVerified] = React.useState(false);
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
     const documentRef = doc(db, 'users', uid);
@@ -14,10 +14,12 @@ function Messages() {
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
         if (data.verified === false || data.verified === 'pending') {
-          toast.error('Please Join the Alumni Family!');
           setTimeout(() => {
             router.push('/join');
-          }, 1000)
+          }, 10)
+        }
+        else{
+          setVerified(true);
         }
       }
       else {
@@ -28,9 +30,8 @@ function Messages() {
     })
   }, [])
   return (
-    <>
+    verified && <>
       <div className='text-2xl font-bold'>Coming Soon...</div>
-      <Toaster toastOptions={{ duration: 2000 }} position="top-center" />
     </>
   )
 }

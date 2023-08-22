@@ -2,12 +2,15 @@ import React from 'react'
 import Typewriter from 'typewriter-effect'
 import cookieCutter from "cookie-cutter";
 import { toast, Toaster } from 'react-hot-toast';
+import { db } from '@/src/utils/firebase';
+import { doc, collection, getDoc } from "firebase/firestore"
 
 function Join() {
 
   const [reciept, setReciept] = React.useState(null);
   const [proofJNU, setProofJNU] = React.useState(null);
   const [uploaded, setUploaded] = React.useState(false);
+  const [status, setStatus] = React.useState(false);
 
   const getVerified = async () => {
     if (reciept && proofJNU) {
@@ -31,6 +34,23 @@ function Join() {
       });
     }
   }
+  React.useEffect(() => {
+    const uid = cookieCutter.get('uid');
+    const documentRef = doc(db, 'users', uid);
+    getDoc(documentRef).then(docSnapshot => {
+      if(docSnapshot.exists()){
+        const data = docSnapshot.data();
+        if(data.verified === true){
+          setStatus(true);
+        }
+        else if(data.verified === 'pending'){
+          setStatus('pending')
+        }
+      }
+    }).catch(err => {
+      console.error('error getting the user verification status ', err);
+    })
+  }, [])
   React.useEffect(() => {
     toast.custom((t) => (
       <div
@@ -69,7 +89,7 @@ function Join() {
   })
 
   return (
-    <div className='h-screen w-full bg-cover bg-center bg-fixed'>
+    (status === false) ? <div className='h-screen w-full'>
       <div>
         <Toaster toastOptions={{ duration: 1000 }} position='top-center' />
         <div className='flex flex-col items-center'>
@@ -136,7 +156,16 @@ function Join() {
 
 
       </div>
-    </div>
+    </div> : (status === true) ? 
+    // for status === true
+    <div className='h-screen w-full flex flex-row items-center justify-center'>
+      <p className='md:text-3xl xs:text-xl p-2 animate-bounce font-semibold text-center text-green-600'>Congratulations! You are now a member of the JNU Alumni Association Family 🎉</p>
+    </div> : 
+    (status === 'pending') && 
+    // for status === 'pending'
+    <div className='h-screen w-full flex flex-row items-center justify-center'>
+    <p className='md:text-3xl xs:text-xl p-2 animate-bounce font-semibold text-center text-primarycolor'>Your documents have been sent for the verification! Please wait till the verification is done. 🙏🏻</p>
+  </div>
   )
 }
 

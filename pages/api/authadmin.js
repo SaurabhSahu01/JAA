@@ -16,7 +16,7 @@ async function handler(req, res) {
                 username: serverSideUsernameHash,
                 password: serverSidePasscodeHash
             }
-            const token = createJWT(payload, '2h');
+            const token = createJWT(payload, '6h');
             res.status(200).json({
                 status: 200,
                 message: "admin authenticated",

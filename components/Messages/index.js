@@ -6,10 +6,18 @@ import { useRouter } from 'next/router';
 import { toast, Toaster } from "react-hot-toast";
 import ChatSidebar from './Sidebar';
 import Chatbox from './ChatBox';
+import Chat from './Sidebar/chat/Chat';
+import UsersPopUp from './Sidebar/UsersPopUp';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 function Messages() {
   const router = useRouter();
   const [verified, setVerified] = React.useState(false);
+  const [usersPopup, setusersPopup] = React.useState(false);
+
+  /*********************************************************** */
+  const [chatUser, selectChatUser] = React.useState(null);
+  /************************************************************ */
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
     const documentRef = doc(db, 'users', uid);
@@ -21,7 +29,7 @@ function Messages() {
             router.push('/join');
           }, 10)
         }
-        else{
+        else {
           setVerified(true);
         }
       }
@@ -31,12 +39,29 @@ function Messages() {
     }).catch(err => {
       console.log('error getting the user verification details');
     })
-  }, [])
+  }, []);
+
+
+
+
   return (
     <>
-      <div className='flex bg-slate-200 grow -mt-16 pt-16'> 
-          <ChatSidebar />
-          <Chatbox />
+      <div className='flex bg-slate-200 grow -mt-16 pt-16'>
+        <div className="md:w-[400px] sm:w-[50%] h-[91vh] p-5 overflow-x-auto scrollbar shrink-0 border-r border-black/[0.2] relative">
+          <div className={`absolute bottom-5 right-5 z-[1]`}>
+            {/* add user icon */}
+            <PlusIcon className="w-9 h-9 p-1 bg-[#1B2D56] font-bold hover:bg-[#3a5285] text-white rounded-full transition-all duration-200 ease-linear" onClick={() => setusersPopup(true)} />
+          </div>
+          {/* popup to search user and add */}
+          {usersPopup && (
+            <UsersPopUp onHide={() => setusersPopup(false)} title="Find Users" selectChatUser={selectChatUser} />
+          )}
+          <div className="flex flex-col h-full">
+          {/* map app chat list */}
+            <Chat />
+          </div>
+        </div>
+        <Chatbox chatUser={chatUser} />
       </div>
       <Toaster toastOptions={{ duration: 2000 }} position="top-center" />
     </>

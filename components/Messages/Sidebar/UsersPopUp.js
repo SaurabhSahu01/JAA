@@ -1,38 +1,30 @@
 import React, { useState } from "react";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "@/src/utils/firebase";
-// import { useAuth } from "@/context/authContext";
-// import { useChatContext } from "@/context/ChatContext";
-// import Avatar from "../Common/Avatar";
-// import { deleteField, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-// import { db } from "@/firebase/firebase";
-// import Search from "../Search/Search";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import cookieCutter from "cookie-cutter";
+import Search from "./Search/Search";
+import secureLocalStorage from "react-secure-storage";
 
 const UsersPopUp = (props) => {
-  const [search, setsearch] = useState("");
   const [users, setUsers] = useState(null);
 
-  React.useEffect(() => {
-    onSnapshot(collection(db, "users"), (snap) => {
-      const updateUser = {};
-      snap.forEach((doc) => {
-        console.log(doc.id);
-        updateUser[doc.id] = doc.data();
-      });
-      setUsers(updateUser);
-      // console.log(users);
-    });
-  }, [])
- if(users){ console.log(Object.keys(users));}
-  // if (users) {
-  //   users?.map((m, i) => {
-  //     console.log(m);
-  //   })
-  // }
 
-  // const { currentUser } = useAuth();
-  // const { users, dispatch } = useChatContext();
+  const getverifiedUsers = async () => {
+    await fetch('/api/getverifiedusers', {
+      method: "GET",
+      headers: {
+        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
+      },
+    }).then((res) => { return res.json() }).then((res) => {
+      // console.log(res.data)
+      setUsers(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  React.useEffect(() => {
+    getverifiedUsers()
+  }, []);
 
   // const slectUser = async (user) => {
   //   try {
@@ -102,48 +94,44 @@ const UsersPopUp = (props) => {
           onClick={props.onHide}
         ></div>
 
-        <div className={`flex flex-col w-[500px] max-h-[80%] min-h-[600px] bg-[#1B2D56] text-white relative z-10 rounded-3xl ${props.shortHeight ? "" : " min-h-[600px]"}`}>
+        <div className={`flex flex-col md:w-1/2 sm:w-5/6 w-11/12  max-h-[80%] min-h-[600px] bg-[#1B2D56] text-white relative z-10 rounded-3xl ${props.shortHeight ? "" : " min-h-[600px]"}`}>
           {!props.noHeader && <div className="shrink-0 p-6 flex items-center justify-between">
-            <div className="text-lg font-semibold">
+            <div className="text-lg font-semibold ml-4">
               {props.title || ""}
             </div>
-            <XMarkIcon className="w-5 h-5" onClick={props.onHide} />
+            <XMarkIcon className="w-7 h-7 cursor-pointer hover:text-red-500 hover:rotate-180 duration-300" onClick={props.onHide} />
           </div>}
 
-          <div className=" shrink-0 relative z-10 flex justify-center w-5/6 mx-auto  py-2">
-            <MagnifyingGlassIcon className="absolute top-6 left-2 text-zinc-500 w-5 h-5" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setsearch(e.target.value)}
-              placeholder="Search Username..."
-              className="w-full h-11 rounded-xl text-black pl-9 pr-5 placeholder:text-black outline-none text-base "
-            />
-          </div>
-          <div className="grow flex flex-col p-5 pt-0">
-            <div className=" mt-5 flex flex-col gap-2 grow relative overflow-auto scrollbar">
-              <div className=" absolute w-full">
-                {/* {users &&
-                  Object.values(users).map((user) => ( */}
-                <div
-                  // onClick={() => slectUser(user)}
-                  className="flex items-center gap-2 rounded-xl hover:bg-gray-300 hover:text-black py-2 px-3 cursor-pointer"
-                >
-                  <img src="iji" alt="user photo" className='w-[50px] h-[50px] p-1 rounded-full object-cover' />
-                  <div className=" flex flex-col justify-center ">
-                    <span className=" text-base flex items-center justify-between">
-                      <div className=" font-medium">Shubham</div>
-                    </span>
-                    <p className=" text-sm text-gray-500">tanwarshubham@gmail.com</p>
+          {users &&
+            <>
+              <Search users={users} selectChatUser={props.selectChatUser} onHide={props.onHide} />
+              <div className="grow flex flex-col p-5 pt-0">
+                <div className=" mt-5 flex flex-col gap-2 grow relative overflow-auto scrollbar">
+                  <div className=" absolute w-full">
+                    {users &&
+                      users.map((user) => (
+                        <div
+                          key={user.id}
+                          onClick={() => {
+                            props.selectChatUser(user)
+                            props.onHide()
+                          }
+                          }
+                          className="flex items-center gap-2 rounded-xl hover:bg-white hover:text-black py-2 px-3 cursor-pointer"
+                        >
+                          {user.data.photo ? <img src={user.data.photo} alt="user photo" className='w-[50px] h-[50px] p-1 rounded-full object-cover' /> : <img src="/icons/profileIcon.png" className="w-[50px] h-[50px]" />}
+                          <div className=" flex flex-col justify-center ">
+                            <span className=" text-base flex items-center justify-between">
+                              <div className=" font-medium">{user.data.firstName.charAt(0).toUpperCase() + user.data.firstName.slice(1)} {user.data.lastName.charAt(0).toUpperCase() + user.data.lastName.slice(1)}</div>
+                            </span>
+                            <p className=" text-sm text-gray-500">{user.data.school}</p>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </div>
-                {/* ))} */}
               </div>
-            </div>
-
-
-
-          </div>
+            </>}
         </div>
       </div>
 

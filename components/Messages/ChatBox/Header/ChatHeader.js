@@ -1,39 +1,15 @@
-import React, { useState } from "react";
-// import { useChatContext } from "@/context/ChatContext";
-// import Avatar from "../../Common/Avatar";
-// import Icon from "../../Common/Icon";
-// import { IoEllipsisVerticalSharp } from "react-icons/io5";
-// import ChatMenu from "./ChatMenu";
+import React from "react";
 
-const ChatHeader = () => {
-  // const [showMenu, setShowMenu] = useState(false);
-  // const { data, users } = useChatContext();
-
-  // const online = users[data.user.uid]?.isOnline;
-  // const user = users[data.user.uid];
-
+const ChatHeader = ({user}) => {
+  
   return (
-    <div className=" flex justify-between items-center pb-5 border-b border-white/[0.05]">
-      {/* {user && (
-        <div className=" flex items-center gap-3">
-          <Avatar size="large" user={user} />
-          <div>
-            <div className=" font-medium">{user.name}</div>
-            <p className=" text-sm text-c3">{online ? "Online" : "Offline"}</p>
-          </div>
+    <div className=" flex justify-between items-center pb-2 border-b border-black/[0.3]">
+      <div className=" flex items-center gap-4">
+        {user.photo ? <img className="w-[50px] h-[50px] rounded-full object-cover" src={user.photo} /> : <img className="w-[50px] h-[50px] rounded-full object-cover" src="/icons/profileIcon.png" />}
+        <div>
+          <div className=" font-medium text-lg">{user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)} {user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1)}</div>
+          <p className=" text-xs font-medium text-gray-500">{user.school}</p>
         </div>
-      )} */}
-      user name avtar
-
-      <div className=" flex items-center gap-2">
-        {/* <Icon
-          size="large"
-          className={`${showMenu ? "bg-c1" : ""}`}
-          onClick={() => setShowMenu(true)}
-          icon={<IoEllipsisVerticalSharp size={20} className=" text-c3" />}
-        /> */}
-{/* 
-        {showMenu && <ChatMenu setShowMenu={setShowMenu} showMenu={showMenu} />} */}
       </div>
     </div>
   );

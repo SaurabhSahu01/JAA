@@ -46,7 +46,7 @@ function Contact() {
       {loading && <div className='h-screen w-full fixed top-0 right-0 z-[200] backdrop-blur-sm'>
         <Loader color="#1B2D56" loading={loading} size={70} />
       </div>}
-      <div className="flex flex-col p-4 pt-0 ">
+      <div className="flex flex-col py-4">
         <div className="text-center m-10 mt-0">
 
           <h2 className="text-3xl font-bold">Contact Us</h2>

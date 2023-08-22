@@ -48,10 +48,8 @@ function Contact() {
       </div>}
       <div className="flex flex-col py-4">
         <div className="text-center m-10 mt-0">
-
           <h2 className="text-3xl font-bold">Contact Us</h2>
           <p className='text-sm '>Any question & remark just write us a message</p>
-
         </div>
 
         <div className='w-fit md:flex md:flex-row flex-col content-center bg-[#ffffff] p-2 rounded-md text-slate-100' >

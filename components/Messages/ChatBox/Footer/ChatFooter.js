@@ -1,7 +1,7 @@
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
-const ChatFooter = () => {
+const ChatFooter = ({user}) => {
   const [inputText, setInputText] = React.useState("");
 
 
@@ -10,7 +10,7 @@ const ChatFooter = () => {
   }
 
   const handleSend =()=>{
-    
+
   }
 
   return (

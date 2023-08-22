@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 
-function ChatMessages() {
+function ChatMessages({user}) {
 
   const [messages, setMessages] = useState([]);
   const [self, setSelf] = useState(true);
@@ -34,7 +34,7 @@ function ChatMessages() {
     })} */}
       <div className={`mb-3 max-w-[300px] ${self ? "self-end" : ""}`}>
         <div className={`relative group flex flex-col gap-4 p-3  rounded-xl break-all ${self ? "rounded-br-sm bg-blue-400/20" : "rounded-bl-sm bg-[#1B2D56]/20"}`}  >
-          Hello Shubhamuuuuuubuihyhhyhhhhhkjhikhjikhikh
+          {user.id}
           <div className=" absolute bottom-[1px] right-1 text-xs text-c3">
             {/* {formateDate(date)} */}date
           </div>

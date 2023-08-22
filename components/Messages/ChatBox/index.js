@@ -10,8 +10,8 @@ const Chatbox = ({chatUser}) => {
       {chatUser ?
         <>
           <ChatHeader user={chatUser.data} />
-          <ChatMessages  />
-          <ChatFooter />
+          <ChatMessages user={chatUser}  />
+          <ChatFooter user={chatUser} />
         </>:
         <div className="w-fit h-full mx-auto translate-y-[50%]">Select Chat</div>
       }

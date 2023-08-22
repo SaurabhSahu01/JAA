@@ -4,12 +4,12 @@ import ChatMessages from "./Message/ChatMessages";
 import ChatFooter from "./Footer/ChatFooter";
 
 const Chatbox = ({chatUser}) => {
-  console.log(chatUser);
+  // console.log(chatUser);
   return (
     <div className=" flex flex-col p-5 grow h-[91vh]">
       {chatUser ?
         <>
-          <ChatHeader user={chatUser.data} />
+          {chatUser.data ? <ChatHeader user={chatUser.data} /> : <ChatHeader user={chatUser} />}
           <ChatMessages user={chatUser}  />
           <ChatFooter user={chatUser} />
         </>:

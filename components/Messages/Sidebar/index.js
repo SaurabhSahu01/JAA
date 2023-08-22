@@ -14,7 +14,7 @@ function ChatSidebar({selectChatUser}) {
       </div>
         {/* popup to search user and add */}
       {usersPopup && (
-        <UsersPopUp onHide={() => setusersPopup(false)} title="Find Users" selectChatUser={selectChatUser} />
+        {/* <UsersPopUp onHide={() => setusersPopup(false)} title="Find Users" selectChatUser={selectChatUser} /> */}
       )}
       <div className="flex flex-col h-full">
         <Chat />

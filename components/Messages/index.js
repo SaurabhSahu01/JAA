@@ -14,13 +14,13 @@ function Messages() {
   const router = useRouter();
   const [verified, setVerified] = React.useState(false);
   const [usersPopup, setusersPopup] = React.useState(false);
-
+  const [chatList, setChatList] = React.useState(null);
   /*********************************************************** */
   const [chatUser, selectChatUser] = React.useState(null);
   /************************************************************ */
   React.useEffect(() => {
-    const uid = cookieCutter.get('uid');
-    const documentRef = doc(db, 'users', uid);
+    const currentUserid = cookieCutter.get('uid');
+    const documentRef = doc(db, 'users', currentUserid);
     getDoc(documentRef).then(docSnapshot => {
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
@@ -42,6 +42,20 @@ function Messages() {
   }, []);
 
 
+  
+
+  React.useEffect(() => {
+    const currentUserid = cookieCutter.get('uid');
+    const sub = onSnapshot(collection(doc(db, 'chats', currentUserid), 'chats'), (snap) => {
+      const postData = [];
+      snap.forEach((doc) => {
+        postData.push({...doc.data(),id: doc.id,});
+      });
+      postData.reverse();
+      setChatList(postData);
+    });
+  }, [])
+
 
 
   return (
@@ -56,10 +70,16 @@ function Messages() {
           {usersPopup && (
             <UsersPopUp onHide={() => setusersPopup(false)} title="Find Users" selectChatUser={selectChatUser} />
           )}
-          <div className="flex flex-col h-full">
-          {/* map app chat list */}
-            <Chat />
+          {chatList ?<div className="flex flex-col h-full">
+            {/* map app chat list */}
+            {chatList.map((list, index)=>{
+              return(<Chat key={index} data={list} selectChatUser={selectChatUser} />)
+            })}
+          </div>:
+          <div className='flex flex-col h-full w-full'>
+             <p className='w-fit mx-auto mt-[50%]'>No Chat Found</p>
           </div>
+          }
         </div>
         <Chatbox chatUser={chatUser} />
       </div>

@@ -4,7 +4,7 @@ import { db } from "@/src/utils/firebaseadmin";
 async function handler(req, res){
     if(req.method === "GET"){
         let messages = []
-        db.collection('messages').get().then(querySnapshot => {
+        db.collection('contactmessages').get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 messages.push(doc.data())
             })

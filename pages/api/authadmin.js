@@ -1,24 +1,17 @@
-import bcrypt from "bcrypt";
+import Cryptr from "cryptr";
+import { JWT_SECRET } from "@/firebase.config";
 import { createJWT } from "../../src/utils/JwtUtils";
 
-async function preHash(PrePassword) {
-    const saltRounds = 10;
-    const hash = bcrypt.hashSync(PrePassword, saltRounds);
-    return hash;
-}
-
 async function handler(req, res) {
-    const serverSidePasscodeHash = await preHash('JNUAlumniAssociation');
-    const serverSideUsernameHash = await preHash('JAA12345');
-    console.log(serverSidePasscodeHash, serverSideUsernameHash);
+    const cryptr = new Cryptr(JWT_SECRET);
+    const serverSidePasscodeHash = cryptr.encrypt('JAA12345')
+    const serverSideUsernameHash = cryptr.encrypt('JNUAlumniAssociation');
+    
     const password = req.body.password;
     const username = req.body.username;
-    console.log(password, username);
+    
     if (req.method === 'POST') {
-        const matchPass = bcrypt.compareSync(password, serverSidePasscodeHash);
-        const matchUser = bcrypt.compareSync(username, serverSideUsernameHash);
-
-        if (matchPass && matchUser) {
+        if (password === cryptr.decrypt(serverSidePasscodeHash) && username === cryptr.decrypt(serverSideUsernameHash)) {
             const payload = {
                 username: serverSideUsernameHash,
                 password: serverSidePasscodeHash

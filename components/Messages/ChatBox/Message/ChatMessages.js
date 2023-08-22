@@ -42,7 +42,7 @@ function ChatMessages({ user }) {
         messages.map((message, index) => {
           {/* console.log(message); */ }
           return (
-            <ChatMessage message={message} />
+            <ChatMessage message={message} key={index}/>
           )
         }) :
         <div>No Chat Found</div>

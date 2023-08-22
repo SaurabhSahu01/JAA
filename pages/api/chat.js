@@ -13,10 +13,10 @@ async function handler(req, res) {
             console.log("Hour : ", hour);
             if(hour > 12){
                 hour = (hour % 12);
-                time = hour + time.slice(3) + 'pm';
+                time = hour + time.slice(3) + ' pm';
             }
             else{
-                time = hour + time.slice(3) + 'am';
+                time = hour + time.slice(3) + ' am';
             }
         }
         console.log("time in am or pm : ",time);

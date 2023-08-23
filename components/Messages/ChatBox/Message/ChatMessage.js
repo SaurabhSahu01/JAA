@@ -15,7 +15,7 @@ const ChatMessage = ({message, user}) => {
             <div className={`mb-3 max-w-[150px] md:max-w-[300px] ${self ? "ml-auto" : ""}`}>
                 <div className={`relative group flex flex-col gap-4 p-3  rounded-xl break-all ${self ? "rounded-br-sm bg-green-400/20 text-gray-700" : "rounded-bl-sm bg-slate-400/20 text-gray-600"}`}  >
                     {chat}
-                    <div className=" absolute bottom-[1px] right-1 text-xs text-c3">
+                    <div className=" absolute bottom-[1px] right-1 text-[10px] font-light text-c3 text-gray-400">
                         {message.time}
                     </div>
                 </div>

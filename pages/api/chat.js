@@ -8,7 +8,7 @@ async function handler(req, res) {
         const date = new Date().toLocaleDateString();
         let time = req.body.time;
         const message = req.body.message;
-        if(!date.includes('am') && !date.includes('pm')){
+        if(!time.includes('am') && !time.includes('pm')){
             let hour = Number(time.slice(0,3));
             // console.log("Hour : ", hour);
             if(hour >= 13 && hour <= 23){

@@ -7,11 +7,9 @@ const ChatFooter = ({ user }) => {
   const [inputText, setInputText] = React.useState("");
 
   const uid = cookieCutter.get('uid');
-  const datetime = new Date().toLocaleString().split(', ');
   const handleSend = async () => {
     const data ={
       message:CryptoJS.AES.encrypt(inputText, user.id).toString(),
-      time:datetime[1],
     }
     if (inputText.replace(/\s+/g,' ').trim() != "") {
       await fetch(`/api/chat?to=${user.id}&from=${uid}`, {

@@ -6,7 +6,7 @@ async function handler(req, res) {
         const sender = req.query.from;
         const receiver = req.query.to;
         const date = new Date().toLocaleDateString();
-        let time = req.body.time;
+        let time = new Date().toLocaleTimeString();
         const message = req.body.message;
         if(!time.includes('am') && !time.includes('pm')){
             let hour = Number(time.slice(0,3));
@@ -25,7 +25,7 @@ async function handler(req, res) {
                 time = 12 + time.slice(3) + ' am';
             }
         }
-        // console.log("time in am or pm : ",time);
+        console.log("time in am or pm : ",time);
         
         // get the datewise chat and update it, if not exists then make new on 
         

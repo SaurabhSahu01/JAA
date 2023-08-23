@@ -20,6 +20,8 @@ async function handler(req, res) {
         const formattedIndianDate = `${day}-${month}-${year}`;
 
         // Indian Time
+        const currentDate = new Date();
+
         const options = {
             timeZone: 'Asia/Kolkata',
             hour12: true, // Use 24-hour format
@@ -27,6 +29,7 @@ async function handler(req, res) {
             minute: 'numeric',
             second: 'numeric'
         };
+
         const indianTime = new Intl.DateTimeFormat('en-IN', options).format(currentDate);
 
         const message = req.body.message;

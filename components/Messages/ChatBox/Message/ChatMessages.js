@@ -4,6 +4,13 @@ import React, { useRef, useState, useEffect } from 'react'
 import cookieCutter from "cookie-cutter";
 import ChatMessage from './ChatMessage';
 
+// function to reverse the date as key we are receiving in the data 
+function reverseKey(key) {
+  const keys = key.split('-');
+  keys.reverse();
+  return (keys[0] + "-" + keys[1] + "-" + keys[2]);
+}
+
 function ChatMessages({ user }) {
 
   const [messages, setMessages] = useState([]);
@@ -19,24 +26,33 @@ function ChatMessages({ user }) {
       else {
         setErr(false);
         console.log("snapData : ", snap.data());
-        // const mergedArray = Object.values(snap.data()).reduce((result, innerArray) => {
-        //   console.log("result : ", result);
-        //   return result.concat(innerArray);
-        // }, []);
+        
         const snapData = snap.data();
         const finalChat = [];
-        Object.values(snapData).forEach(async elem => {
-          // elem is an array too, sorting the elements as per the time
-          const sortedElem = await elem.sort((a, b) => {
+
+        // function to get the date keys ordered in ascending order
+        let snapDataKeys = Object.keys(snapData);
+        snapDataKeys  = snapDataKeys.map((keys) => {
+          return reverseKey(keys);
+        })
+        snapDataKeys = snapDataKeys.sort((a,b) => {
+          return a.localeCompare(b);
+        })
+        snapDataKeys = snapDataKeys.map(keys => {
+          return reverseKey(keys);
+        })
+        console.log("snapDataKeys : ", snapDataKeys);
+      
+        for(const keys of snapDataKeys){
+          const sortedElem = snapData[keys].sort((a, b) => {
             const timeA = a.time;;
             const timeB = b.time;
             return timeA > timeB;
           });
-          console.log("sortedElem : ", sortedElem);
           for (const elements of sortedElem) {
             finalChat.push(elements);
           }
-        })
+        }
         console.log("finalChat : ", finalChat);
         setMessages(finalChat);
       }
@@ -59,7 +75,7 @@ function ChatMessages({ user }) {
     <div ref={ref} className='grow p-5 overflow-auto scrollbar flex flex-col'>
       {!err ?
         messages.map((message, index) => (
-          <ChatMessage message={message} key={index} user={user}/>
+          <ChatMessage message={message} key={index} user={user} />
         )) :
         <div>No Chat Found</div>
       }

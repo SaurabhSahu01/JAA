@@ -9,10 +9,8 @@ const ChatFooter = ({ user }) => {
   const uid = cookieCutter.get('uid');
 
   const handleSend = async () => {
-    const datetime = new Date().toLocaleString().split(',');
     const data ={
       message:CryptoJS.AES.encrypt(inputText, user.id).toString(),
-      date:datetime[0],
       time:datetime[1],
     }
 

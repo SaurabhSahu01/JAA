@@ -5,7 +5,7 @@ async function handler(req, res) {
     if (req.method === "POST") {
         const sender = req.query.from;
         const receiver = req.query.to;
-        const date = req.body.date;
+        const date = new Date().toLocaleDateString();
         let time = req.body.time;
         const message = req.body.message;
         if(!date.includes('am') && !date.includes('pm')){

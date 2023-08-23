@@ -28,9 +28,9 @@ function ChatMessages({ user }) {
         Object.values(snapData).forEach(async elem => {
           // elem is an array too, sorting the elements as per the time
           const sortedElem = await elem.sort((a, b) => {
-            const timeA = new Date(a.time.replace(/-/g, ' '));
-            const timeB = new Date(b.time.replace(/-/g, ' '));
-            return timeA - timeB;
+            const timeA = a.time;;
+            const timeB = b.time;
+            return timeA > timeB;
           });
           console.log("sortedElem : ", sortedElem);
           for (const elements of sortedElem) {

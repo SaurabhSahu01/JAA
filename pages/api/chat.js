@@ -5,85 +5,89 @@ async function handler(req, res) {
     if (req.method === "POST") {
         const sender = req.query.from;
         const receiver = req.query.to;
-        const date = new Date().toLocaleDateString();
-        let time = new Date().toLocaleTimeString();
+
+        // Indian Date
+        const currentDateUTC = new Date();
+
+        const ISTOffsetMinutes = 5 * 60 + 30;
+
+        const currentISTTime = new Date(currentDateUTC.getTime() + (ISTOffsetMinutes * 60 * 1000));
+
+        const day = currentISTTime.getDate();
+        const month = currentISTTime.getMonth() + 1; // Month is 0-based, so add 1
+        const year = currentISTTime.getFullYear();
+
+        const formattedIndianDate = `${day}-${month}-${year}`;
+
+        // Indian Time
+        const options = {
+            timeZone: 'Asia/Kolkata',
+            hour12: true, // Use 24-hour format
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        };
+        const indianTime = new Intl.DateTimeFormat('en-IN', options).format(currentDate);
+
         const message = req.body.message;
-        if(!time.includes('am') && !time.includes('pm')){
-            let hour = Number(time.slice(0,3));
-            // console.log("Hour : ", hour);
-            if(hour >= 13 && hour <= 23){
-                hour = (hour % 12);
-                time = hour + time.slice(3) + ' pm';
-            }
-            else if(hour >= 1 && hour <= 11){
-                time = hour + time.slice(3) + ' am';
-            }
-            else if(hour === 12){
-                time = hour + time.slice(3) + ' pm';
-            }
-            else if(hour === 24){
-                time = 12 + time.slice(3) + ' am';
-            }
-        }
-        console.log("time in am or pm : ",time);
-        
+
         // get the datewise chat and update it, if not exists then make new on 
-        
+
         const senderRef = db.collection('chats').doc(sender).collection('chats').doc(receiver);
         const senderRefData = await senderRef.get()
         if (senderRefData.exists) {
             const senderChatData = senderRefData.data();
             // if chats for that date exist
-            if(senderChatData[date]){
-                const data = senderChatData[date];
+            if (senderChatData[formattedIndianDate]) {
+                const data = senderChatData[formattedIndianDate];
                 senderRef.set({
-                    [date]: [...data, {time: time, chatinfo:{uid: sender, message: message}}]
-                }, {merge: true}).then(async rs => {
+                    [formattedIndianDate]: [...data, { time: indianTime, chatinfo: { uid: sender, message: message } }]
+                }, { merge: true }).then(async rs => {
                     const receiverRef = db.collection('chats').doc(receiver).collection('chats').doc(sender);
-                const receiverRefData = await receiverRef.get();
-                // if the chats already exist
-                if (receiverRefData.exists) {
-                    const receiverChatData = receiverRefData.data();
-                    // if chats for that date exist
-                    if(receiverChatData[date]){
-                        const data = receiverChatData[date];
+                    const receiverRefData = await receiverRef.get();
+                    // if the chats already exist
+                    if (receiverRefData.exists) {
+                        const receiverChatData = receiverRefData.data();
+                        // if chats for that date exist
+                        if (receiverChatData[formattedIndianDate]) {
+                            const data = receiverChatData[formattedIndianDate];
+                            receiverRef.set({
+                                [formattedIndianDate]: [...data, { time: indianTime, chatinfo: { uid: sender, message: message } }]
+                            }, { merge: true }).then(rs => {
+                                res.status(200).json({
+                                    message: "chats updated"
+                                })
+                            }).catch(err => {
+                                res.status(504).json({
+                                    message: "db error"
+                                })
+                            })
+                        }
+                        // if the chats for that date don't exist
+                        else {
+                            receiverRef.set({
+                                [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
+                            }, { merge: true }).then(rs => {
+                                res.status(200).json({
+                                    message: "chats updated"
+                                })
+                            })
+                        }
+                    }
+                    // if the chats don't exist already
+                    else {
                         receiverRef.set({
-                            [date]: [...data, {time: time, chatinfo:{uid: sender, message: message}}]
-                        }, {merge: true}).then(rs => {
+                            [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
+                        }).then(response2 => {
                             res.status(200).json({
                                 message: "chats updated"
                             })
                         }).catch(err => {
                             res.status(504).json({
-                                message: "db error"
+                                message: `${receiver} messages can't be updated`
                             })
                         })
                     }
-                    // if the chats for that date don't exist
-                    else{
-                        receiverRef.set({
-                            [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
-                        }, {merge: true}).then(rs => {
-                            res.status(200).json({
-                                message: "chats updated"
-                            })
-                        })
-                    }
-                }
-                // if the chats don't exist already
-                else {
-                    receiverRef.set({
-                        [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
-                    }).then(response2 => {
-                        res.status(200).json({
-                            message: "chats updated"
-                        })
-                    }).catch(err => {
-                        res.status(504).json({
-                            message: `${receiver} messages can't be updated`
-                        })
-                    })
-                }
                 }).catch(err => {
                     res.status(504).json({
                         message: "db error"
@@ -91,61 +95,61 @@ async function handler(req, res) {
                 })
             }
             // if the chats for that date don't exist
-            else{
+            else {
                 senderRef.set({
-                    [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
-                }, {merge: true}).then(async rs => {
+                    [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
+                }, { merge: true }).then(async rs => {
                     const receiverRef = db.collection('chats').doc(receiver).collection('chats').doc(sender);
-                const receiverRefData = await receiverRef.get();
-                // if the chats already exist
-                if (receiverRefData.exists) {
-                    const receiverChatData = receiverRefData.data();
-                    // if chats for that date exist
-                    if(receiverChatData[date]){
-                        const data = receiverChatData[date];
+                    const receiverRefData = await receiverRef.get();
+                    // if the chats already exist
+                    if (receiverRefData.exists) {
+                        const receiverChatData = receiverRefData.data();
+                        // if chats for that date exist
+                        if (receiverChatData[formattedIndianDate]) {
+                            const data = receiverChatData[formattedIndianDate];
+                            receiverRef.set({
+                                [formattedIndianDate]: [...data, { time: indianTime, chatinfo: { uid: sender, message: message } }]
+                            }, { merge: true }).then(rs => {
+                                res.status(200).json({
+                                    message: "chats updated"
+                                })
+                            }).catch(err => {
+                                res.status(504).json({
+                                    message: "db error"
+                                })
+                            })
+                        }
+                        // if the chats for that date don't exist
+                        else {
+                            receiverRef.set({
+                                [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
+                            }, { merge: true }).then(rs => {
+                                res.status(200).json({
+                                    message: "chats updated"
+                                })
+                            })
+                        }
+                    }
+                    // if the chats don't exist already
+                    else {
                         receiverRef.set({
-                            [date]: [...data, {time: time, chatinfo:{uid: sender, message: message}}]
-                        }, {merge: true}).then(rs => {
+                            [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
+                        }).then(response2 => {
                             res.status(200).json({
                                 message: "chats updated"
                             })
                         }).catch(err => {
                             res.status(504).json({
-                                message: "db error"
+                                message: `${receiver} messages can't be updated`
                             })
                         })
                     }
-                    // if the chats for that date don't exist
-                    else{
-                        receiverRef.set({
-                            [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
-                        }, {merge: true}).then(rs => {
-                            res.status(200).json({
-                                message: "chats updated"
-                            })
-                        })
-                    }
-                }
-                // if the chats don't exist already
-                else {
-                    receiverRef.set({
-                        [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
-                    }).then(response2 => {
-                        res.status(200).json({
-                            message: "chats updated"
-                        })
-                    }).catch(err => {
-                        res.status(504).json({
-                            message: `${receiver} messages can't be updated`
-                        })
-                    })
-                }
                 })
             }
         }
         else {
             senderRef.set({
-                [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
+                [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
             }).then(async response => {
                 const receiverRef = db.collection('chats').doc(receiver).collection('chats').doc(sender);
                 const receiverRefData = await receiverRef.get();
@@ -153,11 +157,11 @@ async function handler(req, res) {
                 if (receiverRefData.exists) {
                     const receiverChatData = receiverRefData.data();
                     // if chats for that date exist
-                    if(receiverChatData[date]){
-                        const data = receiverChatData[date];
+                    if (receiverChatData[formattedIndianDate]) {
+                        const data = receiverChatData[formattedIndianDate];
                         receiverRef.set({
-                            [date]: [...data, {time: time, chatinfo:{uid: sender, message: message}}]
-                        }, {merge: true}).then(rs => {
+                            [formattedIndianDate]: [...data, { time: indianTime, chatinfo: { uid: sender, message: message } }]
+                        }, { merge: true }).then(rs => {
                             res.status(200).json({
                                 message: "chats updated"
                             })
@@ -168,10 +172,10 @@ async function handler(req, res) {
                         })
                     }
                     // if the chats for that date don't exist
-                    else{
+                    else {
                         receiverRef.set({
-                            [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
-                        }, {merge: true}).then(rs => {
+                            [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
+                        }, { merge: true }).then(rs => {
                             res.status(200).json({
                                 message: "chats updated"
                             })
@@ -181,7 +185,7 @@ async function handler(req, res) {
                 // if the chats don't exist already
                 else {
                     receiverRef.set({
-                        [date]: [{ time: time, chatinfo: { uid: sender, message: message } }]
+                        [formattedIndianDate]: [{ time: indianTime, chatinfo: { uid: sender, message: message } }]
                     }).then(response2 => {
                         res.status(200).json({
                             message: "chats updated"

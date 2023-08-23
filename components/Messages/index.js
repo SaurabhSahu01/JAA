@@ -12,7 +12,7 @@ import useWindowSize from '../Hook/useWindowSize';
 
 function Messages() {
   const {width} = useWindowSize();
-  console.log(width);
+  console.log("screenwidth : ",width);
 
   const router = useRouter();
   const [verified, setVerified] = React.useState(false);

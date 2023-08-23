@@ -8,9 +8,7 @@ const ChatFooter = ({ user }) => {
 
   const uid = cookieCutter.get('uid');
   const handleSend = async () => {
-    const data ={
-      message:CryptoJS.AES.encrypt(inputText, user.id).toString(),
-    }
+    
     if (inputText.replace(/\s+/g,' ').trim() != "") {
       await fetch(`/api/chat?to=${user.id}&from=${uid}`, {
         method: "POST",
@@ -18,7 +16,9 @@ const ChatFooter = ({ user }) => {
           "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          message:CryptoJS.AES.encrypt(inputText, user.id).toString()
+        }),
       }).then((res) => { return res.json() }).then((res) => {
         console.log(res);
         setInputText("")

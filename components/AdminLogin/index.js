@@ -37,7 +37,7 @@ function AdminLogin() {
                         if(data.status === 200){
                             console.log("admin authenticated");
                             cookieCutter.set('atkn', data.atkn);
-                            changeMaxAge('atkn', 7200);
+                            changeMaxAge('atkn', 60 * 60 * 6);
                             setLoading(false);
                             router.push('/adminpanel');
                         }

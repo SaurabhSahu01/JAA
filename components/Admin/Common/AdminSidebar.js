@@ -1,7 +1,6 @@
 import React from 'react'
 import { Bars3Icon, ChartPieIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { UserGroupIcon } from '@heroicons/react/24/solid'
-import { NewspaperIcon } from '@heroicons/react/24/solid'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 import { EnvelopeIcon } from '@heroicons/react/24/solid'
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid'
@@ -38,10 +37,6 @@ function Sidebar({ onOpen }) {
                 <Link href="/adminpanel/users" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel/users' ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <UserGroupIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>USERS</span>
-                </Link>
-                <Link href="/adminpanel/posts" className={`$flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel/posts' ? 'text-primarycolor' : 'text-gray-400'}`}>
-                    <NewspaperIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
-                    <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>POSTS</span>
                 </Link>
                 <Link href="/adminpanel/events" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname.includes('/adminpanel/events') ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <CalendarDaysIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />

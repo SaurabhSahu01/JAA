@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import cookieCutter from "cookie-cutter";
 import Search from "./Search/Search";
-import secureLocalStorage from "react-secure-storage";
-
 
 const UsersPopUp = (props) => {
   const uid = cookieCutter.get('uid')

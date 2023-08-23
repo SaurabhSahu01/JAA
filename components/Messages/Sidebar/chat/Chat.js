@@ -20,7 +20,7 @@ const Chat = ({ data, selectChatUser }) => {
         }
         getProfile();
     }, []);
-    const fullName = profile?.firstName.charAt(0).toUpperCase() + profile?.firstName.slice(1) + " " + profile?.lastName.charAt(0).toUpperCase() + profile?.lastName.slice(1);
+    const fullName = profile?.firstName + " " + profile?.lastName;
     return (
         <div
             onClick={() => selectChatUser(profile)}

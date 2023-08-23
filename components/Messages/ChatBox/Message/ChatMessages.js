@@ -59,7 +59,7 @@ function ChatMessages({ user }) {
     <div ref={ref} className='grow p-5 overflow-auto scrollbar flex flex-col'>
       {!err ?
         messages.map((message, index) => (
-          <ChatMessage message={message} key={index} />
+          <ChatMessage message={message} key={index} user={user}/>
         )) :
         <div>No Chat Found</div>
       }

@@ -1,6 +1,7 @@
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import cookieCutter from "cookie-cutter";
+import CryptoJS from "crypto-js"
 
 const ChatFooter = ({ user }) => {
   const [inputText, setInputText] = React.useState("");
@@ -10,13 +11,13 @@ const ChatFooter = ({ user }) => {
   const handleSend = async () => {
     const datetime = new Date().toLocaleString().split(',');
     const data ={
-      message:inputText,
+      message:CryptoJS.AES.encrypt(inputText, user.id).toString(),
       date:datetime[0],
       time:datetime[1],
     }
 
     if (inputText != "") {
-      await fetch(`/api/chat?to=${uid}&from=${user.id}`, {
+      await fetch(`/api/chat?to=${user.id}&from=${uid}`, {
         method: "POST",
         headers: {
           "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`,

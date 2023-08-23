@@ -13,8 +13,7 @@ const ChatFooter = ({ user }) => {
       message:CryptoJS.AES.encrypt(inputText, user.id).toString(),
       time:datetime[1],
     }
-
-    if (inputText != "") {
+    if (inputText.replace(/\s+/g,' ').trim() != "") {
       await fetch(`/api/chat?to=${user.id}&from=${uid}`, {
         method: "POST",
         headers: {
@@ -29,7 +28,9 @@ const ChatFooter = ({ user }) => {
         console.log(err);
       });
     }
-
+    else{
+      setInputText("");
+    }
   }
 
 
@@ -39,7 +40,7 @@ const ChatFooter = ({ user }) => {
         <input
           type="text"
           className=" grow w-full outline-none px-2 py-2 text-gray-600  bg-slate-100/60 backdrop-blur-sm shadow-lg rounded-lg placeholder:text-c3 text-base"
-          placeholder="Type a message"
+          placeholder="Type a message....."
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           onKeyUp={(e)=>{

@@ -1,4 +1,4 @@
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import cookieCutter from "cookie-cutter";
 
@@ -39,7 +39,7 @@ const ChatFooter = ({ user }) => {
       <div className=" flex items-center gap-2 grow">
         <input
           type="text"
-          className=" grow w-full outline-[#1B2D56] px-2 py-2 text-white  bg-[#1B2D56] rounded-lg placeholder:text-c3 text-base"
+          className=" grow w-full outline-none px-2 py-2 text-gray-600  bg-slate-100/60 backdrop-blur-sm shadow-lg rounded-lg placeholder:text-c3 text-base"
           placeholder="Type a message"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
@@ -55,7 +55,7 @@ const ChatFooter = ({ user }) => {
             ${inputText.trim().length > 0 ? "-rotate-45 duration-300" : "text-[#1B2D56]"}`
           }
         >
-          <PaperAirplaneIcon className="w-7 h-7" />
+          <PaperAirplaneIcon className="w-[3rem] h-[3rem]" />
         </button>
       </div>
     </div>

@@ -4,7 +4,9 @@ import cookieCutter from "cookie-cutter";
 import Search from "./Search/Search";
 import secureLocalStorage from "react-secure-storage";
 
+
 const UsersPopUp = (props) => {
+  const uid = cookieCutter.get('uid')
   const [users, setUsers] = useState(null);
 
 
@@ -94,12 +96,12 @@ const UsersPopUp = (props) => {
           onClick={props.onHide}
         ></div>
 
-        <div className={`flex flex-col md:w-1/2 sm:w-5/6 w-11/12  max-h-[80%] min-h-[600px] bg-[#1B2D56] text-white relative z-10 rounded-3xl ${props.shortHeight ? "" : " min-h-[600px]"}`}>
+        <div className={`flex flex-col md:w-1/2 sm:w-5/6 w-11/12  max-h-[80%] min-h-[600px] backdrop-blur-md bg-primarycolor/20 text-white relative z-10 rounded-lg ${props.shortHeight ? "" : " min-h-[600px]"}`}>
           {!props.noHeader && <div className="shrink-0 p-6 flex items-center justify-between">
             <div className="text-lg font-semibold ml-4">
               {props.title || ""}
             </div>
-            <XMarkIcon className="w-7 h-7 cursor-pointer hover:text-red-500 hover:rotate-180 duration-300" onClick={props.onHide} />
+            <XMarkIcon className="w-7 h-7 cursor-pointer hover:text-primarycolor hover:rotate-180 duration-300" onClick={props.onHide} />
           </div>}
 
           {users &&
@@ -110,21 +112,21 @@ const UsersPopUp = (props) => {
                   <div className=" absolute w-full">
                     {users &&
                       users.map((user) => (
-                        <div
+                        (uid !== user.id) && <div
                           key={user.id}
                           onClick={() => {
                             props.selectChatUser(user)
                             props.onHide()
                           }
                           }
-                          className="flex items-center gap-2 rounded-xl hover:bg-white hover:text-black py-2 px-3 cursor-pointer"
+                          className="flex items-center gap-2 rounded-xl hover:bg-gray-200 hover:text-gray-800 py-2 px-3 cursor-pointer"
                         >
                           {user.data.photo ? <img src={user.data.photo} alt="user photo" className='w-[50px] h-[50px] p-1 rounded-full object-cover' /> : <img src="/icons/profileIcon.png" className="w-[50px] h-[50px]" />}
                           <div className=" flex flex-col justify-center ">
                             <span className=" text-base flex items-center justify-between">
                               <div className=" font-medium">{user.data.firstName.charAt(0).toUpperCase() + user.data.firstName.slice(1)} {user.data.lastName.charAt(0).toUpperCase() + user.data.lastName.slice(1)}</div>
                             </span>
-                            <p className=" text-sm text-gray-500">{user.data.school}</p>
+                            <p className=" text-sm">{user.data.school}</p>
                           </div>
                         </div>
                       ))}

@@ -3,8 +3,7 @@ import { db } from '@/src/utils/firebase';
 import { onSnapshot, doc, collection, getDoc } from "firebase/firestore"
 import cookieCutter from 'cookie-cutter';
 import { useRouter } from 'next/router';
-import { toast, Toaster } from "react-hot-toast";
-import ChatSidebar from './Sidebar';
+import { Toaster } from "react-hot-toast";
 import Chatbox from './ChatBox';
 import Chat from './Sidebar/chat/Chat';
 import UsersPopUp from './Sidebar/UsersPopUp';
@@ -64,7 +63,7 @@ function Messages() {
         <div className="md:w-[400px] sm:w-[50%] h-[91vh] p-5 overflow-x-auto scrollbar shrink-0 border-r border-black/[0.2] relative">
           <div className={`absolute bottom-5 right-5 z-[1]`}>
             {/* add user icon */}
-            <PlusIcon className="w-9 h-9 p-1 bg-[#1B2D56] font-bold hover:bg-[#3a5285] text-white rounded-full transition-all duration-200 ease-linear" onClick={() => setusersPopup(true)} />
+            <PlusIcon className="cursor-pointer w-[3rem] h-[3rem] p-3 bg-[#1B2D56] hover:scale-110 text-white rounded-full transition-all duration-200 ease-linear" onClick={() => setusersPopup(true)} />
           </div>
           {/* popup to search user and add */}
           {usersPopup && (

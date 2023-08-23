@@ -11,12 +11,18 @@ async function handler(req, res) {
         if(!date.includes('am') && !date.includes('pm')){
             let hour = Number(time.slice(0,3));
             console.log("Hour : ", hour);
-            if(hour > 12){
+            if(hour >= 13 && hour <= 23){
                 hour = (hour % 12);
                 time = hour + time.slice(3) + ' pm';
             }
-            else{
+            else if(hour >= 1 && hour <= 11){
                 time = hour + time.slice(3) + ' am';
+            }
+            else if(hour === 12){
+                time = hour + time.slice(3) + ' pm';
+            }
+            else if(hour === 24){
+                time = 12 + time.slice(3) + ' am';
             }
         }
         console.log("time in am or pm : ",time);

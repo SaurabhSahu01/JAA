@@ -10,7 +10,7 @@ async function handler(req, res) {
         const message = req.body.message;
         if(!date.includes('am') && !date.includes('pm')){
             let hour = Number(time.slice(0,3));
-            console.log("Hour : ", hour);
+            // console.log("Hour : ", hour);
             if(hour >= 13 && hour <= 23){
                 hour = (hour % 12);
                 time = hour + time.slice(3) + ' pm';
@@ -25,9 +25,10 @@ async function handler(req, res) {
                 time = 12 + time.slice(3) + ' am';
             }
         }
-        console.log("time in am or pm : ",time);
-        // get the datewise chat and update it
-        // if not exists then make new on 
+        // console.log("time in am or pm : ",time);
+        
+        // get the datewise chat and update it, if not exists then make new on 
+        
         const senderRef = db.collection('chats').doc(sender).collection('chats').doc(receiver);
         const senderRefData = await senderRef.get()
         if (senderRefData.exists) {

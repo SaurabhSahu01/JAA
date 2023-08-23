@@ -6,11 +6,13 @@ async function handler(req, res){
     const name = firstName + " " + lastName;
     const docID = firstName + lastName + new Date().getTime();
     if(req.method === "POST"){
+        const date = new Date().toDateString();
         db.collection('contactmessages').doc(docID).set({
             name: name,
             number: number,
             email: email,
-            message: message
+            message: message,
+            date: date
         }).then(response => {
             return res.status(200).json({
                 status: 200,

@@ -63,7 +63,7 @@ function Messages() {
 
   return (
     <>
-      <div className='flex bg-slate-200 grow -mt-16 pt-16'>
+      <div className='flex grow -mt-16 pt-16'>
         <div className={`md:w-[400px] sm:w-[50%] h-[84vh] md:h-[91vh] p-5 overflow-x-auto scrollbar shrink-0 border-r border-black/[0.2] relative ${width<=500 ? (chatUser === null ? "w-full block" : " hidden w-0") : "" } `}>
           <div className={`absolute bottom-5 right-5 z-[1]`}>
             {/* add user icon */}

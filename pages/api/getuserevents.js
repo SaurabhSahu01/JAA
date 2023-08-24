@@ -1,4 +1,3 @@
-import apimiddleware from "./apimiddleware";
 import { db } from "@/src/utils/firebaseadmin";
 async function handler(req, res) {
     if (req.method === "GET") {
@@ -20,4 +19,4 @@ async function handler(req, res) {
     }
 }
 
-export default apimiddleware(handler)
+export default handler

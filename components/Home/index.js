@@ -25,8 +25,7 @@ function Home() {
     fetch('api/getuserevents', {
       method: "GET",
       headers: {
-        'Content-type' : "application/json; charset=utf-8;",
-        "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
+        'Content-type' : "application/json; charset=utf-8;"
     },
     }).then(res => res.json()).then(data => {
       console.log(data.data)
@@ -102,7 +101,7 @@ function Home() {
             <div className="w-full bg-white shadow flex flex-col my-4 p-6 rounded-md pb-5 home-gallary hide-scroll">
               <p className="text-xl font-semibold pb-5">Important Dates</p>
               {
-                (events.length !== 0) && events.map((event, index) => {
+                (events?.length) && events.map((event, index) => {
                   return <EventCard event={event.data.event} date={event.data.date} key={index}/>
                 })
               }

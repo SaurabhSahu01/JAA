@@ -11,7 +11,7 @@ function UserCard({ id, verified, firstName, lastName, number, gender, school, h
     return (
         <div className='p-2 bg-white backdrop-blur-sm shadow-lg w-full flex md:flex-row md:justify-between md:items-center xs:flex-col xs:items-between xs:justify-center gap-2 mt-3'>
             <div className='flex justify-start items-center gap-2'>
-                {photo === null ? <UserCircleIcon className='xs:h-[2rem] xs:w-[2rem] md:h-[4rem] md:w-[4rem] rounded-full'/> : <img src={photo} className='xs:h-[2rem] xs:w-[2rem] md:h-[4rem] md:w-[4rem] rounded-full'></img>}
+                {!photo ? <UserCircleIcon className='xs:h-[2rem] xs:w-[2rem] md:h-[4rem] md:w-[4rem] rounded-full'/> : <img src={photo} className='xs:h-[2rem] xs:w-[2rem] md:h-[4rem] md:w-[4rem] rounded-full'></img>}
                 <div className='flex flex-col items-start justify-center'>
                     <p className='xs:text-sm md:text-lg font-medium'>{`${fullname} (${gender})`}</p>
                     <p className='xs:text-[10px] md:text-[14px] font-light'>{academicInfo}</p>

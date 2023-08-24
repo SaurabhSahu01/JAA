@@ -157,7 +157,7 @@ const Profile = () => {
                     <Loader color="#1B2D56" loading={loading} size={70} />
                 </div> : <></>
             }
-            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.webp)" }} className=' -mt-16 pt-10 pb-4 bg-cover w-full min-h-screen'>
+            <div style={{ backgroundImage: "url(/gallery/jnu/WA0013.webp)" }} className=' -mt-16 pt-10 pb-4 bg-cover w-full min-h-screen'>
 
                 <form onSubmit={handleSubmit} className=' relative bg-cover bg-white/10 backdrop-blur-md mx-auto my-16 shadow-xl flex flex-col items-center w-[85%] md:w-[39rem]'>
                     {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.webp)" }} className='rounded-lg h-[8rem] w-full'> */}

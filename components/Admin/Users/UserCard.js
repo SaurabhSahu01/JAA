@@ -28,7 +28,7 @@ function UserCard({ id, verified, firstName, lastName, number, gender, school, h
             </div>
             {verified === 'pending' ? <button className='bg-primarycolor md:px-3 md:py-1 rounded-md text-white' onClick={() => router.push(`/adminpanel/verify/${id}`)}>
                 Verify
-            </button> : (verified === true ? <span className='flex items-center gap-2 text-green-500'><CheckBadgeIcon className='w-[3rem] h-[3rem] text-green-500'/> Verified</span> : <span className='flex items-center gap-2 text-red-500'><BookmarkSlashIcon className='w-[2rem] h-[2rem] text-red-500'/> Not Verified</span>)}
+            </button> : (verified === true ? <span className='flex items-center gap-2 text-green-500'><CheckBadgeIcon className='w-[2rem] h-[2rem] text-green-500'/> Verified</span> : <span className='flex items-center gap-2 text-red-400'><BookmarkSlashIcon className='w-[1.5rem] h-[1.5rem] text-red-500'/> Not Verified</span>)}
         </div>
     )
 }

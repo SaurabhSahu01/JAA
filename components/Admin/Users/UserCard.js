@@ -14,6 +14,7 @@ function UserCard({ id, verified, firstName, lastName, number, gender, school, h
                 {!photo ? <UserCircleIcon className='xs:h-[2rem] xs:w-[2rem] md:h-[4rem] md:w-[4rem] rounded-full'/> : <img src={photo} className='xs:h-[2rem] xs:w-[2rem] md:h-[4rem] md:w-[4rem] rounded-full'></img>}
                 <div className='flex flex-col items-start justify-center'>
                     <p className='xs:text-sm md:text-lg font-medium'>{`${fullname} (${gender})`}</p>
+                    <p className='text-xs font-medium'>{`id: ${id}`}</p>
                     <p className='xs:text-[10px] md:text-[14px] font-light'>{academicInfo}</p>
                 </div>
             </div>

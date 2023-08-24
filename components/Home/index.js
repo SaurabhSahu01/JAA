@@ -8,7 +8,7 @@ import EventCard from './EventCard';
 
 function Home() {
   const router = useRouter();
-  const [events, setEvents] = React.useState([]);
+  const [events, setEvents] = React.useState(null);
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
     if (uid) {
@@ -101,7 +101,7 @@ function Home() {
             <div className="w-full bg-white shadow flex flex-col my-4 p-6 rounded-md pb-5 home-gallary hide-scroll">
               <p className="text-xl font-semibold pb-5">Important Dates</p>
               {
-                (events?.length) && events.map((event, index) => {
+                (events) && events.map((event, index) => {
                   return <EventCard event={event.data.event} date={event.data.date} key={index}/>
                 })
               }

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 function UserCard({ id, verified, firstName, lastName, number, gender, school, hostel, joiningYear, graduationYear, program, dob, photo }) {
     const router = useRouter();
-    const fullname = firstName.toUpperCase() + " " + lastName.toUpperCase();
+    const fullname = firstName + " " + lastName;
     const academicInfo = program + ", " + school + ", " + `(${joiningYear} -  ${graduationYear})`;
     return (
         <div className='p-2 bg-white backdrop-blur-sm shadow-lg w-full flex md:flex-row md:justify-between md:items-center xs:flex-col xs:items-between xs:justify-center gap-2 mt-3'>

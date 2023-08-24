@@ -27,12 +27,12 @@ const images = [
             "/gallery/jnu/1649242971649.webp",
             "/gallery/jnu/1649242971867.webp",
             "/gallery/jnu/1649242971879.webp",
-            "/gallery/jnu/img-20220807-wa0011.webp",
-            "/gallery/jnu/img-20220807-wa0012.webp",
-            "/gallery/jnu/img-20220807-wa0013.webp",
-            "/gallery/jnu/img-20220812-wa0000.webp",
-            "/gallery/jnu/img-20220812-wa0001.webp",
-            "/gallery/jnu/snapchat-1580255331.webp",
+            "/gallery/jnu/WA0011.webp",
+            "/gallery/jnu/WA0012.webp",
+            "/gallery/jnu/WA0013.webp",
+            "/gallery/jnu/WA0000.webp",
+            "/gallery/jnu/WA0001.webp",
+            "/gallery/jnu/snapchat.webp",
         ]
     },
     {

@@ -27,8 +27,6 @@ const images = [
             "/gallery/jnu/1649242971649.webp",
             "/gallery/jnu/1649242971867.webp",
             "/gallery/jnu/1649242971879.webp",
-            "/gallery/jnu/images (12)(1).webp",
-            "/gallery/jnu/images (17).webp",
             "/gallery/jnu/img-20220807-wa0011.webp",
             "/gallery/jnu/img-20220807-wa0012.webp",
             "/gallery/jnu/img-20220807-wa0013.webp",

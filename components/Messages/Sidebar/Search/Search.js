@@ -94,7 +94,7 @@ const Search = (props) => {
                                     }}
                                     className="flex items-center gap-2 rounded-xl bg-transparent/20 hover:bg-white hover:text-black py-2 px-3 cursor-pointer"
                                 >
-                                    {user.data.photo ? <img src={user.data.photo} alt="user photo" className='w-[50px] h-[50px] p-1 rounded-full object-cover' /> : <img src="/icons/profileIcon.png" className="w-[50px] h-[50px]" />}
+                                    {user.data.photo ? <img src={user.data.photo} alt="user photo" className='w-[50px] h-[50px] p-1 rounded-full object-cover' /> : <img src="/icons/profileIcon.webp" className="w-[50px] h-[50px]" />}
                                     <div className=" flex flex-col justify-center ">
                                         <span className=" text-base flex items-center justify-between">
                                             <div className=" font-medium">{user.data.firstName} {user.data.lastName}</div>

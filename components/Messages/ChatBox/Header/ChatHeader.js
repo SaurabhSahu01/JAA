@@ -9,7 +9,7 @@ const ChatHeader = ({user, selectChatUser}) => {
     <div className=" flex justify-between items-center pb-2 border-b border-black/[0.3]">
     {width<=500 ? <ChevronLeftIcon onClick={()=>selectChatUser(null)} className="w-8 h-8 cursor-pointer" />:<></>}
       <div className=" flex items-center gap-4">
-        {user?.photo ? <img className="w-[50px] h-[50px] rounded-full object-cover" src={user?.photo} /> : <img className="w-[50px] h-[50px] rounded-full object-cover" src="/icons/profileIcon.png" />}
+        {user?.photo ? <img className="w-[50px] h-[50px] rounded-full object-cover" src={user?.photo} /> : <img className="w-[50px] h-[50px] rounded-full object-cover" src="/icons/profileIcon.webp" />}
         <div>
           <div className=" font-medium text-lg">{user?.firstName} {user?.lastName}</div>
           {/* <div className=" font-medium text-lg">{user.name}</div> */}

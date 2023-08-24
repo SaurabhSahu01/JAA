@@ -3,7 +3,7 @@
 # Function to list image files in a directory and its subdirectories
 list_image_files() {
   local directory="$1"
-  find "$directory" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" \)
+  find "$directory" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.bmp" \)
 }
 
 # Specify the root directory where you want to start searching

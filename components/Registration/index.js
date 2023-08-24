@@ -113,7 +113,7 @@ const Registration = () => {
             {registered ? <div className='fixed top-0 right-2 text-lg font-medium text-green-500 p-2 shadow-xl rounded-md z-50'>
                 Registered all your details successfully
             </div> : <></>}
-            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className='absolute w-full min-h-screen bg-cover top-0 right-0'></div>
+            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.webp)" }} className='absolute w-full min-h-screen bg-cover top-0 right-0'></div>
             <div className='w-full h-screen flex justify-center items-center'>
                 <div className='flex flex-col justify-around bg-cover bg-white/10 backdrop-blur-md w-[30rem] sm:h-[35rem] md:h-[30rem] py-3'>
                     <ProgressLine firstStep={firstStep} secondStep={secondStep} thirdStep={thirdStep} />

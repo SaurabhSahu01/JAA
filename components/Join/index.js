@@ -70,7 +70,7 @@ function Join() {
             <div className="flex-shrink-0 pt-0.5">
               <img
                 className="h-[2rem] w-[2rem] object-contain"
-                src="/header/JNUlogo.png"
+                src="/header/JNUlogo.webp"
                 alt="JNU icon"
               />
             </div>

@@ -26,7 +26,7 @@ const Chat = ({ data, selectChatUser }) => {
             onClick={() => selectChatUser(profile)}
             className="flex items-center gap-2 rounded-xl bg-blue-200/30 shadow-sm hover:bg-gray-300 py-2 px-3 cursor-pointer"
         >
-            {profile?.photo ? <img src={profile?.photo} className="w-[50px] h-[50px] rounded-full object-cover" /> : <img src="/icons/profileIcon.png" className="w-[50px] h-[50px]" />}
+            {profile?.photo ? <img src={profile?.photo} className="w-[50px] h-[50px] rounded-full object-cover" /> : <img src="/icons/profileIcon.webp" className="w-[50px] h-[50px]" />}
             {profile && <div className=" flex flex-col justify-center">
                 <span className=" text-base text-black flex items-center justify-between">
                     <div className=" font-medium text-lg">{fullName}</div>

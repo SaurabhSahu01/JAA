@@ -57,7 +57,7 @@ function Header() {
             <div className='flex justify-between items-center bg-[#f2f4f6] sticky top-0 py-2 md:px-5 xs:px-3 z-10'>
                 <div className='flex justify-center items-center gap-2'>
                     <Image
-                        src="/header/JNUlogo.png"
+                        src="/header/JNUlogo.webp"
                         width={30}
                         height={30}
                         alt="JNU logo"

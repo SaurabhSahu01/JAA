@@ -123,7 +123,7 @@ function Contact() {
               <input className='border-b-2 bg-transparent px-2 py-1 enabled:hover:border-[#1B2D56] focus:outline-none' onChange={handleChange} value={state.message} placeholder='Write your message...' id='message' type="text" required />
             </div>
 
-            <img className='absolute bottom-[-7rem] left-[-12rem] z-10' src="/contact/sendpng.png" alt="" />
+            <img className='absolute bottom-[-7rem] left-[-12rem] z-10' src="/contact/sendpng.webp" alt="" />
 
             <button type='submit' className='bg-[#1B2D56] hover:bg-[#2e4578] rounded-md p-3 text-slate-100 w-48'>Send Message</button>
           </form>

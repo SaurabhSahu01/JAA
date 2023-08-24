@@ -11,7 +11,7 @@ const ChatHeader = ({user, selectChatUser}) => {
       <div className=" flex items-center gap-4">
         {user?.photo ? <img className="w-[50px] h-[50px] rounded-full object-cover" src={user?.photo} /> : <img className="w-[50px] h-[50px] rounded-full object-cover" src="/icons/profileIcon.png" />}
         <div>
-          <div className=" font-medium text-lg">{user?.firstName.charAt(0).toUpperCase() + user?.firstName.slice(1)} {user?.lastName.charAt(0).toUpperCase() + user?.lastName.slice(1)}</div>
+          <div className=" font-medium text-lg">{user?.firstName} {user?.lastName}</div>
           {/* <div className=" font-medium text-lg">{user.name}</div> */}
           <p className=" text-xs font-medium text-gray-500">{user?.school}</p>
         </div>

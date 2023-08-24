@@ -169,7 +169,7 @@ const Profile = () => {
                     }
                     <div className=' relative flex flex-col items-center md:items-start justify-start bg-[#1B2D56] h-[8rem] w-full'>
                         <div className='w-fit mt-2 md:mt-10'>
-                            {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName.charAt(0).toUpperCase() + state.firstName.slice(1)} {state.lastName.charAt(0).toUpperCase() + state.lastName.slice(1)}</h1> :
+                            {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName} {state.lastNameme}</h1> :
                                 <div className=' flex w-full md:ml-10 mb-1'>
                                     <input
                                         type="text"

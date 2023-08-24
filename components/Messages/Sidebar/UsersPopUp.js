@@ -122,7 +122,7 @@ const UsersPopUp = (props) => {
                           {user.data.photo ? <img src={user.data.photo} alt="user photo" className='w-[50px] h-[50px] p-1 rounded-full object-cover' /> : <img src="/icons/profileIcon.png" className="w-[50px] h-[50px]" />}
                           <div className=" flex flex-col justify-center ">
                             <span className=" text-base flex items-center justify-between">
-                              <div className=" font-medium">{user.data.firstName.charAt(0).toUpperCase() + user.data.firstName.slice(1)} {user.data.lastName.charAt(0).toUpperCase() + user.data.lastName.slice(1)}</div>
+                              <div className=" font-medium">{user.data.firstName} {user.data.lastName}</div>
                             </span>
                             <p className=" text-sm">{user.data.school}</p>
                           </div>

@@ -19,37 +19,37 @@ const artAlumnus = [
         id: 1,
         name: "Sanjay Chauhan",
         description: "Film story, Screenplay, Dialogue writer, Author",
-        imageSrc: "/jnu/sanjay.jpg",
+        imageSrc: "/jnu/sanjay.webp",
     },
     {
         id: 2,
         name: "P. Jaya Kumar",
         description: "Filmmaker, Screenwriter, Author",
-        imageSrc: "/jnu/jaya.jpg",
+        imageSrc: "/jnu/jaya.webp",
     },
     {
         id: 3,
         name: "Srijit Mukherji",
         description: "Bengali film director",
-        imageSrc: "/jnu/srijit.jpg",
+        imageSrc: "/jnu/srijit.webp",
     },
     {
         id: 4,
         name: "Swara Bhaskar",
         description: "Bollywood actress",
-        imageSrc: "/jnu/swara.jpg",
+        imageSrc: "/jnu/swara.webp",
     },
     {
         id: 5,
         name: "Archishman Sarker",
         description: "Indian art historian",
-        imageSrc: "/jnu/sarker.jpg",
+        imageSrc: "/jnu/sarker.webp",
     },
     {
         id: 6,
         name: "Shaunak Sen",
         description: "Indian filmmaker, winner of Golden Eye award",
-        imageSrc: "/jnu/shaunak.jpg",
+        imageSrc: "/jnu/shaunak.webp",
     },
 
 ]
@@ -58,13 +58,13 @@ const politicalAlumus = [
         id: 7,
         name: "Baburam Bhattarai",
         description: "36th Prime Minister of Nepal",
-        imageSrc: "/jnu/baburam.jpg"
+        imageSrc: "/jnu/baburam.webp"
     },
     {
         id: 8,
         name: "Ali Zeiden",
         description: "24th Prime Minister of Libya",
-        imageSrc: "/jnu/ali.jpg"
+        imageSrc: "/jnu/ali.webp"
     }
 ]
 
@@ -74,31 +74,31 @@ const humanitiesAlumnus = [
         id: 9,
         name: 'Abhijit Banerjee',
         description: 'Nobel Laureate in Economics (2019)',
-        imageSrc: '/jnu/abhijit.jpg',
+        imageSrc: '/jnu/abhijit.webp',
     },
     {
         id: 10,
         name: "Anant Kumar",
         description: "Award-winning German Writer in Kassel and Resident Writer of Royal City Gotha",
-        imageSrc: '/jnu/ananth.jpg',
+        imageSrc: '/jnu/ananth.webp',
     },
     {
         id: 11,
         name: "David Vumlallian Zou",
         description: "historian",
-        imageSrc: '/jnu/david.jpg',
+        imageSrc: '/jnu/david.webp',
     },
     {
         id: 12,
         name: "Muzaffar Alam",
         description: "George V. Bobrinsky Professor of History at University of Chicago",
-        imageSrc: '/jnu/alam.jpg',
+        imageSrc: '/jnu/alam.webp',
     },
     {
         id: 13,
         name: "Sanjoy Bhattacharya",
         description: "historian",
-        imageSrc: '/jnu/sanjoy.jpg',
+        imageSrc: '/jnu/sanjoy.webp',
     },
 
 ]
@@ -107,19 +107,19 @@ const militaryAlumnus = [
         id: 14,
         name: "R. Hari Kumar",
         description: "Chief of Personnel of the Indian Navy",
-        imageSrc: '/jnu/radhakrishnan.jpg',
+        imageSrc: '/jnu/radhakrishnan.webp',
     },
     {
         id: 15,
         name: "Anjana Sinha",
         description: "Director of National Industrial Security Academy",
-        imageSrc: '/jnu/anjana.jpg',
+        imageSrc: '/jnu/anjana.webp',
     },
     {
         id: 17,
         name: "Soumen Mitra",
         description: "Police Commissioner of Kolkata",
-        imageSrc: '/jnu/Soumen.jpg',
+        imageSrc: '/jnu/Soumen.webp',
     },
 ]
 const scienceAlumnus = [
@@ -127,19 +127,19 @@ const scienceAlumnus = [
         id: 18,
         name: "Alok Bhattacharya",
         description: "Parasitologist and Shanti Swarup Bhatnagar laureate",
-        imageSrc: '/jnu/alok.jpg'
+        imageSrc: '/jnu/alok.webp'
     },
     {
         id: 19,
         name: "Apurva Sarin",
         description: "Cell biologist, N-Bios laureate",
-        imageSrc: '/jnu/apurva.jpg'
+        imageSrc: '/jnu/apurva.webp'
     },
     {
         id: 20,
         name: "Arun Kumar Shukla",
         description: "structural biologist, N-Bios laureate, Shanti Swarup Bhatnagar laureate",
-        imageSrc: '/jnu/arun.jpg'
+        imageSrc: '/jnu/arun.webp'
     },
     {
         id: 21,
@@ -214,38 +214,38 @@ const alumnus = [
         id: 36,
         name: 'Nirmala Sitharaman',
         description: 'Minister of Finance & Corporate Affairs',
-        imageSrc: '/jnu/nirmala.jpg',
+        imageSrc: '/jnu/nirmala.webp',
     },
     {
         id: 37,
         name: 'S. Jaishankar',
         description: 'Minister of External Affairs',
-        imageSrc: '/jnu/jaishankar.jpg',
+        imageSrc: '/jnu/jaishankar.webp',
     },
 
     {
         id: 38,
         name: 'Sita Ram Yechury',
         description: 'General Secretary of CPI(M)',
-        imageSrc: '/jnu/sitaram.jpg',
+        imageSrc: '/jnu/sitaram.webp',
     },
     {
         id: 39,
         name: 'Prakash Karat',
         description: 'Former general secretary of CPI (2005 to 2015)',
-        imageSrc: '/jnu/PrakashKarat.jpg',
+        imageSrc: '/jnu/PrakashKarat.webp',
     },
     {
         id: 40,
         name: 'Devi Prasad Tripathi',
         description: 'General Secretary of NCP of India.',
-        imageSrc: '/jnu/dp.jpg',
+        imageSrc: '/jnu/dp.webp',
     },
     {
         id: 41,
         name: 'Santishree Dhulipudi Pandit',
         description: 'Vice-chancellor of JNU',
-        imageSrc: '/jnu/santi.jpg',
+        imageSrc: '/jnu/santi.webp',
     },
     {
         id: 42,

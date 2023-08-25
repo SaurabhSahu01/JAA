@@ -13,7 +13,7 @@ function Home() {
       const unsubscribe = onSnapshot(profileRef, snapshot => {
         secureLocalStorage.setItem('profile', JSON.stringify(snapshot.data()));
       });
-      return () =>{
+      return () => {
         unsubscribe();
       }
     }
@@ -226,19 +226,22 @@ function Home() {
             <img className='w-full mt-6 md:w-5/12 h-5/6  rounded-md' src='/jnu/jyoti.jpg' />
           </div>
         </div>
-        <footer className="w-full border-t " style={{ backgroundColor: "#E9EFFF" }}>
+        <footer className="w-full border-t  " style={{ backgroundColor: "#E9EFFF" }}>
 
 
-          <div className='font-medium place-self-center justify-self-center text-2xl  pt-12 w-full'>  <center>Gallery  of Fame</center>
+          <div className='font-medium place-self-center justify-self-center text-2xl  pt-12 w-full'>  <center>Gallery  of Fame
+          </center>
+          
           </div>
+          
 
-          <div className=" py-24 sm:py-24">
-
-
-            <ul role="list" className="grid  sm:grid-cols-3  ">
+          <div className=" py-16">
 
 
-              <div class="    p-5">
+            <ul role="list" className="grid grid-cols-2 md:grid-cols-4  ">
+
+
+              <div class="p-5">
                 <img class="w-32 h-32 rounded-full mx-auto" src={"/jnu/nirmala.jpg"} alt="Profile picture" />
                 <h2 class="text-center text-2xl font-semibold mt-3">Nirmala Sitharaman</h2>
                 <p class="text-center text-gray-600 mt-1 pb-8">Minister of Finance & Corporate Affairs</p>
@@ -247,7 +250,7 @@ function Home() {
 
 
               <div class=" p-5">
-                <img class="w-32 h-22 rounded-full mx-auto" src="https://picsum.photos/200" alt="Profile picture" />
+                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/jaishankar.jpg" alt="Profile picture" />
                 <h2 class="text-center text-2xl font-semibold mt-3">S. Jaishankar</h2>
                 <p class="text-center text-gray-600 mt-1">Minister of External Affairs</p>
 
@@ -256,9 +259,40 @@ function Home() {
 
 
               <div class=" p-5">
-                <img class="w-32 h-22 rounded-full mx-auto" src="https://picsum.photos/200" alt="Profile picture" />
+                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/abhijit.jpg" alt="Profile picture" />
                 <h2 class="text-center text-2xl font-semibold mt-3">Abhijit Banerjee</h2>
                 <p class="text-center text-gray-600 mt-1">Nobel Laureate in Economics (2019)</p>
+
+
+              </div>
+
+              <div class=" p-5">
+                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/sitaram.jpg" alt="Profile picture" />
+                <h2 class="text-center text-2xl font-semibold mt-3">Sita Ram Yechury</h2>
+                <p class="text-center text-gray-600 mt-1">General Secretary of CPI(M)</p>
+
+
+              </div>
+
+              <div class=" p-5">
+                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/PrakashKarat.jpg" alt="Profile picture" />
+                <h2 class="text-center text-2xl font-semibold mt-3">Prakash Karat</h2>
+                <p class="text-center text-gray-600 mt-1">Former general secretary of CPI (2005 to 2015)</p>
+
+
+              </div>
+
+              <div class=" p-5">
+                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/dp.jpg" alt="Profile picture" />
+                <h2 class="text-center text-2xl font-semibold mt-3">Devi Prasad Tripathi</h2>
+                <p class="text-center text-gray-600 mt-1">General Secretary of NCP of India.</p>
+
+
+              </div>
+              <div class=" p-5">
+                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/santi.jpg" alt="Profile picture" />
+                <h2 class="text-center text-2xl font-semibold mt-3">Santishree Dhulipudi Pandit</h2>
+                <p class="text-center text-gray-600 mt-1">Vice-chancellor of JNU</p>
 
 
               </div>
@@ -266,6 +300,12 @@ function Home() {
 
 
             </ul>
+            <p className="mt-10 text-center text-sm text-gray-500">
+            view all{' '}
+            <a href="/alumni" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              click here
+            </a>
+          </p>
           </div>
 
 

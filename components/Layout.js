@@ -11,7 +11,7 @@ function Layout(props) {
                 <meta name='description' content='JAA - JNU Alumni Association' />
                 <link rel='icon' href="/favicon.ico" />
             </Head>
-            <div className='bg-slate-300'>
+            <div className='bg-cover bg-center bg-fixed bg-[url("/bg/bglightani.svg")]'>
                 <Header/>
                 <main className="w-full min-h-screen select-none">{props.children}</main>
                 <Footer/>

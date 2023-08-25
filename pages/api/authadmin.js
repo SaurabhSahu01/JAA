@@ -1,29 +1,23 @@
-import bcrypt from "bcrypt";
-import { createJWT } from "@/src/utils/JwtUtils";
+import Cryptr from "cryptr";
+import { JWT_SECRET } from "@/firebase.config";
+import { createJWT } from "../../src/utils/JwtUtils";
 
-async function preHash(PrePassword) {
-    const saltRounds = 10;
-    const hash = bcrypt.hashSync(PrePassword, saltRounds);
-    return hash;
-}
 
 async function handler(req, res) {
-    const serverSidePasscodeHash = await preHash('Hgm#2023@bakraw');
-    const serverSideUsernameHash = await preHash('BAK_RAW');
-    console.log(serverSidePasscodeHash, serverSideUsernameHash);
+    const cryptr = new Cryptr(JWT_SECRET);
+    const serverSidePasscodeHash = cryptr.encrypt('JAA12345')
+    const serverSideUsernameHash = cryptr.encrypt('JNUAlumniAssociation');
+    
     const password = req.body.password;
     const username = req.body.username;
-    console.log(password, username);
+    
     if (req.method === 'POST') {
-        const matchPass = bcrypt.compareSync(password, serverSidePasscodeHash);
-        const matchUser = bcrypt.compareSync(username, serverSideUsernameHash);
-
-        if (matchPass && matchUser) {
+        if (password === cryptr.decrypt(serverSidePasscodeHash) && username === cryptr.decrypt(serverSideUsernameHash)) {
             const payload = {
                 username: serverSideUsernameHash,
                 password: serverSidePasscodeHash
             }
-            const token = createJWT(payload, '2h');
+            const token = createJWT(payload, '6h');
             res.status(200).json({
                 status: 200,
                 message: "admin authenticated",

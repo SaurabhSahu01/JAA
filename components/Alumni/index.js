@@ -1,4 +1,3 @@
-import AlumniCard from "./AlumniCard"
 
 /*
   This example requires some changes to your config:
@@ -67,8 +66,6 @@ const politicalAlumus = [
         imageSrc: "/jnu/ali.webp"
     }
 ]
-
-
 const humanitiesAlumnus = [
     {
         id: 9,
@@ -145,70 +142,70 @@ const scienceAlumnus = [
         id: 21,
         name: "Gaiti Hasan",
         description: "microbiologist",
-        imageSrc: ''
+        imageSrc: '/jnu/gaiti.webp'
     },
     {
         id: 22,
         name: "Srinivasan Ramachandran",
         description: "bioinformatician, N-Bios laureate",
-        imageSrc: ''
+        imageSrc: '/jnu/srinivasan.webp'
     },
     {
         id: 23,
         name: "Suman Kumar Dhar",
         description: "Molecular biologist, Shanti Swarup Bhatnagar laureate",
-        imageSrc: ''
+        imageSrc: '/jnu/suman.webp'
     },
-    
+
 ]
 const alumnus = [
     {
         id: 27,
         name: "Abdul Sattar Murad",
         description: "Minister of Economy, Afghanistan",
-        imageSrc: ""
+        imageSrc: "/jnu/abdul.webp"
     },
     {
         id: 28,
         name: "Ajit Seth",
         description: "30th Cabinet Secretary of India",
-        imageSrc: ""
+        imageSrc: "/jnu/ajit.webp"
     },
     {
         id: 29,
         name: "Amitabh Kant",
         description: "CEO of NITI Aayog",
-        imageSrc: ""
+        imageSrc: "/jnu/amitabh.webp"
     },
     {
         id: 30,
         name: "Amitabh Rajan",
         description: "Home Secretary of Maharashtra",
-        imageSrc: ""
+        imageSrc: "/jnu/amitabhR.webp"
     },
     {
         id: 31,
         name: "Arvind Gupta",
         description: "Deputy National Security Advisor of India",
-        imageSrc: ""
+        imageSrc: "/jnu/arvind.webp"
     },
     {
         id: 32,
         name: "Ashok Tanwar",
         description: "Former President of Indian Youth Congress",
-        imageSrc: ""
+        imageSrc: "/jnu/ashok.webp"
     },
     {
         id: 33,
         name: "Aishe Ghosh",
         description: "Student Activist",
-        imageSrc: ""
+        imageSrc: "/jnu/aishe.webp"
     },
     {
         id: 35,
         name: "Muhammed Muhsin",
         description: "Politician Communist Party of India, MLA - Kerala Legislative Assembly",
-        imageSrc: ""
+        imageSrc: "/jnu/muhammed.webp"
     },
     {
         id: 36,
@@ -220,9 +217,8 @@ const alumnus = [
         id: 37,
         name: 'S. Jaishankar',
         description: 'Minister of External Affairs',
-        imageSrc: '/jnu/jaishankar.webp',
+        imageSrc: '/jnu/Sjai.webp',
     },
-
     {
         id: 38,
         name: 'Sita Ram Yechury',
@@ -251,67 +247,55 @@ const alumnus = [
         id: 42,
         name: "Dipsita Dhar",
         description: "Student Activist",
-        imageSrc: ""
+        imageSrc: "/jnu/dipsita.webp"
     },
     {
         id: 43,
         name: "Chandan Kumar",
         description: "Student Activist",
-        imageSrc: ""
+        imageSrc: "/jnu/chandan.webp"
     },
     {
         id: 44,
         name: "Lê Lương Minh",
         description: "13th Secretary General of ASEAN",
-        imageSrc: ""
+        imageSrc: "/jnu/le.webp"
     },
     {
         id: 45,
         name: "Jyotindra Dixit",
         description: "2nd National Security Adviser",
-        imageSrc: ""
-    },
-    {
-        id: 46,
-        name: "Nirmala Sitharaman",
-        description: "Former Defense Minister of India",
-        imageSrc: ""
+        imageSrc: "/jnu/jyotindra.webp"
     },
     {
         id: 47,
         name: "Palagummi Sainath",
         description: "Renowned journalist, Ramon Magsaysay Laureate",
-        imageSrc: ""
+        imageSrc: "/jnu/sainath.webp"
     },
     {
         id: 48,
         name: "Ranjit Nayak",
         description: "World Bank's Chief for Kosovo",
-        imageSrc: ""
+        imageSrc: "/jnu/ranjit.webp"
     },
     {
         id: 49,
         name: "Shehla Rashid",
         description: "student activist",
-        imageSrc: ""
-    },
-    {
-        id: 50,
-        name: "Subrahmanyam Jaishankar",
-        description: "IFS Officer, 30th Foreign Secretary of India Minister of External Affairs",
-        imageSrc: ""
+        imageSrc: "/jnu/shehla.webp"
     },
     {
         id: 51,
         name: "Syed Ibrahim",
         description: "24th Director of Intelligence Bureau",
-        imageSrc: ""
+        imageSrc: "/jnu/syed.webp"
     },
     {
         id: 52,
         name: "Venu Rajamony",
         description: "IFS Officer. Former Press Secretary to President of India",
-        imageSrc: ""
+        imageSrc: "/jnu/venu.webp"
     }
     // More alumnus...
 ]
@@ -324,50 +308,92 @@ export default function Alumni() {
                     Alumni
                 </h2>
                 <div>
-
                     <h2 className=" text-3xl">
                         Art Alumni
                     </h2>
 
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 mt-4">
                         {artAlumnus.map((alumni) => (
-                            <AlumniCard alumni={alumni} />
+                            <div key={alumni.id} className="group">
+                                <div className="aspect-h-1  aspect-w-1 h-5/6 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+                                    <img
+                                        src={alumni.imageSrc}
+                                        alt={alumni.name}
+                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                                </div>
+                                <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                                    <h3>{alumni.name}</h3>
+                                </div>
+                                <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
                 <div>
-
                     <h2 className=" text-3xl">
                         Politics and Law Alumni
                     </h2>
-
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                         {politicalAlumus.map((alumni) => (
-                            <AlumniCard alumni={alumni} />
+                            <div key={alumni.id} className="group">
+                                <div className="aspect-h-1  aspect-w-1 h-5/6 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+                                    <img
+                                        src={alumni.imageSrc}
+                                        alt={alumni.name}
+                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                                </div>
+                                <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                                    <h3>{alumni.name}</h3>
+                                </div>
+                                <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
                 <div>
-
                     <h2 className=" text-3xl">
                         Humanities and Social Sciences
                     </h2>
-
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 mt-4">
                         {humanitiesAlumnus.map((alumni) => (
-                            <AlumniCard alumni={alumni} />
+                            <div key={alumni.id} className="group">
+                                <div className="aspect-h-1  aspect-w-1 h-5/6 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+                                    <img
+                                        src={alumni.imageSrc}
+                                        alt={alumni.name}
+                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                                </div>
+                                <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                                    <h3>{alumni.name}</h3>
+                                </div>
+                                <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
                 <div>
-
                     <h2 className=" text-3xl">
                         Military and police
                     </h2>
 
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 mt-4">
                         {militaryAlumnus.map((alumni) => (
-                            <AlumniCard alumni={alumni} />
+                            <div key={alumni.id} className="group">
+                                <div className="aspect-h-1  aspect-w-1 h-5/6 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+                                    <img
+                                        src={alumni.imageSrc}
+                                        alt={alumni.name}
+                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                                </div>
+                                <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                                    <h3>{alumni.name}</h3>
+                                </div>
+                                <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -379,7 +405,19 @@ export default function Alumni() {
 
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 mt-4">
                         {scienceAlumnus.map((alumni) => (
-                            <AlumniCard alumni={alumni} />
+                            <div key={alumni.id} className="group">
+                                <div className="aspect-h-1  aspect-w-1 h-5/6 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+                                    <img
+                                        src={alumni.imageSrc}
+                                        alt={alumni.name}
+                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                                </div>
+                                <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                                    <h3>{alumni.name}</h3>
+                                </div>
+                                <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -391,7 +429,19 @@ export default function Alumni() {
 
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 mt-4">
                         {alumnus.map((alumni) => (
-                            <AlumniCard alumni={alumni} />
+                            <div key={alumni.id} className="group">
+                                <div className="aspect-h-1  aspect-w-1 h-5/6 w-full overflow-hidden rounded-lg sm:aspect-h-3 sm:aspect-w-2">
+                                    <img
+                                        src={alumni.imageSrc}
+                                        alt={alumni.name}
+                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                                </div>
+                                <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">
+                                    <h3>{alumni.name}</h3>
+                                </div>
+                                <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>
+                            </div>
                         ))}
                     </div>
                 </div>

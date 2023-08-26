@@ -182,33 +182,33 @@ function Home() {
 
               </div>
 
-              <div class=" p-5">
-                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/sitaram.webp" alt="Profile picture" />
-                <h2 class="text-center text-2xl font-semibold mt-3">Sita Ram Yechury</h2>
-                <p class="text-center text-gray-600 mt-1">General Secretary of CPI(M)</p>
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/sitaram.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Sita Ram Yechury</h2>
+                <p className="text-center text-gray-600 mt-1">General Secretary of CPI(M)</p>
 
 
               </div>
 
-              <div class=" p-5">
-                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/PrakashKarat.webp" alt="Profile picture" />
-                <h2 class="text-center text-2xl font-semibold mt-3">Prakash Karat</h2>
-                <p class="text-center text-gray-600 mt-1">Former general secretary of CPI (2005 to 2015)</p>
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/PrakashKarat.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Prakash Karat</h2>
+                <p className="text-center text-gray-600 mt-1">Former general secretary of CPI (2005 to 2015)</p>
 
 
               </div>
 
-              <div class=" p-5">
-                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/dp.webp" alt="Profile picture" />
-                <h2 class="text-center text-2xl font-semibold mt-3">Devi Prasad Tripathi</h2>
-                <p class="text-center text-gray-600 mt-1">General Secretary of NCP of India.</p>
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/dp.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Devi Prasad Tripathi</h2>
+                <p className="text-center text-gray-600 mt-1">General Secretary of NCP of India.</p>
 
 
               </div>
-              <div class=" p-5">
-                <img class="w-32 h-32 rounded-full mx-auto" src="/jnu/santi.webp" alt="Profile picture" />
-                <h2 class="text-center text-2xl font-semibold mt-3">Santishree Dhulipudi Pandit</h2>
-                <p class="text-center text-gray-600 mt-1">Vice-chancellor of JNU</p>
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/santi.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Santishree Dhulipudi Pandit</h2>
+                <p className="text-center text-gray-600 mt-1">Vice-chancellor of JNU</p>
 
 
               </div>

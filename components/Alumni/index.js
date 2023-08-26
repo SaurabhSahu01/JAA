@@ -276,7 +276,7 @@ const alumnus = [
     {
         id: 48,
         name: "Ranjit Nayak",
-        description: "World Bank's Chief for Kosovo",
+        description: "World Bank&apos;s Chief for Kosovo",
         imageSrc: "/jnu/ranjit.webp"
     },
     {

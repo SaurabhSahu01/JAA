@@ -319,7 +319,7 @@ export default function Alumni() {
                                     <img
                                         src={alumni.imageSrc}
                                         alt={alumni.name}
-                                        className=" h-full w-full object-cover object-center group-hover:opacity-75"
+                                        className="h-full w-full object-cover object-center group-hover:opacity-75"
                                     />
                                 </div>
                                 <div className="mt-4 flex items-center justify-between text-base font-medium text-gray-900">

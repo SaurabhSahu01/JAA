@@ -23,5 +23,7 @@ module.exports = {
       'lg': '950px',
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio')
+  ],
 }

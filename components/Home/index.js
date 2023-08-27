@@ -5,6 +5,7 @@ import { doc, onSnapshot } from "firebase/firestore"
 import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/router';
 import EventCard from './EventCard';
+import Link from 'next/link';
 
 function Home() {
   const router = useRouter();
@@ -178,7 +179,7 @@ function Home() {
               </div>
 
               <div className=" p-5">
-                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/sitaram.webp" alt="Profile picture" />
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/Sitaram.webp" alt="Profile picture" />
                 <h2 className="text-center text-2xl font-semibold mt-3">Sita Ram Yechury</h2>
                 <p className="text-center text-gray-600 mt-1">General Secretary of CPI(M)</p>
 
@@ -213,9 +214,7 @@ function Home() {
             </ul>
             <p className="mt-10 text-center text-sm text-gray-500">
               view all{' '}
-              <a href="/alumni" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                click here
-              </a>
+              <Link href="/gallery" className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'>click here</Link>
             </p>
           </div>
 

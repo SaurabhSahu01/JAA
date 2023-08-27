@@ -113,7 +113,7 @@ function Home() {
               <p className="text-xl font-semibold pb-5 pt-5">Gallery</p>
               <div className="grid grid-cols-2 md:grid-cols-2 gap-2 home-gallary hide-scroll">
 
-                <div><img className="h-30  max-w-full  rounded-lg object-cover" src={"/gallery/jnu/254788437_618057452882154_1878271647435269536_n.webp"} alt="" /></div>
+                <div><img className="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/254788437_618057452882154_1878271647435269536_n.webp"} alt="" /></div>
                 <div><img className="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141590701.webp"} alt="" /></div>
                 <div><img className="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141598497.webp"} alt="" /></div>
                 <div><img className="h-30  max-w-full  rounded-lg" src={"/gallery/jnu/1636141608018.webp"} alt="" /></div>
@@ -209,9 +209,15 @@ function Home() {
               </div>
 
               <div className=" p-5">
-                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/swara.webp" alt="Profile picture" />
-                <h2 className="text-center text-2xl font-semibold mt-3">Swara Bhaskar</h2>
-                <p className="text-center text-gray-600 mt-1">Bollywood Actress</p>
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/digvijyji.jpeg" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3"> Digvijay singh </h2>
+                <p className="text-center text-gray-600 mt-1">Ex Railway Minister from banka Bihar</p>
+              </div>
+
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/Mridula.jpg" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Mridula Mukherjee</h2>
+                <p className="text-center text-gray-600 mt-1"> Indian historian </p>
               </div>
 
 

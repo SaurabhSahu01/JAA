@@ -21,12 +21,12 @@ function Home() {
       }
     }
   }, []);
-  React.useEffect( () => {
+  React.useEffect(() => {
     fetch('api/getuserevents', {
       method: "GET",
       headers: {
-        'Content-type' : "application/json; charset=utf-8;"
-    },
+        'Content-type': "application/json; charset=utf-8;"
+      },
     }).then(res => res.json()).then(data => {
       console.log(data.data)
       setEvents(data.data);
@@ -102,7 +102,7 @@ function Home() {
               <p className="text-xl font-semibold pb-5">Important Dates</p>
               {
                 (events) && events.map((event, index) => {
-                  return <EventCard event={event.data.event} date={event.data.date} key={index}/>
+                  return <EventCard event={event.data.event} date={event.data.date} key={index} />
                 })
               }
             </div>
@@ -148,13 +148,13 @@ function Home() {
           <div className='font-medium place-self-center justify-self-center text-2xl  pt-12 w-full'>  <center>Gallery  of Fame</center>
           </div>
 
-          <div className=" py-24 sm:py-24">
+          <div className=" py-16">
 
 
-            <ul role="list" className="grid  sm:grid-cols-3  ">
+            <ul role="list" className="grid xs:grid-cols-1 sm:grid-cols-2  md:grid-cols-4 place-items-center">
 
 
-              <div className="    p-5">
+              <div className="p-5">
                 <img className="w-32 h-32 rounded-full mx-auto" src={"/jnu/nirmala.webp"} alt="Profile picture" />
                 <h2 className="text-center text-2xl font-semibold mt-3">Nirmala Sitharaman</h2>
                 <p className="text-center text-gray-600 mt-1 pb-8">Minister of Finance & Corporate Affairs</p>
@@ -166,8 +166,6 @@ function Home() {
                 <img className="w-32 h-32 object-fill rounded-full mx-auto" src="/jnu/SJai.webp" alt="Profile picture" />
                 <h2 className="text-center text-2xl font-semibold mt-3">S. Jaishankar</h2>
                 <p className="text-center text-gray-600 mt-1">Minister of External Affairs</p>
-
-
               </div>
 
 
@@ -179,9 +177,46 @@ function Home() {
 
               </div>
 
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/sitaram.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Sita Ram Yechury</h2>
+                <p className="text-center text-gray-600 mt-1">General Secretary of CPI(M)</p>
+
+
+              </div>
+
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/PrakashKarat.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Prakash Karat</h2>
+                <p className="text-center text-gray-600 mt-1">Former general secretary of CPI (2005 to 2015)</p>
+
+
+              </div>
+
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/dp.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Devi Prasad Tripathi</h2>
+                <p className="text-center text-gray-600 mt-1">General Secretary of NCP of India.</p>
+
+
+              </div>
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/santi.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Santishree Dhulipudi Pandit</h2>
+                <p className="text-center text-gray-600 mt-1">Vice-chancellor of JNU</p>
+
+
+              </div>
+
 
 
             </ul>
+            <p className="mt-10 text-center text-sm text-gray-500">
+              view all{' '}
+              <a href="/alumni" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                click here
+              </a>
+            </p>
           </div>
 
 

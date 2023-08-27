@@ -83,7 +83,7 @@ const humanitiesAlumnus = [
         id: 11,
         name: "David Vumlallian Zou",
         description: "historian",
-        imageSrc: '/jnu/david.webp',
+        imageSrc: '/jnu/David.webp',
     },
     {
         id: 12,
@@ -217,13 +217,13 @@ const alumnus = [
         id: 37,
         name: 'S. Jaishankar',
         description: 'Minister of External Affairs',
-        imageSrc: '/jnu/Sjai.webp',
+        imageSrc: '/jnu/SJai.webp',
     },
     {
         id: 38,
         name: 'Sita Ram Yechury',
         description: 'General Secretary of CPI(M)',
-        imageSrc: '/jnu/sitaram.webp',
+        imageSrc: '/jnu/Sitaram.webp',
     },
     {
         id: 39,

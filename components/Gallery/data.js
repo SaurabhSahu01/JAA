@@ -46,6 +46,45 @@ const images = [
         ]
     },
 
+    {
+        "category": "alumni meets",
+        "images": [
+            '/gallery/alumni/1.jpg',
+            '/gallery/alumni/12.jpg',
+            '/gallery/alumni/17.jpg',
+            '/gallery/alumni/24.jpg',
+            '/gallery/alumni/25.jpg',
+            '/gallery/alumni/27.jpg',
+            '/gallery/alumni/img20230414011501.jpg',
+            '/gallery/alumni/img20230414011523.jpg',
+            '/gallery/alumni/img20230414011713.jpg',
+            '/gallery/alumni/img20230414011723.jpg',
+            '/gallery/alumni/img20230414011731.jpg',
+            '/gallery/alumni/img20230414011739.jpg',
+            '/gallery/alumni/img20230414011933.jpg',
+            '/gallery/alumni/img20230414011943.jpg',
+            '/gallery/alumni/img20230414012045.jpg',
+            '/gallery/alumni/img20230414012056.jpg',
+            '/gallery/alumni/img20230414012354.jpg',
+            '/gallery/alumni/img20230414012919.jpg',
+            '/gallery/alumni/img20230414012927.jpg',
+            '/gallery/alumni/img20230414013048.jpg',
+            '/gallery/alumni/img20230414013155.jpg',
+            '/gallery/alumni/img20230414013208.jpg',
+            '/gallery/alumni/img20230414013523.jpg',
+            '/gallery/alumni/img20230414013535.jpg',
+            '/gallery/alumni/img20230414013543.jpg',
+            '/gallery/alumni/img20230414013634.jpg',
+            '/gallery/alumni/img20230414013705.jpg',
+            '/gallery/alumni/img20230414013722.jpg',
+            '/gallery/alumni/img20230414013727.jpg',
+            '/gallery/alumni/img20230414013757.jpg',
+            '/gallery/alumni/img20230414013818.jpg',
+            '/gallery/alumni/img20230414013959.jpg',
+            '/gallery/alumni/img20230414014013.jpg'
+        ]
+    },
+
     // {
     //     "category": "alumni meets",
     //     "images": [

@@ -42,9 +42,9 @@ function Sidebar({ onOpen }) {
                     <CalendarDaysIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>EVENTS</span>
                 </Link>
-                <Link href="/adminpanel/messages" className={`mb-auto flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel/messages' ? 'text-primarycolor' : 'text-gray-400'}`}>
+                <Link href="/adminpanel/inbox" className={`mb-auto flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel/messages' ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <EnvelopeIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
-                    <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>MESSAGES</span>
+                    <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>INBOX</span>
                 </Link>
                 <li onClick={() => {
                     deleteCookie('atkn');

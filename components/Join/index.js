@@ -119,15 +119,20 @@ function Join() {
 
 
         <div className=' w-11/12 sm:w-5/6 mx-auto mt-10 bg-slate-200/50 backdrop-blur-sm rounded-md p-4'>
-          <h1 className=' font-semibold md:text-xl xs:text-xl text-red-400'>Rs.500/- to join website membership as per below Bank Details and upload reciept & a proof of a jnu student</h1>
-          <div className=' mt-10'>
-            <h1 className='text-2xl font-semibold '>Bank Details:</h1>
-            <div className=' font-light text-base leading-6'>
-              Bank of Baroda Chanakyapuri <br />
-              A/C Name: Jnu Alumni Association <br />
-              A/C No:00940100006687 <br />
-              IFSC:BARBOCHANAK
-            </div>
+          <div className=' mt-5'>
+            <h1 className='text-2xl font-semibold my-3'>To become a website member, there is a membership fee of Rs. 500. Please follow these steps:</h1>
+            <p className=' font-light text-base leading-6'>
+              1. Make a payment of Rs. 500 to the following bank details:<br/><br/>
+              Bank Name: <span className='font-semibold'>Bank of Baroda Chanakyapuri</span><br/>
+              Account Name: <span className='font-semibold'>Jnu Alumni Association</span><br/>
+              Account Number: <span className='font-semibold'>00940100006687</span><br/>
+              IFSC Code: <span className='font-semibold'>BARBOCHANAK</span><br/><br/>
+
+              2. After making the payment, please upload a receipt confirming the transaction.<br/>
+
+              3. Additionally, provide proof of your JNU alumni status. This can be in the form of a marks sheet or any other relevant document. If you don&apos;t have any such proof, kindly contact us at 9717129297 for further assistance.
+              <br/><br/> <span className='text-md font-medium'>Thank you for your interest in joining our website membership.</span>
+            </p>
           </div>
 
 

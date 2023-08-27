@@ -42,7 +42,7 @@ function Home() {
             <article className="flex flex-col  rounded-md my-4 w-full bg-white">
 
               <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer ">
-                <img className=" object-fill w-full z-0" style={{ height: '600px' }} src={"/jnu/nehruPartima.jpg"} />
+                <img className=" object-fill w-full z-0" style={{ height: '600px' }} src={"/jnu/nehruPartima.webp"} />
 
                 <div className="absolute top-0 left-0 px-6 py-4 text-primarycolor text-2xl font-semibold">
                   {/* JNU Central Library */}

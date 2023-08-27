@@ -201,12 +201,17 @@ function Home() {
 
 
               </div>
+
               <div className=" p-5">
                 <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/santi.webp" alt="Profile picture" />
                 <h2 className="text-center text-2xl font-semibold mt-3">Santishree Dhulipudi Pandit</h2>
                 <p className="text-center text-gray-600 mt-1">Vice-chancellor of JNU</p>
+              </div>
 
-
+              <div className=" p-5">
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/swara.webp" alt="Profile picture" />
+                <h2 className="text-center text-2xl font-semibold mt-3">Swara Bhaskar</h2>
+                <p className="text-center text-gray-600 mt-1">Bollywood Actress</p>
               </div>
 
 
@@ -214,7 +219,7 @@ function Home() {
             </ul>
             <p className="mt-10 text-center text-sm text-gray-500">
               view all{' '}
-              <Link href="/gallery" className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'>click here</Link>
+              <Link href="/alumni" className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'>click here</Link>
             </p>
           </div>
 

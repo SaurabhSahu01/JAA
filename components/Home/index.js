@@ -108,11 +108,6 @@ function Home() {
                         <p class="mt-2 text-gray-800 text-center"> Click Here To see More </p> </div> </a>
                   </div>
 
-
-
-
-
-
                 </div>
               </center>
 

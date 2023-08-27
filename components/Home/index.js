@@ -52,14 +52,12 @@ function Home() {
 
             <article className="flex flex-col  rounded-md my-4 w-full bg-white">
 
+              <div className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer ">
+                <img className=" object-fill w-full z-0" style={{ height: '600px' }} src={"/jnu/nehruPartima.jpg"} />
 
-
-              <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer ">
-                <img class="object-cover w-full z-0" style={{ height: '600px' }} src={"/jnu/jnu1.jpg"} />
-
-                <div class="absolute top-0 left-0 px-6 py-4">
-                  <h4 class="mb-3 text-xl font-semibold tracking-tight text-white">This is the title</h4>
-                  {/* <p class="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur adipis icing elit. Praesen tium, quibusdam facere quo laborum maiores sequi nam tenetur laud.</p> */}
+                <div className="absolute top-0 left-0 px-6 py-4 text-primarycolor text-2xl font-semibold">
+                  {/* JNU Central Library */}
+                  {/* <p className="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur adipis icing elit. Praesen tium, quibusdam facere quo laborum maiores sequi nam tenetur laud.</p> */}
                 </div>
               </div>
 

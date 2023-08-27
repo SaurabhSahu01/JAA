@@ -6,10 +6,10 @@ import Select from '../tags/Select'
 
 const EditProfile = ({handleSubmit, onChangeHandler, fileAttached, state, img, }) => {
   return (
-    <form onSubmit={handleSubmit} style={{ backgroundImage: "url(/gallery/jnu/1636141627078.jpg)" }} className=' relative m-6 bg-cover mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
+    <form onSubmit={handleSubmit} style={{ backgroundImage: "url(/gallery/jnu/1636141627078.webp)" }} className=' relative m-6 bg-cover mx-auto p-4 bg-white rounded-lg flex flex-col items-center justify-center z-0 w-[96%] md:w-[65%]'>
             <div className='flex flex-col items-center relative'>
                 <div className=" w-[100px] h-[100px]">
-                    {img === null ? <img src="/login/lable.png" className='w-full h-full' alt="" /> : <img src={img} className='w-full h-full rounded-full' alt="" />}
+                    {img === null ? <img src="/login/lable.webp" className='w-full h-full' alt="" /> : <img src={img} className='w-full h-full rounded-full' alt="" />}
                 </div>
                 {<div className=" shrink-0 mt-6">
                     <input

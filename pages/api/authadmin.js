@@ -2,6 +2,7 @@ import Cryptr from "cryptr";
 import { JWT_SECRET } from "@/firebase.config";
 import { createJWT } from "../../src/utils/JwtUtils";
 
+
 async function handler(req, res) {
     const cryptr = new Cryptr(JWT_SECRET);
     const serverSidePasscodeHash = cryptr.encrypt('JAA12345')

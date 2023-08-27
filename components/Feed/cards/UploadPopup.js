@@ -84,7 +84,7 @@ function UploadPopup({ setWantShare }) {
                     <div className='flex flex-col md:flex-row' >
                         <div className='w-full flex flex-col p-1 md:p-2'>
                             <div className='flex items-center gap-2'>
-                                {profileimg ? <img src={profileimg} className='w-8 h-8 rounded-full' alt="profile photo" /> : <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
+                                {profileimg ? <img src={profileimg} className='w-8 h-8 rounded-full' alt="profile photo" /> : <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
                                 <p className='font-semibold text-base text-slate-600'>{name}</p>
                             </div>
                             <textarea

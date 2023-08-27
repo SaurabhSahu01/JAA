@@ -157,10 +157,10 @@ const Profile = () => {
                     <Loader color="#1B2D56" loading={loading} size={70} />
                 </div> : <></>
             }
-            <div style={{ backgroundImage: "url(/gallery/jnu/IMG-20220807-WA0013.jpg)" }} className=' -mt-16 pt-10 pb-4 bg-cover w-full min-h-screen'>
+            <div style={{ backgroundImage: "url(/gallery/jnu/WA0013.webp)" }} className=' -mt-16 pt-10 pb-4 bg-cover w-full min-h-screen'>
 
                 <form onSubmit={handleSubmit} className=' relative bg-cover bg-white/10 backdrop-blur-md mx-auto my-16 shadow-xl flex flex-col items-center w-[85%] md:w-[39rem]'>
-                    {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.png)" }} className='rounded-lg h-[8rem] w-full'> */}
+                    {/* <div style={{ backgroundImage: "url(/profile/blurry_gradient_haikei.webp)" }} className='rounded-lg h-[8rem] w-full'> */}
 
                     {isdisable &&
                         <div onClick={() => setDisable(false)} className=' absolute bg-white rounded-md top-2 right-2 w-fit cursor-pointer p-1 z-10'>
@@ -169,7 +169,7 @@ const Profile = () => {
                     }
                     <div className=' relative flex flex-col items-center md:items-start justify-start bg-[#1B2D56] h-[8rem] w-full'>
                         <div className='w-fit mt-2 md:mt-10'>
-                            {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName.charAt(0).toUpperCase() + state.firstName.slice(1)} {state.lastName.charAt(0).toUpperCase() + state.lastName.slice(1)}</h1> :
+                            {isdisable ? <h1 className='text-2xl text-white font-bold w-fit md:ml-10'>{state.firstName} {state.lastNameme}</h1> :
                                 <div className=' flex w-full md:ml-10 mb-1'>
                                     <input
                                         type="text"
@@ -211,8 +211,8 @@ const Profile = () => {
                         <div className='absolute top-16 right-[50%] translate-x-[50%] md:translate-x-0 md:top-10 md:right-4 bg-slate-50 shadow-xl rounded-full p-1 w-[150px] h-[150px]'>
                             {
                                 // new image > image removed > incoming image
-                                selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : (!deletePic && incomingImage) ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.png" />
-                                // selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.png" />
+                                selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : (!deletePic && incomingImage) ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.webp" />
+                                // selectImg ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={selectImg} alt='user profile' /> : incomingImage ? <img className='w-full h-full rounded-full object-cover overflow-hidden' src={incomingImage} alt="selected profile pic" /> : <img src="/icons/profileIcon.webp" />
                             }
                         </div>
                         {

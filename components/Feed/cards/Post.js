@@ -112,7 +112,7 @@ const Post = ({ data }) => {
             <div className='w-full h-fit bg-white rounded-lg px-4 mt-4 flex flex-col items-start justify-center'>
                 <div className='relative flex items-center my-2 w-full'>
                     {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
-                        <img src='/icons/profileIcon.png' className='w-10 h-10 rounded-full mr-4' />}
+                        <img src='/icons/profileIcon.webp' className='w-10 h-10 rounded-full mr-4' />}
                     <div className=''>
                         <p className=' font-semibold text-base cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
                         {/* <p className=' text-xs font-normal'>{profile?.program.charAt(0).toUpperCase() + profile?.program.slice(1) + " " + profile?.joiningYear}</p> */}
@@ -180,7 +180,7 @@ const Post = ({ data }) => {
                     <div className='w-full h-fit bg-white px-4 mb-4 flex flex-col items-start justify-center'>
                         <div className='relative flex items-center my-2 w-full'>
                             {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
-                                <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
+                                <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
                             <div className=''>
                                 <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
                             </div>
@@ -201,7 +201,7 @@ const Post = ({ data }) => {
                         <div className='w-full'>
                             <div className='relative flex items-center my-2 w-full'>
                                 {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
-                                    <img src='/icons/profileIcon.png' className='w-8 h-8 rounded-full' />}
+                                    <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
                                 <div className=''>
                                     <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName'] + JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
                                 </div>

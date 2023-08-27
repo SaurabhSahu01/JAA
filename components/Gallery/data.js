@@ -40,9 +40,9 @@ const images = [
         "images": [
             // "/gallery/events/IMG_2083.webp",
             // "/gallery/events/IMG_2084.webp",
-            "/gallery/events/wa0008.webp",
-            "/gallery/events/wa0027.webp",
-            "/gallery/events/wa0016.webp",
+            // "/gallery/events/wa0008.webp",
+            // "/gallery/events/wa0027.webp",
+            // "/gallery/events/wa0016.webp",
         ]
     },
 

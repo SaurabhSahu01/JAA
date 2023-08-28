@@ -26,11 +26,11 @@ const images = [
             "/gallery/jnu/1649242971639.webp",
             "/gallery/jnu/1649242971649.webp",
             "/gallery/jnu/1649242971867.webp",
-            "/gallery/jnu/1649242971879.webp",
-            "/gallery/jnu/WA0011.webp",
+            // "/gallery/jnu/1649242971879.webp",
+            // "/gallery/jnu/WA0011.webp",
             "/gallery/jnu/WA0012.webp",
             "/gallery/jnu/WA0013.webp",
-            "/gallery/jnu/WA0000.webp",
+            // "/gallery/jnu/WA0000.webp",
             "/gallery/jnu/WA0001.webp",
             "/gallery/jnu/snapchat.webp",
         ]
@@ -38,6 +38,7 @@ const images = [
     {
         "category": "events",
         "images": [
+            "/gallery/events/wp1.jpg",
             // "/gallery/events/IMG_2083.webp",
             // "/gallery/events/IMG_2084.webp",
             // "/gallery/events/wa0008.webp",
@@ -49,12 +50,12 @@ const images = [
     {
         "category": "alumni meets",
         "images": [
-            '/gallery/alumni/1.webp',
-            '/gallery/alumni/12.webp',
-            '/gallery/alumni/17.webp',
-            '/gallery/alumni/24.webp',
-            '/gallery/alumni/25.webp',
-            '/gallery/alumni/27.webp',
+            // '/gallery/alumni/1.webp',
+            // '/gallery/alumni/12.webp',
+            // '/gallery/alumni/17.webp',
+            // '/gallery/alumni/24.webp',
+            // '/gallery/alumni/25.webp',
+            // '/gallery/alumni/27.webp',
             '/gallery/alumni/IMG20230414011501.webp',
             '/gallery/alumni/IMG20230414011523.webp',
             '/gallery/alumni/IMG20230414011713.webp',

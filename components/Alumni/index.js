@@ -1,3 +1,6 @@
+import React from "react";
+import ImageViewer from 'react-simple-image-viewer';
+
 const alumniList = [
     {
         ListTitle: "Art Alumni",
@@ -83,6 +86,22 @@ const alumniList = [
 ]
 
 export default function Alumni() {
+
+
+    const [currentImage, setCurrentImage] = React.useState(0);
+    const [isViewerOpen, setIsViewerOpen] = React.useState(false);
+    const [photo, setPhoto] = React.useState(null);
+
+    const openImageViewer = React.useCallback((index) => {
+        setCurrentImage(index);
+        setIsViewerOpen(true);
+    }, []);
+
+    const closeImageViewer = () => {
+        setCurrentImage(0);
+        setIsViewerOpen(false);
+    };
+
     return (
         <div className="">
             <div className="mx-auto w-11/12 p-5 py-10">
@@ -101,8 +120,26 @@ export default function Alumni() {
                                                 <img
                                                     src={alumni.imageSrc}
                                                     alt={alumni.name}
+                                                    onClick={() => {
+                                                        setPhoto(alumni.imageSrc);
+                                                        openImageViewer(0)
+                                                        }}
                                                     className="h-[12rem] w-[12rem] rounded-full mx-auto object-cover object-center group-hover:opacity-75"
                                                 />
+
+                                                <div>
+                                                    {isViewerOpen && (
+                                                        <ImageViewer
+                                                            src={[photo]}
+                                                            currentIndex={currentImage}
+                                                            disableScroll={true}
+                                                            closeOnClickOutside={true}
+                                                            onClose={closeImageViewer}
+                                                            backgroundStyle={{ backdropFilter: "blur(10px)", backgroundColor: "transparent", zIndex: "10" }}
+                                                        />
+                                                    )}
+                                                </div>
+
                                                 <div className="mt-1 flex flex-col items-center text-center text-base font-medium text-gray-900">
                                                     <h3>{alumni.name}</h3>
                                                     <p className="mt-1 text-sm italic text-gray-500">{alumni.description}</p>

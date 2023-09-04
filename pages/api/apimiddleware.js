@@ -36,7 +36,8 @@ const apimiddleware = handler => async (req, res) => {
             })
             .catch(e => {
                 // console.log("error = ",e.errorInfo.code);
-                if (e.errorInfo.code === "auth/id-token-expired") {
+                console.log(e);
+                if (e.errorInfo.code === "auth/id-token-expired" || e.errorInfo.code === "auth/argument-error") {
                     // get a new id token from the refresh token
                     // get the tokenString[2]
                     if (tokenString[2]) {
@@ -50,7 +51,7 @@ const apimiddleware = handler => async (req, res) => {
 
                         axios.post(`${url}?key=${apiKey}`, requestData, { headers })
                             .then(response => {
-                                //console.log('Response:', response.data);
+                                console.log('Response:', response.data.user_id);
 
                                 // access_token refresh_token
 
@@ -61,6 +62,10 @@ const apimiddleware = handler => async (req, res) => {
                                     }),
                                     cookie.serialize('refreshToken', response.data.refresh_token, {
                                         maxAge: 3600 * 24 * 30, // Refresh token can have a longer expiration
+                                        path: '/',
+                                    }),
+                                    cookie.serialize('uid', response.data.user_id, {
+                                        maxAge: 3600 * 24 * 30, // setting the user id too
                                         path: '/',
                                     }),
                                 ]);

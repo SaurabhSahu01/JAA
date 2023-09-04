@@ -24,7 +24,7 @@ const Chat = ({ data, selectChatUser }) => {
     return (
         <div
             onClick={() => selectChatUser(profile)}
-            className="flex items-center gap-2 rounded-xl bg-blue-200/30 shadow-sm hover:bg-gray-300 py-2 px-3 cursor-pointer"
+            className="flex items-center gap-2 rounded-sm bg-blue-200/30 shadow-lg hover:bg-gray-100 py-2 px-3 cursor-pointer"
         >
             {profile?.photo ? <img src={profile?.photo} className="w-[50px] h-[50px] rounded-full object-cover" /> : <img src="/icons/profileIcon.webp" className="w-[50px] h-[50px]" />}
             {profile && <div className=" flex flex-col justify-center">

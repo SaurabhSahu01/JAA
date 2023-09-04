@@ -23,7 +23,7 @@ function FeedUpload({setWantShare}) {
                 />
                 <MagnifyingGlassIcon className='absolute top-3 right-1 w-5 h-5'  />
             </div> */}
-            <div className=' w-full sm:p-2 xs:p-1 rounded-full bg-gray-200 hover:bg-gray-100 flex justify-center items-center border-[1px] border-black cursor-pointer tracking-wider xs:mr-2' onClick={() => setWantShare(true)}>
+            <div className=' w-full sm:p-2 xs:p-1 rounded-full bg-gray-100 hover:bg-gray-200 flex justify-center items-center border-[1px] border-black cursor-pointer tracking-wider xs:mr-2' onClick={() => setWantShare(true)}>
                 Share a post
             </div>
         </div>

@@ -23,7 +23,7 @@ const Comment = ({ data }) => {
         getProfile();
     }, [])
     return (
-        <div className='relative flex items-center w-full'>
+        <div className='w-full relative flex flex-row items-center justify-center my-2'>
             {user?.photo ? <img src={user?.photo} alt="user" className='w-7 h-7 object-cover mr-2 rounded-full cursor-pointer' /> :
                 <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full mr-2' alt='profilepic' />}
             <div className='relative w-full'>

@@ -167,8 +167,8 @@ const Post = ({ data }) => {
                     <div
                         className='w-fit flex items-center justify-center mx-2 text-gray-600'
                     >
-                        {likes.includes(uid) ? <HandThumbUpIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-blue-500' onClick={() => actionLike('unlike')} /> : <HandThumbUpIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-gray-500' onClick={() => actionLike('like')} />}
-                        <p className='mx-[3px] text-blue-500 xs:text-sm md:text-md'>{likes.length} <span className='text-gray-500'>Likes</span></p>
+                        {likes.includes(uid) ? <HandThumbUpIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-primarycolor' onClick={() => actionLike('unlike')} /> : <HandThumbUpIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-gray-500' onClick={() => actionLike('like')} />}
+                        <p className='mx-[3px] text-primarycolor xs:text-sm md:text-md'>{likes.length} <span className='text-gray-500'>Likes</span></p>
                     </div>
                     <div
                         className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 '
@@ -186,18 +186,38 @@ const Post = ({ data }) => {
 
             {showComment &&
                 <div className='px-4'>
-                    <hr className='w-full h-[1px] border-r-2 border-black' />
                     <div className='w-full h-fit bg-white px-4 mb-4 flex flex-col items-start justify-center'>
-                        <div className='relative flex items-center my-2 w-full'>
+                        {/* <div className='relative flex items-center my-2 w-full'>
                             {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
                                 <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
                             <div className=''>
                                 <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
                             </div>
+                        </div> */}
+                        <div className='w-full'>
+                            {/* <div className='relative flex items-center my-2 w-full'>
+                                {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
+                                    <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
+                                <div className=''>
+                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName'] + JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
+                                </div>
+                            </div> */}
+                            <div className='flex justify-center items-center gap-2 my-2 bg-transparent'>
+                                <textarea
+                                    className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans shadow-md rounded-lg'
+                                    rows={1}
+                                    cols={33}
+                                    placeholder='write comment here...'
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                ></textarea>
+                                <button
+                                    className='h-min px-2 py-1 bg-primarycolor text-white rounded-md xs:text-sm md:text-md'
+                                    onClick={sendComment}
+                                >Comment</button>
+                            </div>
                         </div>
-                        <hr className='w-full h-[2px] bg-black/30 my-1' />
-                        <p>comment</p>
-                        <div className='flex flex-col gap-2'>
+                        <div className='w-full flex flex-col justify-center items-start gap-2 bg-gray-300/10 backdrop-blur-sm px-2 rounded-md'>
                             {
                                 comments?.map((c, index) => {
                                     {/* console.log(c); */}
@@ -206,30 +226,6 @@ const Post = ({ data }) => {
                                     )
                                 })
                             }
-                        </div>
-                        <hr className='w-full h-[1px] border-r-2 border-black' />
-                        <div className='w-full'>
-                            <div className='relative flex items-center my-2 w-full'>
-                                {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
-                                    <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
-                                <div className=''>
-                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName'] + JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
-                                </div>
-                            </div>
-                            <div className='flex justify-center'>
-                                <textarea
-                                    className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans'
-                                    rows={1}
-                                    cols={33}
-                                    placeholder='write comment here...'
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                ></textarea>
-                                <button
-                                    className='h-min px-2 py-1 bg-primarycolor text-white rounded-sm'
-                                    onClick={sendComment}
-                                >Comment</button>
-                            </div>
                         </div>
                     </div>
                 </div>

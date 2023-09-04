@@ -9,9 +9,12 @@ import { db } from '@/src/utils/firebase';
 import { onSnapshot, collection, doc } from 'firebase/firestore';
 import Comment from './Comment';
 import secureLocalStorage from 'react-secure-storage';
+import Loader from '@/components/common/Loader';
+
 
 
 const Post = ({ data }) => {
+    const [deleteLoading, setDeleteLoading] = React.useState(false);
     const uid = cookieCutter.get('uid');
     const router = useRouter();
     const { photo, content, date, postedBy, postId, likes } = data;
@@ -32,6 +35,7 @@ const Post = ({ data }) => {
         setIsViewerOpen(false);
     };
     const deletePost = (postID) => {
+        setDeleteLoading(true);
         fetch(`/api/deletepost?pid=${postID}`, {
             method: "GET",
             headers: {
@@ -40,8 +44,14 @@ const Post = ({ data }) => {
             }
         })
             .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
+            .then(data => {
+                console.log(data);
+                setDeleteLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+                setDeleteLoading(false);
+            })
     }
     const getProfile = async () => {
         await fetch(`/api/getuserdata?q=${postedBy}&required=name`, {
@@ -109,7 +119,7 @@ const Post = ({ data }) => {
 
     return (
         profile && <>
-            <div className='w-full h-fit bg-white rounded-lg px-4 mt-4 flex flex-col items-start justify-center'>
+            <div className={`w-full h-fit backdrop-blur-sm rounded-md shadow-md px-4 mt-4 flex flex-col items-start justify-center ` + (!deleteLoading ? 'bg-blue-200/10' : 'bg-red-200/50')}>
                 <div className='relative flex items-center my-2 w-full'>
                     {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
                         <img src='/icons/profileIcon.webp' className='w-10 h-10 rounded-full mr-4' />}
@@ -167,7 +177,7 @@ const Post = ({ data }) => {
                         <ChatBubbleBottomCenterIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem]' />
                         <span className='xs:text-sm md:text-md ml-1'>{comments?.length} Comments</span>
                     </div>
-                    {(postedBy === uid) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)} /> : <></>}
+                    {(postedBy === uid && !deleteLoading) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)} /> : <></>}
                 </div>
             </div>
 

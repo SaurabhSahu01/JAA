@@ -12,6 +12,10 @@ function Home() {
   const [events, setEvents] = React.useState(null);
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
+    const userToken = cookieCutter.get('userToken');
+    if(!userToken){
+      localStorage.clear();
+    }
     if (uid) {
       const profileRef = doc(db, 'users', uid, 'profile', 'profile');
       const unsubscribe = onSnapshot(profileRef, snapshot => {

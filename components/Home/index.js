@@ -13,7 +13,8 @@ function Home() {
   React.useEffect(() => {
     const uid = cookieCutter.get('uid');
     const userToken = cookieCutter.get('userToken');
-    if(!userToken){
+    const refreshToken = cookieCutter.get('refreshToken');
+    if(!userToken && !refreshToken){
       localStorage.clear();
     }
     if (uid) {

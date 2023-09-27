@@ -215,7 +215,7 @@ function Home() {
               </div>
 
               <div className=" p-5">
-                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/Mridula.wepb" alt="Profile picture" />
+                <img className="w-32 h-32 rounded-full mx-auto" src="/jnu/Mridula.webp" alt="Profile picture" />
                 <h2 className="text-center text-2xl font-semibold mt-3">Mridula Mukherjee</h2>
                 <p className="text-center text-gray-600 mt-1"> Indian historian </p>
               </div>

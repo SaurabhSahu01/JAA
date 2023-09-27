@@ -57,15 +57,15 @@ const apimiddleware = handler => async (req, res) => {
 
                                 res.setHeader('Set-Cookie', [
                                     cookie.serialize('userToken', response.data.access_token, {
-                                        maxAge: 3600 * 24 * 30,   // Token expiration time in seconds (adjust as needed)
+                                        maxAge: 3600 * 2,   // Token expiration time in seconds (adjust as needed)
                                         path: '/',      // The path for which the cookie is valid
                                     }),
                                     cookie.serialize('refreshToken', response.data.refresh_token, {
-                                        maxAge: 3600 * 24 * 30, // Refresh token can have a longer expiration
+                                        maxAge: 3600 * 2, // Refresh token can have a longer expiration
                                         path: '/',
                                     }),
                                     cookie.serialize('uid', response.data.user_id, {
-                                        maxAge: 3600 * 24 * 30, // setting the user id too
+                                        maxAge: 3600 * 2, // setting the user id too
                                         path: '/',
                                     }),
                                 ]);

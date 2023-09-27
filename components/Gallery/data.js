@@ -38,7 +38,7 @@ const images = [
     {
         "category": "events",
         "images": [
-            "/gallery/events/wp1.jpg",
+            "/gallery/events/wp1.webp",
             // "/gallery/events/IMG_2083.webp",
             // "/gallery/events/IMG_2084.webp",
             // "/gallery/events/wa0008.webp",

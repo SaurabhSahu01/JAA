@@ -8,7 +8,7 @@ export const firebaseConfig = {
     measurementId: "G-WCCWJ05M36"
 };
 
-export const adminFirebaseConfig = {
+export const adminFirebaseConfig ={
     "type": "service_account",
     "project_id": "jnu-alumni-association",
     "private_key_id": "3711523afa7d7923df581933b761bcdcf15ca427",
@@ -20,7 +20,7 @@ export const adminFirebaseConfig = {
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-sxoes%40jnu-alumni-association.iam.gserviceaccount.com",
     "universe_domain": "googleapis.com"
-};
+  };
 
 export const firebaseStorageBucket = "gs://jnu-alumni-association.appspot.com";
 

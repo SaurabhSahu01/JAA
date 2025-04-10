@@ -1,7 +1,7 @@
 export const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_USER_PRIVATE_KEY,
     authDomain: "jnu-alumni-association.firebaseapp.com",
-    projectId: "jnu-alumni-association",
+    projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
     storageBucket: "jnu-alumni-association.appspot.com",
     messagingSenderId: "382439048728",
     appId: "1:382439048728:web:a2504dad6fb65d2d5de56d",
@@ -10,7 +10,7 @@ export const firebaseConfig = {
 
 export const adminFirebaseConfig ={
     "type": "service_account",
-    "project_id": "jnu-alumni-association",
+    "project_id": process.env.NEXT_PUBLIC_PROJECT_ID,
     "private_key_id": "3711523afa7d7923df581933b761bcdcf15ca427",
     "private_key": process.env.NEXT_PUBLIC_ADMIN_PRIVATE_KEY,
     "client_email": "firebase-adminsdk-sxoes@jnu-alumni-association.iam.gserviceaccount.com",

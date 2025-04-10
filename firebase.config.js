@@ -24,6 +24,6 @@ export const adminFirebaseConfig ={
 
 export const firebaseStorageBucket = "gs://jnu-alumni-association.appspot.com";
 
-export const webAPIKey = "AIzaSyD5nCc4a1OK8XE88GqwT3mmPBhzfBe_Z40";
+export const webAPIKey = process.env.NEXT_PUBLIC_WEB_API_KEY;
 
-export const JWT_SECRET = "sadkfhalsdfjoacid";
+export const JWT_SECRET = process.env.JWT_SECRET;

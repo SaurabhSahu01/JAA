@@ -108,7 +108,7 @@ function Home() {
               <p className="text-xl font-semibold pb-5">Important Dates</p>
               {
                 (events) && events.map((event, index) => {
-                  return <EventCard event={event.data.event} date={event.data.date} key={index} />
+                  return <EventCard event={event.data.event} date={event.data.date} link={event.data.link} key={index} />
                 })
               }
             </div>

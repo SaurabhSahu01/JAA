@@ -36,3 +36,9 @@ next-env.d.ts
 
 # environment file
 .env
+
+# session files
+*.log
+*.pid
+temp_add_event.js
+WhatsApp Image*.jpeg

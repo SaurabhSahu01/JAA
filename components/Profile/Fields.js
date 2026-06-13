@@ -1,3 +1,5 @@
+'use client';
+
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
 import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
 import { PhoneIcon, CalendarDaysIcon, BookOpenIcon } from "@heroicons/react/24/outline";

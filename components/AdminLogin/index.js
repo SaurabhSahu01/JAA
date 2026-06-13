@@ -1,9 +1,12 @@
+'use client';
+
 import React from 'react';
 import Input from '../common/Input';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import cookieCutter from "cookie-cutter";
 import Spinner from '../common/Spinner';
 import { changeMaxAge } from '@/src/utils/login';
+import Link from 'next/link';
 
 function AdminLogin() {
     const [username, setUsername] = React.useState(null);
@@ -18,7 +21,12 @@ function AdminLogin() {
     }, [])
 
     return (
-        <div className='w-full h-screen flex items-center justify-center bg-[url("/bg/bglightani.svg")] bg-no-repeat bg-cover'>
+        <div className='w-full h-screen flex items-center justify-center bg-[url("/bg/bglightani.svg")] bg-no-repeat bg-cover relative'>
+            <div className='absolute top-6 left-6 z-50'>
+                <Link href="/" className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-jnu-blue transition-colors group bg-white/60 backdrop-blur-md px-3.5 py-2 rounded-xl border border-gray-200/50 shadow-sm">
+                    <span className="inline-block transition-transform group-hover:-translate-x-1">&larr;</span> Back to Home
+                </Link>
+            </div>
             {loading && <Spinner color="#1B2D56" loading={loading}/>}
             <div className='bg-transparent/10 p-4 flex flex-col justify-center items-center gap-3'>
                 <Input type="text" placeholder="Username" className="border-[0.3px] border-black shadow-lg outline-primarycolor text-black" onChange={(e) => setUsername(e.target.value)} />

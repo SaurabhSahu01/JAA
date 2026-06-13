@@ -18,55 +18,43 @@ async function handler(req, res) {
         const uid = req.body.uid;
         if (action === "like") {
             const documentRef = db.collection('posts').doc(postid);
-            const getDocRef = documentRef.get();
-            getDocRef.then(docsnapshot => {
-                let likes = docsnapshot.data().likes;
+            try {
+                const docsnapshot = await documentRef.get();
+                let likes = docsnapshot.data().likes || [];
                 if (!likes.includes(uid)) {
                     likes.push(uid);
                 }
-                documentRef.set({
+                await documentRef.set({
                     likes: likes
-                }, { merge: true }).then(rs => {
-                    res.status(200).json({
-                        message: `liked the post ${postid}`
-                    })
-                })
-                    .catch(err => {
-                        res.status(504).json({
-                            message: `cannot like the post ${postid}`
-                        })
-                    })
-            }).catch(err => {
-                res.status(504).json({
-                    message: "some db error"
-                })
-            })
+                }, { merge: true });
+                return res.status(200).json({
+                    message: `liked the post ${postid}`
+                });
+            } catch (err) {
+                return res.status(504).json({
+                    message: `cannot like the post ${postid}`
+                });
+            }
         }
         else if (action === "unlike") {
             const documentRef = db.collection('posts').doc(postid);
-            const getDocRef = documentRef.get();
-            getDocRef.then(docsnapshot => {
-                let likes = docsnapshot.data().likes;
+            try {
+                const docsnapshot = await documentRef.get();
+                let likes = docsnapshot.data().likes || [];
                 if (likes.includes(uid)) {
                     likes = removeItemAll(likes, uid);
                 }
-                documentRef.set({
+                await documentRef.set({
                     likes: likes
-                }, { merge: true }).then(rs => {
-                    res.status(200).json({
-                        message: `unliked the post ${postid}`
-                    })
-                })
-                    .catch(err => {
-                        res.status(504).json({
-                            message: `cannot unlike the post ${postid}`
-                        })
-                    })
-            }).catch(err => {
-                res.status(504).json({
-                    message: "some db error"
-                })
-            })
+                }, { merge: true });
+                return res.status(200).json({
+                    message: `unliked the post ${postid}`
+                });
+            } catch (err) {
+                return res.status(504).json({
+                    message: `cannot unlike the post ${postid}`
+                });
+            }
         }
         else {
             res.status(405).json({

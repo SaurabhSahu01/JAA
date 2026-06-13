@@ -5,18 +5,19 @@ async function handler(req, res){
     if(req.method === "POST"){
         const event = req.body.event;
         const date = req.body.date;
-        db.collection('events').doc().set({
-            event: event,
-            date: date
-        }).then(response => {
-            res.status(200).json({
+        try {
+            await db.collection('events').doc().set({
+                event: event,
+                date: date
+            });
+            return res.status(200).json({
                 message: "event successfully added"
-            })
-        }).catch(err => {
-            res.status(504).json({
+            });
+        } catch (err) {
+            return res.status(504).json({
                 message: "database error"
-            })
-        })
+            });
+        }
     }
     else{
         res.status(405).json({

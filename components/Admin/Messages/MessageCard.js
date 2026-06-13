@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 
 function MessageCard({ name, number, email, date, message }) {

@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection: only allow reading one's own user document.
+    // Client-side code queries `users/{uid}` to check verification.
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+      
+      // Profile subcollection: allow authenticated users to read profiles.
+      // Profile writes are done securely server-side.
+      match /profile/profile {
+        allow read: if request.auth != null;
+        allow write: if false;
+      }
+    }
+    
+    // Posts collection: allow authenticated users to read posts.
+    // Post writes are handled securely server-side.
+    match /posts/{postId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+      
+      // Comments subcollection: allow authenticated users to read comments.
+      // Comment creation is handled securely server-side.
+      match /comments/{commentId} {
+        allow read: if request.auth != null;
+        allow write: if false;
+      }
+    }
+    
+    // Chats collection: only allow a user to read their own chat sessions.
+    // Chat writes/updates are done server-side.
+    match /chats/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+      
+      match /chats/{chatId} {
+        allow read: if request.auth != null && (request.auth.uid == userId || request.auth.uid == chatId);
+        allow write: if false;
+      }
+    }
+    
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

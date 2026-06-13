@@ -1,19 +1,21 @@
+'use client';
+
 import React from 'react'
 import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline'
 import { TrashIcon } from '@heroicons/react/24/outline'
-import { HandThumbUpIcon, HandThumbDownIcon } from '@heroicons/react/24/solid'
+import { HandThumbUpIcon } from '@heroicons/react/24/solid'
 import ImageViewer from 'react-simple-image-viewer';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import cookieCutter from "cookie-cutter";
 import { db } from '@/src/utils/firebase';
 import { onSnapshot, collection, doc } from 'firebase/firestore';
 import Comment from './Comment';
-import secureLocalStorage from 'react-secure-storage';
+import { useProfile } from '@/components/common/ProfileContext';
 import Loader from '@/components/common/Loader';
-
-
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Post = ({ data }) => {
+    const { profile: myProfile } = useProfile();
     const [deleteLoading, setDeleteLoading] = React.useState(false);
     const uid = cookieCutter.get('uid');
     const router = useRouter();
@@ -23,7 +25,12 @@ const Post = ({ data }) => {
     const [profile, setProfile] = React.useState(null);
     const [showComment, setShowComment] = React.useState(false);
     const [comments, setComments] = React.useState(null);
-    const [comment, setComment] = React.useState(null);
+    const [comment, setComment] = React.useState('');
+    const [liked, setLiked] = React.useState(false);
+
+    React.useEffect(() => {
+        setLiked(likes?.includes(uid));
+    }, [likes, uid]);
 
     const openImageViewer = React.useCallback((index) => {
         setCurrentImage(index);
@@ -34,6 +41,7 @@ const Post = ({ data }) => {
         setCurrentImage(0);
         setIsViewerOpen(false);
     };
+
     const deletePost = (postID) => {
         setDeleteLoading(true);
         fetch(`/api/deletepost?pid=${postID}`, {
@@ -44,35 +52,24 @@ const Post = ({ data }) => {
             }
         })
             .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setDeleteLoading(false);
-            })
-            .catch(err => {
-                console.log(err);
-                setDeleteLoading(false);
-            })
+            .then(data => { setDeleteLoading(false); })
+            .catch(err => { setDeleteLoading(false); })
     }
+
     const getProfile = async () => {
         await fetch(`/api/getuserdata?q=${postedBy}&required=name`, {
             method: "GET",
             headers: {
                 "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
             },
-        }).then((res) => { return res.json() }).then((res) => {
+        }).then((res) => res.json()).then((res) => {
             setProfile(res);
-        }).catch((err) => {
-            console.log(err);
-        });
+        }).catch((err) => { console.log(err); });
     }
 
     const sendComment = async () => {
         const datetime = new Date().toLocaleString().split(',');
-        const currentDate = datetime[1] + " " + datetime[0];
-        const data = {
-            comment,
-            datetime,
-        }
+        const data = { comment, datetime };
         if (comment) {
             await fetch(`/api/addcomment?pid=${postId}`, {
                 method: "POST",
@@ -81,12 +78,9 @@ const Post = ({ data }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-            }).then((res) => { return res.json() }).then((res) => {
-                console.log(res);
+            }).then((res) => res.json()).then(() => {
                 setComment("")
-            }).catch((err) => {
-                console.log(err);
-            });
+            }).catch((err) => { console.log(err); });
         }
     }
 
@@ -96,53 +90,68 @@ const Post = ({ data }) => {
             headers: {
                 "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
             },
-        }).then((res) => { return res.json() }).then((res) => {
-            console.log(res);
-
-        }).catch((err) => {
-            console.log(err);
-        });
+        }).then((res) => res.json()).catch((err) => { console.log(err); });
     }
 
     React.useEffect(() => {
         getProfile();
-        // comments
         const sub = onSnapshot(collection(doc(db, 'posts', postId), 'comments'), (snap) => {
             const postData = [];
-            snap.forEach((doc) =>
-                postData.push({ ...doc.data(), id: doc.id })
-            );
+            snap.forEach((doc) => postData.push({ ...doc.data(), id: doc.id }));
             postData.reverse();
             setComments(postData);
         });
     }, []);
 
     return (
-        profile && <>
-            <div className={`w-full h-fit backdrop-blur-sm rounded-md shadow-md px-4 mt-4 flex flex-col items-start justify-center ` + (!deleteLoading ? 'bg-blue-200/10' : 'bg-red-200/50')}>
-                <div className='relative flex items-center my-2 w-full'>
-                    {profile.photo ? <img src={profile?.photo} alt="user" className='w-10 h-10 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
-                        <img src='/icons/profileIcon.webp' className='w-10 h-10 rounded-full mr-4' />}
-                    <div className=''>
-                        <p className=' font-semibold text-base cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
-                        {/* <p className=' text-xs font-normal'>{profile?.program.charAt(0).toUpperCase() + profile?.program.slice(1) + " " + profile?.joiningYear}</p> */}
-                    </div>
-                    <p className='absolute bottom-[50%] translate-y-[50%] right-1 font-light text-[10px]'>{date}</p>
-                </div>
-
-                {photo &&
-                    <>
-
-                        <div class="relative w-full h-0 pb-[56.25%]">
-                            <img
-                                src={photo}
-                                alt="Post"
-                                class="absolute object-cover w-full h-full"
-                                onClick={() => openImageViewer(0)}
-                            />
+        profile && (
+            <div className={`glass-card overflow-hidden transition-all duration-300 ${deleteLoading ? 'opacity-40 pointer-events-none scale-[0.98]' : ''}`}>
+                {/* Post Content */}
+                <div className="p-6">
+                    {/* Author Header */}
+                    <div className='flex items-center gap-3 mb-4'>
+                        <button onClick={() => router.push(`/user/${postedBy}`)} className="flex-shrink-0 group">
+                            {profile.photo ? (
+                                <img src={profile?.photo} alt="user" className='w-11 h-11 object-cover rounded-full ring-2 ring-white shadow-sm group-hover:ring-jnu-blue/30 transition-all' />
+                            ) : (
+                                <img src='/icons/profileIcon.webp' className='w-11 h-11 rounded-full ring-2 ring-white shadow-sm' />
+                            )}
+                        </button>
+                        <div className='flex-1 min-w-0'>
+                            <button
+                                className='font-semibold text-sm text-gray-900 hover:text-jnu-blue transition-colors truncate block'
+                                onClick={() => router.push(`/user/${postedBy}`)}
+                            >
+                                {profile?.name}
+                            </button>
+                            <p className='text-xs text-gray-400 font-medium'>{date}</p>
                         </div>
+                        {postedBy === uid && !deleteLoading && (
+                            <button
+                                onClick={() => deletePost(postId)}
+                                className="p-2 rounded-lg text-gray-300 hover:text-red-500 hover:bg-red-50 transition-all"
+                            >
+                                <TrashIcon className='w-4 h-4' />
+                            </button>
+                        )}
+                    </div>
 
-                        <div>
+                    {/* Content */}
+                    {content && (
+                        <p className='text-gray-700 leading-relaxed text-[15px] mb-4'>{content}</p>
+                    )}
+
+                    {/* Image */}
+                    {photo && (
+                        <>
+                            <div className="relative rounded-xl overflow-hidden -mx-1 mb-2 cursor-pointer group" onClick={() => openImageViewer(0)}>
+                                <img
+                                    src={photo}
+                                    alt="Post"
+                                    className="w-full object-cover max-h-[400px] group-hover:scale-[1.02] transition-transform duration-500"
+                                />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors"></div>
+                            </div>
                             {isViewerOpen && (
                                 <ImageViewer
                                     src={[photo]}
@@ -150,87 +159,83 @@ const Post = ({ data }) => {
                                     disableScroll={true}
                                     closeOnClickOutside={true}
                                     onClose={closeImageViewer}
-                                    backgroundStyle={{ backdropFilter: "blur(10px)", backgroundColor: "transparent", zIndex: "10" }}
+                                    backgroundStyle={{ backdropFilter: "blur(16px)", backgroundColor: "rgba(0,0,0,0.6)", zIndex: "10" }}
                                 />
                             )}
-                        </div>
-                    </>
-                }
-
-                <div className='w-full text-left'>
-                    <p className='font-medium text-lg'>{content}</p>
+                        </>
+                    )}
                 </div>
 
-                <hr className='w-full h-[2px] bg-black/30 my-2' />
+                {/* Action Bar */}
+                <div className='px-6 py-3 border-t border-gray-100 flex items-center justify-between'>
+                    <div className="flex gap-1">
+                        {/* Like */}
+                        <button
+                            onClick={() => actionLike(liked ? 'unlike' : 'like')}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                                liked
+                                    ? 'text-jnu-blue bg-jnu-blue/5'
+                                    : 'text-gray-500 hover:text-jnu-blue hover:bg-gray-50'
+                            }`}
+                        >
+                            <HandThumbUpIcon className={`w-5 h-5 transition-transform ${liked ? 'scale-110' : ''}`} />
+                            <span>{likes?.length || 0}</span>
+                        </button>
 
-                <div className='w-full flex justify-around items-center py-2'>
-                    <div
-                        className='w-fit flex items-center justify-center mx-2 text-gray-600'
-                    >
-                        {likes.includes(uid) ? <HandThumbUpIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-primarycolor' onClick={() => actionLike('unlike')} /> : <HandThumbUpIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-gray-500' onClick={() => actionLike('like')} />}
-                        <p className='mx-[3px] text-primarycolor xs:text-sm md:text-md'>{likes.length} <span className='text-gray-500'>Likes</span></p>
+                        {/* Comment */}
+                        <button
+                            onClick={() => setShowComment(!showComment)}
+                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                                showComment
+                                    ? 'text-jnu-blue bg-jnu-blue/5'
+                                    : 'text-gray-500 hover:text-jnu-blue hover:bg-gray-50'
+                            }`}
+                        >
+                            <ChatBubbleBottomCenterIcon className='w-5 h-5' />
+                            <span>{comments?.length || 0}</span>
+                        </button>
                     </div>
-                    <div
-                        className='w-fit flex items-center mx-2 cursor-pointer text-gray-600 '
-                        onClick={() => setShowComment(!showComment)}
-                    >
-                        <ChatBubbleBottomCenterIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem]' />
-                        <span className='xs:text-sm md:text-md ml-1'>{comments?.length} Comments</span>
-                    </div>
-                    {(postedBy === uid && !deleteLoading) ? <TrashIcon className='md:h-[1.5rem] md:w-[1.5rem] xs:h-[1rem] xs:w-[1rem] cursor-pointer text-center items-center' onClick={() => deletePost(postId)} /> : <></>}
                 </div>
-            </div>
 
-
-            {/*********************************** comment section************************************************** */}
-
-            {showComment &&
-                <div className='px-4'>
-                    <div className='w-full h-fit bg-white px-4 mb-4 flex flex-col items-start justify-center'>
-                        {/* <div className='relative flex items-center my-2 w-full'>
-                            {profile.photo ? <img src={profile?.photo} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' onClick={() => router.push(`/user/${postedBy}`)} /> :
-                                <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
-                            <div className=''>
-                                <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline' onClick={() => router.push(`/user/${postedBy}`)}>{profile?.name}</p>
-                            </div>
-                        </div> */}
-                        <div className='w-full'>
-                            {/* <div className='relative flex items-center my-2 w-full'>
-                                {JSON.parse(secureLocalStorage.getItem('profile'))['photo'] ? <img src={JSON.parse(secureLocalStorage.getItem('profile'))['photo']} alt="user" className='w-8 h-8 object-cover mr-4 rounded-full cursor-pointer' /> :
-                                    <img src='/icons/profileIcon.webp' className='w-8 h-8 rounded-full' />}
-                                <div className=''>
-                                    <p className=' font-semibold text-sm cursor-pointer hover:text-blue-500 hover:underline'>{JSON.parse(secureLocalStorage.getItem('profile'))['firstName'] + JSON.parse(secureLocalStorage.getItem('profile'))['lastName']}</p>
+                {/* Comments Section */}
+                <AnimatePresence>
+                    {showComment && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                        >
+                            <div className='px-6 pb-5 bg-gray-50/50 border-t border-gray-100'>
+                                {/* Comment Input */}
+                                <div className='flex items-center gap-3 py-4'>
+                                    <textarea
+                                        className='flex-1 outline-none p-3 border border-gray-200 bg-white text-gray-700 text-sm rounded-xl focus:ring-2 focus:ring-jnu-blue/10 focus:border-jnu-blue/20 transition-all resize-none placeholder-gray-400'
+                                        rows={1}
+                                        placeholder='Write a comment...'
+                                        value={comment}
+                                        onChange={(e) => setComment(e.target.value)}
+                                    />
+                                    <button
+                                        className='px-5 py-3 bg-jnu-blue text-white font-semibold rounded-xl hover:bg-jnu-blue-light transition-all text-sm shadow-sm hover:shadow-md flex-shrink-0'
+                                        onClick={sendComment}
+                                    >
+                                        Post
+                                    </button>
                                 </div>
-                            </div> */}
-                            <div className='flex justify-center items-center gap-2 my-2 bg-transparent'>
-                                <textarea
-                                    className='w-full outline-none p-1 md:p-3 border-gray-300 text-gray-600 text-sm font-sans shadow-md rounded-lg'
-                                    rows={1}
-                                    cols={33}
-                                    placeholder='write comment here...'
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                ></textarea>
-                                <button
-                                    className='h-min px-2 py-1 bg-primarycolor text-white rounded-md xs:text-sm md:text-md'
-                                    onClick={sendComment}
-                                >Comment</button>
-                            </div>
-                        </div>
-                        <div className='w-full flex flex-col justify-center items-start gap-2 bg-gray-300/10 backdrop-blur-sm px-2 rounded-md'>
-                            {
-                                comments?.map((c, index) => {
-                                    {/* console.log(c); */}
-                                    return (
+                                {/* Comments List */}
+                                <div className='flex flex-col gap-3'>
+                                    {comments?.map((c, index) => (
                                         <Comment key={index} data={c} />
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
-        </>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        )
     )
 }
 

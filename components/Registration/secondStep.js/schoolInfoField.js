@@ -1,3 +1,5 @@
+'use client';
+
 export const schoolInfoField = [
     {
         label: "school", field: "Select School", id: "school", option: ["",

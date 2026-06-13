@@ -1,195 +1,255 @@
+'use client';
+
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { HomeIcon } from "@heroicons/react/24/solid"
-import { NewspaperIcon } from "@heroicons/react/24/solid"
-import { PhotoIcon } from "@heroicons/react/24/solid"
-import { CheckBadgeIcon } from "@heroicons/react/24/solid"
-import { ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
-import { UserCircleIcon } from "@heroicons/react/24/solid"
-import { PowerIcon } from "@heroicons/react/24/solid"
-import { UserIcon } from "@heroicons/react/24/solid"
+import { useRouter, usePathname } from 'next/navigation'
+import { UserCircleIcon, PowerIcon, UserIcon } from "@heroicons/react/24/solid"
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import cookieCutter from "cookie-cutter"
 import { deleteCookie } from '@/src/utils/login'
-import secureLocalStorage from 'react-secure-storage';
+import { useProfile } from '@/components/common/ProfileContext';
+import { useLanguage } from '@/components/common/LanguageContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function Header() {
+    const { profile, clearProfile } = useProfile();
     const router = useRouter();
+    const pathname = usePathname();
+    const { locale, changeLocale, t } = useLanguage();
     const [userDropdown, setUserDropdown] = React.useState(false);
     const [userToken, setUserToken] = React.useState(false);
-    const [userPic, setUserPic] = React.useState(null);
-    
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [scrolled, setScrolled] = React.useState(false);
 
     React.useEffect(() => {
         if (cookieCutter.get('userToken')) {
             setUserToken(true);
-        }
-        else {
+        } else {
             setUserToken(false);
         }
     }, [])
 
+    // Removed the complex useEffect that was duplicating the profile fetch logic
+    // Now the ProfileProvider handles fetching and caching the profile automatically
+
+    // Scroll listener for navbar background
     React.useEffect(() => {
-        if (cookieCutter.get('profileSet') && !secureLocalStorage.getItem('profile')) {
-            fetch('/api/getprofile', {
-                method: "GET",
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                    "authorization": `Bearer ${cookieCutter.get('userToken')} ${cookieCutter.get('refreshToken')}`
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    //console.log(data.data);
-                    secureLocalStorage.setItem('profile', JSON.stringify(data.data))
-                })
-                .catch(err => console.log("some error in header, ", err))
-        }
-        if (secureLocalStorage.getItem('profile')) {
-            const profilepic = JSON.parse(secureLocalStorage.getItem('profile')).photo;
-            setUserPic(profilepic);
-        }
-    }, [])
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const navLinks = [
+        { name: t('home'), path: '/' },
+        { name: t('feed'), path: '/feeds' },
+        { name: t('gallery'), path: '/gallery' },
+        { name: t('about'), path: '/about' },
+        { name: t('contact'), path: '/contact' },
+    ];
+
+    const handleLogout = () => {
+        deleteCookie('userToken');
+        deleteCookie('uid');
+        deleteCookie('refreshToken');
+        deleteCookie('profileSet');
+        clearProfile();
+        router.push('/');
+        setTimeout(() => window.location.reload(), 500);
+    };
 
     return (
         <>
-            <div className='flex justify-between items-center bg-[#f2f4f6] sticky top-0 py-2 md:px-5 xs:px-3 z-10'>
-                <div className='flex justify-center items-center gap-2'>
-                    <Image
-                        src="/header/JNUnewLogo.png"
-                        width={30}
-                        height={30}
-                        alt="JNU logo"
-                    />
-                    <p className='md:text-xl xs:text-lg font-semibold tracking-wider text-primarycolor'>JNU Alumni Association (Regd.)</p>
-                </div>
-                <ul className='md:w-7/12 xs:w-full md:relative md:flex md:flex-row justify-around items-center xs:fixed xs:flex xs:bottom-0 xs:left-0 xs:py-1 md:py-0 bg-[#f2f4f6]'>
-                    <li>
-                        {
-                            router.pathname === "/" ?
-                                <Link href="/">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <HomeIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Home</span>
-                                    </div>
-                                </Link>
-                                :
-                                <Link href="/">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <HomeIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Home</span>
-                                    </div>
-                                </Link>
-                        }
-                    </li>
-                    <li>
-                        {
-                            router.pathname === "/feeds" ?
-                                <Link href="/feeds">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <NewspaperIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Feeds</span>
-                                    </div>
-                                </Link>
-                                :
-                                <Link href="/feeds">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <NewspaperIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Feeds</span>
-                                    </div>
-                                </Link>
-                        }
-                    </li>
-                    <li>
-                        {
-                            router.pathname === "/gallery" ?
-                                <Link href="/gallery">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <PhotoIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Gallery</span>
-                                    </div>
-                                </Link>
-                                :
-                                <Link href="/gallery">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <PhotoIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Gallery</span>
-                                    </div>
-                                </Link>
-                        }
-                    </li>
-                    <li>
-                        {
-                            router.pathname === "/join" ?
-                                <Link href="/join">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <CheckBadgeIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Join</span>
-                                    </div>
-                                </Link>
-                                :
-                                <Link href="/join">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <CheckBadgeIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Join</span>
-                                    </div>
-                                </Link>
-                        }
-                    </li>
-                    <li>
-                        {
-                            router.pathname === "/messages" ?
-                                <Link href="/messages">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <ChatBubbleLeftIcon className='text-primarycolor md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-semibold text-primarycolor'>Messages</span>
-                                    </div>
-                                </Link>
-                                :
-                                <Link href="/messages">
-                                    <div className='flex flex-col justify-center items-center'>
-                                        <ChatBubbleLeftIcon className='text-gray-400 md:h-[2rem] md:w-[2rem] xs:h-[1.5rem] xs:w-[1.5rem]' />
-                                        <span className='text-xs font-light'>Messages</span>
-                                    </div>
-                                </Link>
-                        }
-                    </li>
-                </ul>
-                <div>
-                    {
-                        userToken ?
-                            (userPic !== null) ? <img src={`${userPic}`} alt="userpic" className='w-[3rem] h-[3rem] rounded-full cursor-pointer' onClick={() => setUserDropdown(userDropdown => !userDropdown)}/> : <UserCircleIcon className='h-[3rem] w-[3rem] text-primarycolor cursor-pointer' onClick={() => setUserDropdown(userDropdown => !userDropdown)} /> :
-                            <Link href="/login">
-                                <div className='bg-primarycolor text-white rounded-sm py-1 px-3'>Login</div>
+            <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+                scrolled 
+                    ? 'bg-white/90 backdrop-blur-xl shadow-glass border-b border-gray-200/50' 
+                    : 'bg-transparent'
+            }`}>
+                <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6 md:px-10">
+                    {/* Logo */}
+                    <Link href="/" className='flex items-center gap-3 group'>
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-jnu-blue/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <Image
+                                src="/header/JNUnewLogo.png"
+                                width={42}
+                                height={42}
+                                alt="JNU logo"
+                                className="relative z-10 group-hover:scale-110 transition-transform duration-300"
+                            />
+                        </div>
+                        <div className="hidden sm:flex flex-col">
+                            <span className='text-lg font-display font-bold text-jnu-blue leading-tight'>JNU Alumni</span>
+                            <span className='text-[10px] font-medium text-gray-400 tracking-widest uppercase'>Association</span>
+                        </div>
+                    </Link>
+
+                    {/* Desktop Nav */}
+                    <nav className='hidden md:flex items-center gap-1'>
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.name}
+                                href={link.path}
+                                className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
+                                    pathname === link.path
+                                        ? 'text-jnu-blue bg-jnu-blue/5'
+                                        : 'text-gray-600 hover:text-jnu-blue hover:bg-gray-50'
+                                }`}
+                            >
+                                {link.name}
+                                {pathname === link.path && (
+                                    <motion.div
+                                        layoutId="activeNav"
+                                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-jnu-blue rounded-full"
+                                        transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                                    />
+                                )}
                             </Link>
-                    }
-                    {
-                        userDropdown ?
-                            <ul className='absolute sm:top-[3.8rem] md:right-[2rem] xs:top-[3.5rem] xs:right-[0.5rem] w-[6rem] h-fit flex flex-col justify-center items-center gap-1 p-2 bg-slate-100  text-black select-none shadow-lg'>
-                                <li>
-                                    <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => {
-                                        router.push('/profile')
-                                    }}><UserIcon className='h-[1rem] w-[1rem]' />Profile</span>
-                                </li>
-                                <li>
-                                    <span className='text-gray-500 flex items-center gap-1 cursor-pointer font-light hover:text-primarycolor' onClick={() => {
-                                        deleteCookie('userToken');
-                                        deleteCookie('uid');
-                                        deleteCookie('refreshToken');
-                                        deleteCookie('profileSet');
-                                        secureLocalStorage.clear();
-                                        router.push('/')
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 500);
-                                    }}><PowerIcon className='h-[1rem] w-[1rem]' />Logout</span>
-                                </li>
-                            </ul> :
-                            ""
-                    }
+                        ))}
+                    </nav>
+
+                    {/* Right Actions */}
+                    <div className='hidden md:flex items-center gap-3 relative'>
+                        {/* Language Switcher */}
+                        <button 
+                            onClick={() => changeLocale(locale === 'en' ? 'hi' : 'en')}
+                            className="px-3 py-1.5 mr-2 rounded-xl bg-gray-100/80 hover:bg-gray-200/80 text-xs font-bold text-jnu-blue transition-all border border-gray-200/50"
+                        >
+                            {locale === 'en' ? 'हिन्दी' : 'EN'}
+                        </button>
+                        {userToken ? (
+                            <>
+                                {profile?.photo ? (
+                                    <button onClick={() => setUserDropdown(!userDropdown)} className="relative group">
+                                        <div className="absolute inset-0 bg-jnu-gold/20 rounded-full blur-md scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        <img src={`${profile.photo}`} alt="userpic" className='w-10 h-10 rounded-full cursor-pointer ring-2 ring-jnu-blue/20 group-hover:ring-jnu-blue/50 transition-all relative z-10'/>
+                                    </button>
+                                ) : (
+                                    <button onClick={() => setUserDropdown(!userDropdown)} className="relative group">
+                                        <UserCircleIcon className='h-10 w-10 text-jnu-blue/70 cursor-pointer group-hover:text-jnu-blue transition-colors' />
+                                    </button>
+                                )}
+                                <AnimatePresence>
+                                    {userDropdown && (
+                                        <motion.ul
+                                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                            transition={{ duration: 0.2 }}
+                                            className='absolute top-14 right-0 w-44 flex flex-col gap-1 p-2 glass-card z-50'
+                                        >
+                                            <li>
+                                                <button className='w-full text-left px-4 py-2.5 text-gray-600 hover:text-jnu-blue hover:bg-jnu-blue/5 rounded-xl flex items-center gap-3 text-sm font-medium transition-all' onClick={() => { router.push('/profile'); setUserDropdown(false); }}>
+                                                    <UserIcon className='h-4 w-4' /> My Profile
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button className='w-full text-left px-4 py-2.5 text-red-500 hover:bg-red-50 rounded-xl flex items-center gap-3 text-sm font-medium transition-all' onClick={handleLogout}>
+                                                    <PowerIcon className='h-4 w-4' /> Sign Out
+                                                </button>
+                                            </li>
+                                        </motion.ul>
+                                    )}
+                                </AnimatePresence>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/login" className='px-5 py-2.5 text-jnu-blue font-semibold rounded-full hover:bg-jnu-blue/5 transition-all text-sm'>
+                                    Sign In
+                                </Link>
+                                <Link href="/join" className='btn-primary !py-2.5 !px-6 text-sm !shadow-md'>
+                                    Join Association
+                                </Link>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="md:hidden relative z-50 p-2 text-jnu-blue"
+                        onClick={() => setMobileOpen(!mobileOpen)}
+                    >
+                        {mobileOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
+                    </button>
                 </div>
-            </div>
+            </header>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {mobileOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center"
+                    >
+                        <motion.nav
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 30 }}
+                            transition={{ delay: 0.1 }}
+                            className="flex flex-col items-center gap-6"
+                        >
+                            {navLinks.map((link, i) => (
+                                <motion.div
+                                    key={link.name}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 + i * 0.05 }}
+                                >
+                                    <Link
+                                        href={link.path}
+                                        className={`text-2xl font-display font-bold transition-colors ${
+                                            pathname === link.path ? 'text-jnu-blue' : 'text-gray-400 hover:text-jnu-blue'
+                                        }`}
+                                        onClick={() => setMobileOpen(false)}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                                className="flex flex-col items-center gap-4 mt-8"
+                            >
+                                {userToken ? (
+                                    <>
+                                        <Link href="/profile" className="btn-primary !text-base" onClick={() => setMobileOpen(false)}>
+                                            My Profile
+                                        </Link>
+                                        <button className="text-red-500 font-semibold text-sm" onClick={() => { handleLogout(); setMobileOpen(false); }}>
+                                            Sign Out
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link href="/login" className="btn-secondary !text-base" onClick={() => setMobileOpen(false)}>
+                                            Sign In
+                                        </Link>
+                                        <Link href="/join" className="btn-primary !text-base" onClick={() => setMobileOpen(false)}>
+                                            Join Association
+                                        </Link>
+                                    </>
+                                )}
+                                {/* Mobile Language Switcher */}
+                                <button 
+                                    onClick={() => { changeLocale(locale === 'en' ? 'hi' : 'en'); setMobileOpen(false); }}
+                                    className="px-6 py-2.5 mt-4 rounded-xl bg-gray-100 hover:bg-gray-200 text-sm font-bold text-jnu-blue transition-all border border-gray-200 w-full text-center"
+                                >
+                                    {locale === 'en' ? 'हिन्दी (Hindi)' : 'English (EN)'}
+                                </button>
+                            </motion.div>
+                        </motion.nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Spacer for fixed header */}
+            <div className="h-[72px]"></div>
         </>
     )
 }

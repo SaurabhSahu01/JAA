@@ -6,18 +6,16 @@ async function handler(req, res) {
         const { uid } = req.body;
         try {
             const documentRef = db.collection('users').doc(uid).collection('profile').doc('profile');
-            documentRef.get().then(docSnapshot => {
-                const data = docSnapshot.data();
-                //console.log(data);
-                res.status(200).json({
-                    data: data
-                })
-            })
+            const docSnapshot = await documentRef.get();
+            const data = docSnapshot.data();
+            return res.status(200).json({
+                data: data
+            });
         }
         catch (error) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: "some database error"
-            })
+            });
         }
     }
     else {

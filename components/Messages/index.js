@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react'
 import { db } from '@/src/utils/firebase';
 import { onSnapshot, doc, collection, getDoc } from "firebase/firestore"
 import cookieCutter from 'cookie-cutter';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { Toaster } from "react-hot-toast";
 import Chatbox from './ChatBox';
 import Chat from './Sidebar/chat/Chat';

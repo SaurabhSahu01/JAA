@@ -42,3 +42,10 @@ next-env.d.ts
 *.pid
 temp_add_event.js
 WhatsApp Image*.jpeg
+
+# Credentials and raw assets
+*firebase-adminsdk*.json
+*.webp
+!public/jnu/nehru_statue.png
+create_test_user.js
+test_page.js

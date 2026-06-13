@@ -1,3 +1,5 @@
+'use client';
+
 export const userInfoField = [
     { label: "firstName", type: "text", id: 'firstName', placeholder: "FirstName" },
     { label: "lastName", type: "text", id: 'lastName', placeholder: "lastName" },

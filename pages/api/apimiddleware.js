@@ -1,7 +1,6 @@
 // middleware to protect APIs from flooding
 import { verifyToken } from "@/src/utils/firebaseadmin";
 import axios from "axios";
-import { webAPIKey } from "@/firebase.config";
 import cookie from "cookie";
 
 const apimiddleware = handler => async (req, res) => {
@@ -42,7 +41,7 @@ const apimiddleware = handler => async (req, res) => {
                     // get the tokenString[2]
                     if (tokenString[2]) {
                         const url = 'https://securetoken.googleapis.com/v1/token';
-                        const apiKey = webAPIKey;
+                        const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
                         const requestData = `grant_type=refresh_token&refresh_token=${tokenString[2]}`;
                         const headers = {
@@ -53,21 +52,18 @@ const apimiddleware = handler => async (req, res) => {
                             .then(response => {
                                 console.log('Response:', response.data.user_id);
 
-                                // access_token refresh_token
+                                const cookieOptions = {
+                                    maxAge: 3600 * 2,
+                                    path: '/',
+                                    httpOnly: true,
+                                    secure: process.env.NODE_ENV === 'production',
+                                    sameSite: 'strict',
+                                };
 
                                 res.setHeader('Set-Cookie', [
-                                    cookie.serialize('userToken', response.data.access_token, {
-                                        maxAge: 3600 * 2,   // Token expiration time in seconds (adjust as needed)
-                                        path: '/',      // The path for which the cookie is valid
-                                    }),
-                                    cookie.serialize('refreshToken', response.data.refresh_token, {
-                                        maxAge: 3600 * 2, // Refresh token can have a longer expiration
-                                        path: '/',
-                                    }),
-                                    cookie.serialize('uid', response.data.user_id, {
-                                        maxAge: 3600 * 2, // setting the user id too
-                                        path: '/',
-                                    }),
+                                    cookie.serialize('userToken', response.data.access_token, cookieOptions),
+                                    cookie.serialize('refreshToken', response.data.refresh_token, cookieOptions),
+                                    cookie.serialize('uid', response.data.user_id, cookieOptions),
                                 ]);
                                 return res.status(200).json({
                                     message: "refresh token revoked"

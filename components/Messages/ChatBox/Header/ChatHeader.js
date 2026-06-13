@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import useWindowSize from "@/components/Hook/useWindowSize";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";

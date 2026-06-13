@@ -7,22 +7,20 @@ async function handler(req, res){
         const { action } = req.body;
         try{
             if(action === "verify") {
-                db.collection('users').doc(uid).set({
+                await db.collection('users').doc(uid).set({
                     verified: true
-                }, {merge: true}).then(response => {
-                    res.status(200).json({
-                        message: `${uid} user verified`
-                    })
-                })
+                }, {merge: true});
+                return res.status(200).json({
+                    message: `${uid} user verified`
+                });
             }
             else if(action === "not verify"){
-                db.collection('users').doc(uid).set({
+                await db.collection('users').doc(uid).set({
                     verified: false
-                }, {merge: true}).then(response => {
-                    res.status(200).json({
-                        message: `${uid} user is not verified`
-                    })
-                })
+                }, {merge: true});
+                return res.status(200).json({
+                    message: `${uid} user is not verified`
+                });
             }
         }
         catch(err){

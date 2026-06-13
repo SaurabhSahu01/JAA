@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 import SideBar from './Common/AdminSidebar'
 import Head from 'next/head'

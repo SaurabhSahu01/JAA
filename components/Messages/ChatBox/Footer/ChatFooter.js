@@ -1,3 +1,5 @@
+'use client';
+
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import cookieCutter from "cookie-cutter";

@@ -1,17 +1,28 @@
+'use client';
+
 import React from 'react'
 
-const MemberCard = ({data}) => {
-    const {imgSrc, name, level, period } = data;
-  return (
-    <div className=' flex flex-col justify-center items-center gap-2 bg-[#F5F5F5] rounded-md p-4 m-2 w-fit shadow-md'>
-        <img src={imgSrc} alt="" className='rounded-full w-[100px] sm:w-[150px] h-[100px] sm:h-[150px] object-cover' />
-        <div className=' py-1 font-medium text-base text-left px-2'>
-            <p className=' underline'>{name}</p>
-            <p>{level}</p>
-            <p>{period}</p>
+const MemberCard = ({ data }) => {
+    const { imgSrc, name, level, period } = data;
+    return (
+        <div className='flip-card w-[160px] sm:w-[200px] h-[240px] sm:h-[280px] m-2'>
+            <div className='flip-card-inner'>
+                {/* Front */}
+                <div className='flip-card-front glass-card flex flex-col items-center justify-center p-4 text-center'>
+                    <img src={imgSrc} alt={name} className='rounded-full w-20 h-20 sm:w-24 sm:h-24 object-cover ring-4 ring-white shadow-lg mb-4' />
+                    <p className='font-display font-bold text-sm text-jnu-blue leading-tight'>{name}</p>
+                    <p className='text-xs text-gray-400 mt-1 font-medium'>{level}</p>
+                </div>
+                {/* Back */}
+                <div className='flip-card-back gradient-animate flex flex-col items-center justify-center p-6 text-center text-white'>
+                    <p className='font-display font-bold text-lg mb-2'>{name}</p>
+                    <div className='w-8 h-0.5 bg-white/30 rounded-full mb-3'></div>
+                    <p className='text-sm font-medium text-white/90 mb-1'>{level}</p>
+                    <p className='text-xs text-white/60'>{period}</p>
+                </div>
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default MemberCard

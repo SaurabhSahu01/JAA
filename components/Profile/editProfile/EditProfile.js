@@ -1,3 +1,5 @@
+'use client';
+
 import { userInfoField } from '@/components/Registration/firstStep/userInfoField'
 import { schoolInfoField } from '@/components/Registration/secondStep.js/schoolInfoField'
 import React from 'react'

@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import ChatHeader from "./Header/ChatHeader";
 import ChatMessages from "./Message/ChatMessages";

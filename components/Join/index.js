@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 import Typewriter from 'typewriter-effect'
 import cookieCutter from "cookie-cutter";
@@ -5,7 +7,7 @@ import { toast, Toaster } from 'react-hot-toast';
 import { db } from '@/src/utils/firebase';
 import { doc, getDoc } from "firebase/firestore"
 import Loader from '../common/Loader';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 function Join() {
   const router = useRouter();
@@ -94,7 +96,7 @@ function Join() {
         </div>
       </div>
     ))
-  })
+  }, [])
 
   return (
     (status === false) ? <div className='h-screen w-full'>

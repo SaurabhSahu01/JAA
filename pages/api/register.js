@@ -13,70 +13,79 @@ async function handler(req, res) {
         const form = formidable({ multiples: false });
         const { uid } = req.body;
 
-        form.parse(req, (err, fields, files) => {
-            if (err) {
-                console.error('Error parsing form data:', err);
-                res.status(500).json({
-                    status: 500,
-                    error: 'Failed to parse form data'
-                });
-                return;
-            }
-            else {
-                if (fields && files.photo) {
-                    const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear } = fields;
-                    const { photo } = files;
-                    // console.log(image2.originalFilename, image2.filepath, image2.mimetype)
-                    register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo).then(response => {
-                        console.log("image added", response);
-                        res.status(200).json({
-                            status: 200,
-                            message: 'profile updated successfully'
-                        });
-                    }).catch(err => {
-                        console.log("error uploading the image : ", err);
-                        res.status(504).json({
-                            status: 504,
-                            message: "error registring the user"
-                        })
-                    })
+        await new Promise((resolve) => {
+            form.parse(req, (err, fields, files) => {
+                if (err) {
+                    console.error('Error parsing form data:', err);
+                    res.status(500).json({
+                        status: 500,
+                        error: 'Failed to parse form data'
+                    });
+                    resolve();
+                    return;
                 }
                 else {
-                    const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo } = fields;
-                    //console.log(photo[0]);
-                    //console.log(firstName);
-                    if (photo[0] === 'null') {
-                        register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, null).then(response => {
+                    if (fields && files.photo) {
+                        const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear } = fields;
+                        const { photo } = files;
+                        // console.log(image2.originalFilename, image2.filepath, image2.mimetype)
+                        register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo).then(response => {
                             console.log("image added", response);
                             res.status(200).json({
                                 status: 200,
                                 message: 'profile updated successfully'
                             });
+                            resolve();
                         }).catch(err => {
                             console.log("error uploading the image : ", err);
                             res.status(504).json({
                                 status: 504,
                                 message: "error registring the user"
-                            })
+                            });
+                            resolve();
                         })
                     }
                     else {
-                        register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo[0]).then(response => {
-                            console.log("image added", response);
-                            res.status(200).json({
-                                status: 200,
-                                message: 'profile updated successfully'
-                            });
-                        }).catch(err => {
-                            console.log("error uploading the image : ", err);
-                            res.status(504).json({
-                                status: 504,
-                                message: "error registring the user"
+                        const { firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo } = fields;
+                        //console.log(photo[0]);
+                        //console.log(firstName);
+                        if (photo && photo[0] === 'null') {
+                            register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, null).then(response => {
+                                console.log("image added", response);
+                                res.status(200).json({
+                                    status: 200,
+                                    message: 'profile updated successfully'
+                                });
+                                resolve();
+                            }).catch(err => {
+                                console.log("error uploading the image : ", err);
+                                res.status(504).json({
+                                    status: 504,
+                                    message: "error registring the user"
+                                });
+                                resolve();
                             })
-                        })
+                        }
+                        else {
+                            register(uid, firstName, lastName, number, gender, dob, school, program, hostel, joiningYear, graduationYear, photo ? photo[0] : null).then(response => {
+                                console.log("image added", response);
+                                res.status(200).json({
+                                    status: 200,
+                                    message: 'profile updated successfully'
+                                });
+                                resolve();
+                            }).catch(err => {
+                                console.log("error uploading the image : ", err);
+                                res.status(504).json({
+                                    status: 504,
+                                    message: "error registring the user"
+                                });
+                                resolve();
+                            })
+                        }
                     }
                 }
-            }
+            });
         });
     }
     else {

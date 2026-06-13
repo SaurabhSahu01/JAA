@@ -28,34 +28,22 @@ export const loginwithgoogle = () => {
 }
 
 export const changeMaxAge = (cookieName, age) => {
-    // Retrieve all cookies as a string
-    var cookies = document.cookie;
+    const isSecure = window.location.protocol === 'https:';
+    const cookies = document.cookie;
+    const cookiesArray = cookies.split(';');
 
-    // Split the string into an array of cookies
-    var cookiesArray = cookies.split(';');
+    for (let i = 0; i < cookiesArray.length; i++) {
+        let cookie = cookiesArray[i].trim();
 
-    // Loop through the cookies to find the one we want to update
-    for (var i = 0; i < cookiesArray.length; i++) {
-        var cookie = cookiesArray[i];
-
-        // Trim leading whitespace if there is any
-        while (cookie.charAt(0) == ' ') {
-            cookie = cookie.substring(1);
-        }
-
-        // Check if this is the cookie we want to update
-        if (cookie.indexOf(`${cookieName}=`) == 0) {
-            // Update the cookie's max-age attribute
-            var cookieParts = cookie.split('=');
-            cookie = cookieParts[0] + "=" + cookieParts[1] + `; max-age=${age}`; // set max-age to 3600 seconds (1 hour)
-
-            // Assign the updated cookie string to the document.cookie property
-            document.cookie = cookie;
+        if (cookie.indexOf(`${cookieName}=`) === 0) {
+            const cookieParts = cookie.split('=');
+            const flags = `; max-age=${age}; path=/; SameSite=Strict${isSecure ? '; Secure' : ''}`;
+            document.cookie = cookieParts[0] + "=" + cookieParts[1] + flags;
             break;
         }
     }
 }
 
 export const deleteCookie = (name) => {
-    document.cookie = name + '=; Max-Age=0; path=/;';
+    document.cookie = name + '=; Max-Age=0; path=/; SameSite=Strict';
 }

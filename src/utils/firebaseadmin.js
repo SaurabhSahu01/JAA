@@ -1,13 +1,20 @@
 import * as admin from "firebase-admin";
 import { getAuth } from "firebase-admin/auth";
-import { adminFirebaseConfig } from "@/firebase.config";
-import { firebaseStorageBucket } from "@/firebase.config";
+import fs from "fs";
+
+// Server-only: read credentials from environment variables
+const adminCredentials = {
+    type: "service_account",
+    project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+    client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+    private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+};
 
 if (admin.apps.length === 0) {
     admin.initializeApp({
-        credential: admin.credential.cert(adminFirebaseConfig),
-        storageBucket: firebaseStorageBucket
-    })
+        credential: admin.credential.cert(adminCredentials),
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    });
 }
 
 export const db = admin.firestore();
@@ -68,20 +75,10 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
     }
     else if (photo !== null) {
         console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
-        const bucket = storage.bucket();
-        const destinationPath = photo[0].originalFilename;
-        console.log("destinationPath = ", destinationPath)
-        destinationPath && await bucket.upload(photo[0].filepath, {
-            destination: destinationPath,
-            metadata: {
-                contentType: photo[0].mimetype
-            }
-        });
-
-        const downloadURL = destinationPath && await bucket.file(destinationPath).getSignedUrl({
-            action: "read",
-            expires: '03-01-2500'
-        })
+        const fileBuffer = fs.readFileSync(photo[0].filepath);
+        const base64Data = fileBuffer.toString('base64');
+        const mimeType = photo[0].mimetype || "image/jpeg";
+        const downloadURL = `data:${mimeType};base64,${base64Data}`;
         return db.collection('users').doc(uid).collection('profile').doc('profile').set({
             set: true,
             firstName: firstName[0],
@@ -94,7 +91,7 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
             hostel: hostel[0],
             joiningYear: joiningYear[0],
             graduationYear: graduationYear[0],
-            photo: downloadURL[0]
+            photo: downloadURL
         }, { merge: true })
     }
     else {
@@ -119,26 +116,16 @@ export async function register(uid, firstName, lastName, number, gender, dob, sc
 export async function addpost(userid, postid, content, date, photo) {
     if (photo !== null) {
         console.log("photo = ", photo[0].originalFilename, photo[0].mimetype, photo[0].filepath);
-        const bucket = storage.bucket();
-        const destinationPath = photo[0].originalFilename;
-        console.log("destinationPath = ", destinationPath)
-        destinationPath && await bucket.upload(photo[0].filepath, {
-            destination: destinationPath,
-            metadata: {
-                contentType: photo[0].mimetype
-            }
-        });
-
-        const downloadURL = destinationPath && await bucket.file(destinationPath).getSignedUrl({
-            action: "read",
-            expires: '03-01-2500'
-        })
+        const fileBuffer = fs.readFileSync(photo[0].filepath);
+        const base64Data = fileBuffer.toString('base64');
+        const mimeType = photo[0].mimetype || "image/jpeg";
+        const downloadURL = `data:${mimeType};base64,${base64Data}`;
         return db.collection('posts').doc(postid).set({
             postedBy: userid,
             postId: postid,
             content: content,
             date: date,
-            photo: downloadURL[0],
+            photo: downloadURL,
             likes : []
         })
     }
@@ -157,35 +144,20 @@ export async function addpost(userid, postid, content, date, photo) {
 export async function verificationMethod(uid, image1, image2){
     console.log("image1",image1[0].mimetype);
     console.log("image2", image2[0].mimetype);
-    const bucket = storage.bucket();
-    const destinationPath1 = image1[0].originalFilename;
-    const destinationPath2 = image2[0].originalFilename;
 
-    await bucket.upload(image1[0].filepath, {
-        destination: destinationPath1,
-        metadata: {
-            contentType: image1[0].mimetype
-        }
-    });
-    await bucket.upload(image2[0].filepath, {
-        destination: destinationPath2,
-        metadata: {
-            contentType: image2[0].mimetype
-        }
-    });
+    const fileBuffer1 = fs.readFileSync(image1[0].filepath);
+    const base64Data1 = fileBuffer1.toString('base64');
+    const mimeType1 = image1[0].mimetype || "image/jpeg";
+    const downloadURL1 = `data:${mimeType1};base64,${base64Data1}`;
 
-    const downloadURL1 = await bucket.file(destinationPath1).getSignedUrl({
-        action: "read",
-        expires: '03-01-2500'
-    })
-    const downloadURL2 = await bucket.file(destinationPath2).getSignedUrl({
-        action: "read",
-        expires: '03-01-2500'
-    })
+    const fileBuffer2 = fs.readFileSync(image2[0].filepath);
+    const base64Data2 = fileBuffer2.toString('base64');
+    const mimeType2 = image2[0].mimetype || "image/jpeg";
+    const downloadURL2 = `data:${mimeType2};base64,${base64Data2}`;
     
     return db.collection('verification').doc(uid).set({
         uid: uid,
-        image1: downloadURL1[0],
-        image2: downloadURL2[0]
+        image1: downloadURL1,
+        image2: downloadURL2
     })
 }

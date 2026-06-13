@@ -1,15 +1,18 @@
+'use client';
+
 import React from 'react'
 import { Bars3Icon, ChartPieIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { UserGroupIcon } from '@heroicons/react/24/solid'
 import { CalendarDaysIcon } from '@heroicons/react/24/solid'
 import { EnvelopeIcon } from '@heroicons/react/24/solid'
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid'
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link'
 
 function Sidebar({ onOpen }) {
     const [index, setIndex] = React.useState(1);
     const router = useRouter();
+    const pathname = usePathname();
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -30,19 +33,19 @@ function Sidebar({ onOpen }) {
                         <Bars3Icon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     }
                 </div>
-                <Link href="/adminpanel" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel' ? 'text-primarycolor' : 'text-gray-400'}`}>
+                <Link href="/adminpanel" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${pathname === '/adminpanel' ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <ChartPieIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>DASHBOARD</span>
                 </Link>
-                <Link href="/adminpanel/users" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel/users' ? 'text-primarycolor' : 'text-gray-400'}`}>
+                <Link href="/adminpanel/users" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${pathname === '/adminpanel/users' ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <UserGroupIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>USERS</span>
                 </Link>
-                <Link href="/adminpanel/events" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname.includes('/adminpanel/events') ? 'text-primarycolor' : 'text-gray-400'}`}>
+                <Link href="/adminpanel/events" className={`flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${pathname.includes('/adminpanel/events') ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <CalendarDaysIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>EVENTS</span>
                 </Link>
-                <Link href="/adminpanel/inbox" className={`mb-auto flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${router.pathname === '/adminpanel/messages' ? 'text-primarycolor' : 'text-gray-400'}`}>
+                <Link href="/adminpanel/inbox" className={`mb-auto flex flex-col justify-center items-center gap-1 select-none cursor-pointer ${pathname === '/adminpanel/messages' ? 'text-primarycolor' : 'text-gray-400'}`}>
                     <EnvelopeIcon className='w-[2rem] h-[2rem] md:h-[3rem] md:w-[3rem] cursor-pointer' />
                     <span className={`text-xs font-light ${open ? 'inline' : 'hidden'} md:inline`}>INBOX</span>
                 </Link>

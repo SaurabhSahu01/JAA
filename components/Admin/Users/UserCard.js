@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react'
 import { UserCircleIcon } from "@heroicons/react/24/solid"
 import { CheckBadgeIcon } from '@heroicons/react/24/solid';
 import { BookmarkSlashIcon } from '@heroicons/react/24/solid';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 function UserCard({ id, verified, firstName, lastName, number, gender, school, hostel, joiningYear, graduationYear, program, dob, photo }) {
     const router = useRouter();
